@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bagan Turnamen PES - 17 Agustus</title>
+    <!-- Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- jQuery Bracket -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-bracket/0.11.1/jquery.bracket.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-bracket/0.11.1/jquery.bracket.min.js"></script>
+    
+    <style>
+        :root {
+            --red: #D32F2F;
+            --white: #FFFFFF;
+            --dark: #212121;
+        }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--red);
+            color: var(--white);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .header h1 {
+            margin: 0;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        .controls {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            backdrop-filter: blur(5px);
+        }
+        select, button {
+            padding: 10px 20px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        select {
+            background: var(--white);
+            color: var(--dark);
+        }
+        .btn-spin {
+            background: #FFD54F;
+            color: var(--dark);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+        }
+        .btn-spin:hover {
+            background: #FFCA28;
+            transform: translateY(-2px);
+        }
+        .btn-reset {
+            background: var(--dark);
+            color: var(--white);
+        }
+        
+        /* Bracket Container */
+        .bracket-container {
+            background: var(--white);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            overflow-x: auto;
+            max-width: 95vw;
+        }
+        
+        /* Override jQuery Bracket Styles to look more modern */
+        .jQBracket { font-family: 'Poppins', sans-serif; }
+        .jQBracket .team { font-weight: 600; }
+        .jQBracket .win { color: #388E3C; font-weight: bold; }
+        .jQBracket .lose { color: #D32F2F; }
+        
+        /* Hidden Spin Wheel Modal */
+        #wheelModal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 1000;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .wheel-container {
+            position: relative;
+            width: 400px;
+            height: 400px;
+        }
+        #spinCanvas {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            box-shadow: 0 0 20px rgba(255,255,255,0.2);
+        }
+        .wheel-pointer {
+            position: absolute;
+            top: 50%;
+            right: -20px;
+            transform: translateY(-50%);
+            width: 0; 
+            height: 0; 
+            border-top: 15px solid transparent;
+            border-bottom: 15px solid transparent;
+            border-right: 30px solid #FFD54F;
+            z-index: 10;
+        }
+        .modal-controls {
+            margin-top: 30px;
+            display: flex;
+            gap: 15px;
+        }
+        #wheelResult {
+            margin-top: 20px;
+            font-size: 28px;
+            font-weight: 800;
+            color: #FFD54F;
+            text-align: center;
+            height: 40px;
+            text-transform: uppercase;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>🏆 Turnamen PES 17 Agustus 🏆</h1>
+        <p>Bagan Sistem Gugur & Perebutan Juara 3</p>
+    </div>
+
+    <div class="controls">
+        <div>
+            <label for="bracketSize">Jumlah Peserta: </label>
+            <select id="bracketSize">
+                <option value="4">4 Peserta (Semifinal)</option>
+                <option value="8">8 Peserta (Perempat Final)</option>
+                <option value="16" selected>16 Peserta</option>
+                <option value="32">32 Peserta</option>
+            </select>
+        </div>
+        <button class="btn-spin" onclick="openWheel()">🎲 Buka Spin Wheel (Undi Tim)</button>
+        <button class="btn-reset" onclick="resetBracket()">Reset Bagan</button>
+    </div>
+
+    <div class="bracket-container">
+        <div id="bracket"></div>
+    </div>
+
+    <!-- Hidden Spin Wheel Modal -->
+    <div id="wheelModal">
+        <h2 style="margin-bottom: 20px; font-weight: 800;">UNDIAN TIM / NEGARA</h2>
+        <div class="wheel-container">
+            <div class="wheel-pointer"></div>
+            <canvas id="spinCanvas" width="500" height="500"></canvas>
+        </div>
+        <div id="wheelResult">...</div>
+        <div class="modal-controls">
+            <button class="btn-spin" id="spinBtn" onclick="spinWheel()" style="font-size: 18px; padding: 12px 30px;">SPIN SEKARANG</button>
+            <button class="btn-reset" onclick="closeWheel()" style="font-size: 18px; padding: 12px 30px;">Tutup</button>
+        </div>
+    </div>
+
+    <script>
+        /* ==============================
+           BAGIAN 1: LOGIKA BAGAN (BRACKET)
+           ============================== */
+        
+        // Setup initial empty teams based on size
+        function generateEmptyTeams(size) {
+            let teams = [];
+            for (let i = 0; i < size / 2; i++) {
+                teams.push(["Tim " + (i * 2 + 1), "Tim " + (i * 2 + 2)]);
+            }
+            return teams;
+        }
+
+        // Initialize or load bracket
+        function initBracket(size) {
+            let savedData = localStorage.getItem('pesBracketData_' + size);
+            let bracketData;
+
+            if (savedData) {
+                bracketData = JSON.parse(savedData);
+            } else {
+                bracketData = {
+                    teams: generateEmptyTeams(size),
+                    results: []
+                };
+            }
+
+            $('#bracket').empty();
+            $('#bracket').bracket({
+                init: bracketData,
+                save: function(data, userData) {
+                    // Save to local storage automatically when score/name is changed
+                    localStorage.setItem('pesBracketData_' + size, JSON.stringify(data));
+                },
+                skipConsolationRound: false, // Ensures 3rd place match is created
+                disableToolbar: true,
+                teamWidth: 150,
+                scoreWidth: 35,
+                matchMargin: 40,
+                roundMargin: 50
+            });
+        }
+
+        // Handle Size Change
+        $('#bracketSize').change(function() {
+            initBracket($(this).val());
+        });
+
+        // Reset Data
+        function resetBracket() {
+            if(confirm("Yakin ingin mereset bagan ini? Semua skor dan nama tim akan hilang.")) {
+                let size = $('#bracketSize').val();
+                localStorage.removeItem('pesBracketData_' + size);
+                initBracket(size);
+            }
+        }
+
+        // Run on load
+        $(document).ready(function() {
+            initBracket(16);
+        });
+
+
+        /* ==============================
+           BAGIAN 2: LOGIKA SPIN WHEEL
+           ============================== */
+        
+        const canvas = document.getElementById("spinCanvas");
+        const ctx = canvas.getContext("2d");
+        
+        // Daftar Tim (Bisa diganti sesuai kesepakatan)
+        const teams = [
+            "Argentina", "France", "Brazil", "England", 
+            "Portugal", "Spain", "Germany", "Italy", 
+            "Netherlands", "Belgium", "Croatia", "Uruguay"
+        ];
+        
+        // Colors for slices
+        const colors = ["#E53935", "#1E88E5", "#43A047", "#FDD835", "#FFB300", "#8E24AA", "#3949AB", "#00ACC1", "#4CAF50", "#F4511E", "#6D4C41", "#757575"];
+
+        let startAngle = 0;
+        let arc = Math.PI / (teams.length / 2);
+        let spinTimeout = null;
+        let spinArcStart = 10;
+        let spinTime = 0;
+        let spinTimeTotal = 0;
+
+        function drawWheel() {
+            ctx.clearRect(0,0,500,500);
+            ctx.strokeStyle = "black";
+            ctx.lineWidth = 2;
+            ctx.font = 'bold 18px Poppins, sans-serif';
+            
+            for(let i = 0; i < teams.length; i++) {
+                let angle = startAngle + i * arc;
+                ctx.fillStyle = colors[i % colors.length];
+                
+                ctx.beginPath();
+                ctx.arc(250, 250, 240, angle, angle + arc, false);
+                ctx.arc(250, 250, 0, angle + arc, angle, true);
+                ctx.fill();
+                ctx.save();
+                
+                // Draw text
+                ctx.fillStyle = "white";
+                ctx.shadowColor = "rgba(0,0,0,0.5)";
+                ctx.shadowBlur = 4;
+                ctx.translate(250 + Math.cos(angle + arc / 2) * 170, 
+                              250 + Math.sin(angle + arc / 2) * 170);
+                ctx.rotate(angle + arc / 2 + Math.PI);
+                let text = teams[i];
+                ctx.fillText(text, -ctx.measureText(text).width / 2, 0);
+                ctx.restore();
+            }
+            
+            // Draw center dot
+            ctx.fillStyle = "white";
+            ctx.beginPath();
+            ctx.arc(250, 250, 30, 0, 2 * Math.PI);
+            ctx.fill();
+        }
+
+        function spinWheel() {
+            document.getElementById("spinBtn").disabled = true;
+            document.getElementById("wheelResult").innerText = "Mengacak...";
+            spinAngleStart = Math.random() * 10 + 10;
+            spinTime = 0;
+            spinTimeTotal = Math.random() * 3000 + 4000;
+            rotateWheel();
+        }
+
+        function rotateWheel() {
+            spinTime += 30;
+            if(spinTime >= spinTimeTotal) {
+                stopRotateWheel();
+                return;
+            }
+            let spinAngle = spinAngleStart - easeOut(spinTime, 0, spinAngleStart, spinTimeTotal);
+            startAngle += (spinAngle * Math.PI / 180);
+            drawWheel();
+            spinTimeout = requestAnimationFrame(rotateWheel);
+        }
+
+        function stopRotateWheel() {
+            cancelAnimationFrame(spinTimeout);
+            let degrees = startAngle * 180 / Math.PI + 90;
+            let arcd = arc * 180 / Math.PI;
+            let index = Math.floor((360 - degrees % 360) / arcd);
+            
+            // Result correction based on pointer on the right side
+            let resultIndex = (teams.length - index) % teams.length;
+            
+            document.getElementById("wheelResult").innerText = "🎉 " + teams[resultIndex] + " 🎉";
+            document.getElementById("spinBtn").disabled = false;
+        }
+
+        function easeOut(t, b, c, d) {
+            let ts = (t/=d)*t;
+            let tc = ts*t;
+            return b+c*(tc + -3*ts + 3*t);
+        }
+
+        // Modal Controls
+        function openWheel() {
+            document.getElementById("wheelModal").style.display = "flex";
+            drawWheel();
+        }
+
+        function closeWheel() {
+            document.getElementById("wheelModal").style.display = "none";
+            document.getElementById("wheelResult").innerText = "...";
+        }
+
+        // Draw initial wheel
+        drawWheel();
+
+    </script>
+</body>
+</html>
