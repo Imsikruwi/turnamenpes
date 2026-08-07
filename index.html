@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bagan PES 32 Peserta - Kiri Kanan</title>
+    <title>Bagan PES Dinamis (4-32) - Kiri Kanan</title>
     <!-- Font -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
     <!-- jQuery -->
@@ -23,7 +23,7 @@
         }
         body {
             font-family: 'Poppins', sans-serif;
-            background-color: #7b0000; /* Darker red for background */
+            background-color: #7b0000;
             background-image: radial-gradient(circle, #D32F2F 0%, #7b0000 100%);
             color: var(--white);
             margin: 0;
@@ -56,8 +56,9 @@
             align-items: center;
             justify-content: center;
             border: 1px solid rgba(255,255,255,0.2);
+            z-index: 10;
         }
-        input[type="file"], button {
+        select, input[type="file"], button {
             padding: 8px 15px;
             font-family: 'Poppins', sans-serif;
             font-size: 13px;
@@ -67,23 +68,11 @@
             cursor: pointer;
             transition: 0.2s;
         }
-        .file-upload {
-            background: var(--white);
-            color: var(--dark);
-        }
-        .btn-action {
-            background: var(--gold);
-            color: var(--dark);
-        }
-        .btn-action:hover {
-            background: #FFCA28;
-            transform: scale(1.05);
-        }
-        .btn-danger {
-            background: #b71c1c;
-            color: white;
-            border: 1px solid white;
-        }
+        select { background: var(--white); color: var(--dark); }
+        .file-upload { background: var(--white); color: var(--dark); }
+        .btn-action { background: var(--gold); color: var(--dark); }
+        .btn-action:hover:not(:disabled) { background: #FFCA28; transform: scale(1.05); }
+        .btn-danger { background: #b71c1c; color: white; border: 1px solid white; }
         
         /* Layout Kiri-Kanan */
         .tournament-wrapper {
@@ -97,24 +86,29 @@
             border-radius: 15px;
             padding: 20px;
             box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+            min-height: 600px; /* Pastikan ada ruang cukup */
         }
         
         .side-bracket {
             flex: 1;
-            min-width: 450px;
+            min-width: 350px;
         }
         
         .center-bracket {
             display: flex;
             flex-direction: column;
-            justify-content: center;
+            justify-content: space-between; /* Membuat Final di atas, Juara 3 di bawah */
             align-items: center;
             padding: 0 30px;
             min-width: 250px;
             border-left: 2px dashed #ccc;
             border-right: 2px dashed #ccc;
             background: rgba(0,0,0,0.02);
+            position: relative;
         }
+        
+        .final-container { margin-top: 20px; }
+        .third-container { margin-top: auto; margin-bottom: 20px; padding-top: 50px;} /* Posisi selalu di bawah */
         
         .center-title {
             color: var(--dark);
@@ -125,19 +119,33 @@
             text-align: center;
         }
         .center-title.bronze {
-            margin-top: 50px;
             font-size: 20px;
             color: #795548;
         }
         
-        /* Bracket Theme Overrides */
+        /* OVERRIDE CSS UNTUK KONTRAS WARNA TIM */
         .jQBracket { font-family: 'Poppins', sans-serif; }
-        .jQBracket .team { font-weight: 600; font-size: 13px; }
-        .jQBracket .win { color: #2E7D32; font-weight: 800; }
-        .jQBracket .lose { color: #C62828; }
-        .jQBracket .score { font-weight: 700; font-size: 14px; }
+        .jQBracket .team { 
+            background-color: #ffffff !important; /* Latar putih cerah */
+            border: 1px solid #999;
+            font-weight: 600; 
+            font-size: 13px; 
+        }
+        .jQBracket .team .label { 
+            color: #111111 !important; /* Teks sangat gelap (hitam) */
+            font-weight: 700;
+        }
+        .jQBracket .team.na { 
+            background-color: #e0e0e0 !important; /* Abu-abu terang jika kosong */
+        }
+        .jQBracket .team.na .label {
+            color: #555555 !important; /* Abu-abu gelap agar tetap terbaca */
+        }
+        .jQBracket .win { color: #2E7D32 !important; font-weight: 900; }
+        .jQBracket .lose { color: #D32F2F !important; }
+        .jQBracket .score { font-weight: 800; font-size: 14px; background: #eee !important; color: #111;}
         
-        /* Spin Wheel Style - Keeping it for utility */
+        /* Spin Wheel Style */
         #wheelModal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.9); z-index: 1000; flex-direction: column; justify-content: center; align-items: center; }
         #spinCanvas { border-radius: 50%; box-shadow: 0 0 20px rgba(255,255,255,0.2); }
         .wheel-pointer { position: absolute; top: 50%; right: -15px; transform: translateY(-50%); width: 0; height: 0; border-top: 15px solid transparent; border-bottom: 15px solid transparent; border-right: 30px solid var(--gold); z-index: 10; }
@@ -147,34 +155,45 @@
 <body>
 
     <div class="header">
-        <h1>🏆 Bagan PES - 32 Peserta Kiri Kanan 🏆</h1>
+        <h1>🏆 Bagan PES - Kiri Kanan 🏆</h1>
     </div>
 
     <div class="controls">
-        <label style="font-size: 14px; font-weight: 600;">📁 Import dari Excel/CSV:</label>
+        <select id="bracketSizeSelector">
+            <option value="4">4 Peserta</option>
+            <option value="8">8 Peserta</option>
+            <option value="16">16 Peserta</option>
+            <option value="32" selected>32 Peserta</option>
+        </select>
+        <label style="font-size: 14px; font-weight: 600;">📁 Import CSV/Excel:</label>
         <input type="file" id="excelUpload" class="file-upload" accept=".xlsx, .xls, .csv">
-        <button class="btn-action" onclick="exportData()">💾 Simpan (Download) Data</button>
-        <button class="btn-action" onclick="openWheel()">🎲 Buka Spin Wheel</button>
-        <button class="btn-danger" onclick="resetAll()">⚠️ Reset Bagan</button>
+        
+        <button class="btn-action" id="openWheelBtn" disabled style="opacity:0.5; cursor:not-allowed;" onclick="openWheel()">🔒 Klik Bagan Dulu Untuk Spin</button>
+        
+        <button class="btn-danger" onclick="resetAll()">⚠️ Reset</button>
     </div>
 
     <div class="tournament-wrapper">
-        <!-- Bagan Kiri (16 Tim) -->
+        <!-- Bagan Kiri -->
         <div class="side-bracket" id="bracket-left"></div>
         
-        <!-- Bagan Tengah (Final & Juara 3) -->
+        <!-- Bagan Tengah -->
         <div class="center-bracket">
-            <div class="center-title">🥇 FINAL 🥈</div>
-            <div id="bracket-final"></div>
+            <div class="final-container">
+                <div class="center-title">🥇 FINAL 🥈</div>
+                <div id="bracket-final"></div>
+                <p style="font-size: 11px; color: #666; text-align: center; margin-top: 10px;">
+                    *Klik kotak untuk ketik nama Finalis
+                </p>
+            </div>
             
-            <div class="center-title bronze">🥉 PEREBUTAN JUARA 3 🥉</div>
-            <div id="bracket-3rd"></div>
-            <p style="font-size: 11px; color: #666; text-align: center; margin-top: 15px;">
-                *Klik pada kotak tim di tengah<br>untuk mengetik nama Finalis.
-            </p>
+            <div class="third-container">
+                <div class="center-title bronze">🥉 JUARA 3 🥉</div>
+                <div id="bracket-3rd"></div>
+            </div>
         </div>
 
-        <!-- Bagan Kanan (16 Tim) -->
+        <!-- Bagan Kanan -->
         <div class="side-bracket" id="bracket-right" style="direction: rtl;"></div>
     </div>
 
@@ -194,45 +213,55 @@
 
     <script>
         // ----------------------------------------------------
-        // 1. DATA INITIALIZATION & LOCAL STORAGE
+        // 1. DATA INITIALIZATION & DYNAMIC SIZE
         // ----------------------------------------------------
         
+        let currentSize = 32;
+
         function generateEmptyTeams(count, prefix) {
             let teams = [];
-            for(let i=1; i<=count/2; i++){
+            // count = jumlah total di satu sisi. misal size 32 -> sisi 16. jumlah match awal = 8.
+            let matches = count / 2;
+            if(matches < 1) matches = 1; // Minimal 1 match (2 tim)
+            for(let i=1; i<=matches; i++){
                 teams.push([prefix + (i*2-1), prefix + (i*2)]);
             }
             return teams;
         }
 
-        let leftData = JSON.parse(localStorage.getItem('pes32_left')) || { teams: generateEmptyTeams(16, "Kiri "), results: [] };
-        let rightData = JSON.parse(localStorage.getItem('pes32_right')) || { teams: generateEmptyTeams(16, "Kanan "), results: [] };
-        let finalData = JSON.parse(localStorage.getItem('pes32_final')) || { teams: [["Finalis Kiri", "Finalis Kanan"]], results: [] };
-        let thirdData = JSON.parse(localStorage.getItem('pes32_third')) || { teams: [["Kalah Semifinal Kiri", "Kalah Semifinal Kanan"]], results: [] };
+        let leftData, rightData, finalData, thirdData;
+
+        function loadData(size) {
+            currentSize = size;
+            let half = size / 2;
+            leftData = JSON.parse(localStorage.getItem('pes_dyn_left_'+size)) || { teams: generateEmptyTeams(half, "Kiri "), results: [] };
+            rightData = JSON.parse(localStorage.getItem('pes_dyn_right_'+size)) || { teams: generateEmptyTeams(half, "Kanan "), results: [] };
+            finalData = JSON.parse(localStorage.getItem('pes_dyn_final_'+size)) || { teams: [["Finalis Kiri", "Finalis Kanan"]], results: [] };
+            thirdData = JSON.parse(localStorage.getItem('pes_dyn_third_'+size)) || { teams: [["Loser Kiri", "Loser Kanan"]], results: [] };
+        }
 
         function initBrackets() {
             $('#bracket-left').empty().bracket({
                 init: leftData,
-                save: function(data) { localStorage.setItem('pes32_left', JSON.stringify(data)); leftData = data; },
+                save: function(data) { localStorage.setItem('pes_dyn_left_'+currentSize, JSON.stringify(data)); leftData = data; },
                 dir: 'lr', skipConsolationRound: true, disableToolbar: true
             });
             
-            // Note: untuk bracket kanan, kita buat dir: 'rl' agar mirror
             $('#bracket-right').empty().bracket({
                 init: rightData,
-                save: function(data) { localStorage.setItem('pes32_right', JSON.stringify(data)); rightData = data; },
+                save: function(data) { localStorage.setItem('pes_dyn_right_'+currentSize, JSON.stringify(data)); rightData = data; },
                 dir: 'rl', skipConsolationRound: true, disableToolbar: true
             });
             
             $('#bracket-final').empty().bracket({
                 init: finalData,
-                save: function(data) { localStorage.setItem('pes32_final', JSON.stringify(data)); finalData = data; },
-                dir: 'lr', skipConsolationRound: true, disableToolbar: true, disableTeamEdit: false // Allow typing names manually
+                save: function(data) { localStorage.setItem('pes_dyn_final_'+currentSize, JSON.stringify(data)); finalData = data; },
+                dir: 'lr', skipConsolationRound: true, disableToolbar: true, disableTeamEdit: false
             });
             
             $('#bracket-3rd').empty().bracket({
                 init: thirdData,
-                save: function(data) { localStorage.setItem('pes32_third', JSON.stringify(data)); thirdData = data; },
+                save: function(data) { localStorage.setItem('pes_dyn_third_'+currentSize, JSON.stringify(data)); thirdData = data; },
                 dir: 'lr', skipConsolationRound: true, disableToolbar: true, disableTeamEdit: false
             });
             
@@ -243,22 +272,37 @@
         }
 
         $(document).ready(function() {
+            loadData(currentSize);
+            initBrackets();
+        });
+
+        $('#bracketSizeSelector').change(function() {
+            let newSize = parseInt($(this).val());
+            loadData(newSize);
             initBrackets();
         });
 
         function resetAll() {
-            if(confirm("Yakin ingin menghapus semua skor dan nama tim?")) {
-                localStorage.clear();
-                leftData = { teams: generateEmptyTeams(16, "Kiri "), results: [] };
-                rightData = { teams: generateEmptyTeams(16, "Kanan "), results: [] };
-                finalData = { teams: [["Finalis Kiri", "Finalis Kanan"]], results: [] };
-                thirdData = { teams: [["Loser Kiri", "Loser Kanan"]], results: [] };
+            if(confirm("Yakin ingin mereset bagan untuk " + currentSize + " peserta?")) {
+                localStorage.removeItem('pes_dyn_left_'+currentSize);
+                localStorage.removeItem('pes_dyn_right_'+currentSize);
+                localStorage.removeItem('pes_dyn_final_'+currentSize);
+                localStorage.removeItem('pes_dyn_third_'+currentSize);
+                loadData(currentSize);
                 initBrackets();
             }
         }
 
         // ----------------------------------------------------
-        // 2. EXCEL IMPORT (SheetJS)
+        // 2. UNLOCK SPIN WHEEL ON BRACKET CLICK
+        // ----------------------------------------------------
+        $(document).on('click', '.jQBracket .team', function() {
+            $('#openWheelBtn').prop('disabled', false).css({'opacity':'1', 'cursor':'pointer'});
+            $('#openWheelBtn').text('🎲 Buka Spin Wheel');
+        });
+
+        // ----------------------------------------------------
+        // 3. EXCEL IMPORT (SheetJS)
         // ----------------------------------------------------
         document.getElementById('excelUpload').addEventListener('change', function(e) {
             var file = e.target.files[0];
@@ -268,70 +312,37 @@
             reader.onload = function(e) {
                 var data = new Uint8Array(e.target.result);
                 var workbook = XLSX.read(data, {type: 'array'});
-                var firstSheet = workbook.SheetNames[0];
-                var worksheet = workbook.Sheets[firstSheet];
-                
-                // Convert to array of arrays
+                var worksheet = workbook.Sheets[workbook.SheetNames[0]];
                 var rows = XLSX.utils.sheet_to_json(worksheet, {header: 1});
                 var names = [];
                 
-                // Ambil kolom pertama dari setiap baris
                 for(var i=0; i<rows.length; i++) {
                     if(rows[i][0]) names.push(rows[i][0].toString().trim());
                 }
                 
-                if(names.length === 0) {
-                    alert("Gagal membaca nama. Pastikan nama tim ada di kolom pertama (Kolom A).");
-                    return;
-                }
+                if(names.length === 0) { alert("Gagal membaca nama."); return; }
                 
-                // Isi sampai 32 nama jika kurang
-                while(names.length < 32) {
-                    names.push("Bye / Kosong");
-                }
+                while(names.length < currentSize) { names.push("Kosong"); }
                 
-                // Pecah jadi Kiri (16) dan Kanan (16)
+                let half = currentSize / 2;
                 let newLeftTeams = [];
-                for(let i=0; i<8; i++) { newLeftTeams.push([names[i*2], names[i*2+1]]); }
+                for(let i=0; i<half/2; i++) { newLeftTeams.push([names[i*2], names[i*2+1]]); }
                 
                 let newRightTeams = [];
-                for(let i=8; i<16; i++) { newRightTeams.push([names[i*2], names[i*2+1]]); }
+                let offset = half;
+                for(let i=0; i<half/2; i++) { newRightTeams.push([names[offset + i*2], names[offset + i*2+1]]); }
 
-                // Update data & re-render
-                leftData.teams = newLeftTeams;
-                leftData.results = [];
-                rightData.teams = newRightTeams;
-                rightData.results = [];
+                leftData.teams = newLeftTeams; leftData.results = [];
+                rightData.teams = newRightTeams; rightData.results = [];
                 
-                localStorage.setItem('pes32_left', JSON.stringify(leftData));
-                localStorage.setItem('pes32_right', JSON.stringify(rightData));
+                localStorage.setItem('pes_dyn_left_'+currentSize, JSON.stringify(leftData));
+                localStorage.setItem('pes_dyn_right_'+currentSize, JSON.stringify(rightData));
                 
                 initBrackets();
-                alert("Data tim berhasil diimpor! (Total " + names.length + " nama dibaca)");
+                alert("Berhasil impor " + names.length + " nama untuk bagan " + currentSize + " peserta!");
             };
             reader.readAsArrayBuffer(file);
         });
-
-        // ----------------------------------------------------
-        // 3. EXCEL EXPORT (Simpan Data)
-        // ----------------------------------------------------
-        function exportData() {
-            // Kita gabungkan data bracket jadi JSON text untuk didownload
-            let allData = {
-                left: leftData,
-                right: rightData,
-                final: finalData,
-                third: thirdData
-            };
-            let dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(allData, null, 2));
-            let downloadAnchorNode = document.createElement('a');
-            downloadAnchorNode.setAttribute("href",     dataStr);
-            downloadAnchorNode.setAttribute("download", "Backup_Bagan_PES.json");
-            document.body.appendChild(downloadAnchorNode); // required for firefox
-            downloadAnchorNode.click();
-            downloadAnchorNode.remove();
-            alert("File backup JSON berhasil didownload. File ini menyimpan status skor saat ini.");
-        }
 
         // ----------------------------------------------------
         // 4. SPIN WHEEL SCRIPT
