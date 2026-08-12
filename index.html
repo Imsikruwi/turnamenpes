@@ -25,6 +25,25 @@
     <style>
         body { font-family: 'Inter', system-ui, sans-serif; overflow: hidden; overscroll-behavior: none; }
         
+        /* Efek Animasi Background Elegan */
+        body::before {
+            content: '';
+            position: fixed;
+            top: -50%; left: -50%; width: 200%; height: 200%;
+            background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.02) 0%, transparent 60%),
+                        radial-gradient(circle at 80% 20%, rgba(125, 211, 252, 0.03) 0%, transparent 40%);
+            animation: elegant-spin 60s linear infinite;
+            z-index: -1;
+            pointer-events: none;
+        }
+        .theme-light body::before {
+            background: radial-gradient(circle at 50% 50%, rgba(0, 0, 0, 0.03) 0%, transparent 60%);
+        }
+        @keyframes elegant-spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
         /* Modern Dark (Default) */
         .theme-dark { background-color: #0f172a; color: #f8fafc; }
         .theme-dark .bracket-card { background-color: #1e293b; border-color: #334155; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3); }
@@ -108,139 +127,88 @@
         
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        
+        /* New Background Gradient Animation */
+        body {
+            background: linear-gradient(-45deg, #0a0a0a, #1a1a2e, #16213e, #0f3460, #0a0a0a);
+            background-size: 400% 400%;
+            animation: gradientBG 25s ease infinite;
+            color: #f8fafc; /* Default text color */
+        }
+        
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Override Theme Backgrounds to use the animated gradient, but keep card styles */
+        .theme-dark { background-color: transparent !important; }
+        .theme-light { background-color: transparent !important; }
+        .theme-blue { background-color: transparent !important; }
+        .theme-red { background-color: transparent !important; }
+        .theme-emerald { background-color: transparent !important; }
+        .theme-purple { background-color: transparent !important; }
+
+        /* General Card Adjustments for better blend with dynamic background */
+        .bracket-card {
+            background-color: rgba(30, 41, 59, 0.7) !important; /* Semi-transparent */
+            backdrop-filter: blur(10px);
+            border-color: rgba(255, 255, 255, 0.1) !important;
+        }
+        .bracket-card:hover { border-color: rgba(255, 255, 255, 0.25) !important; }
+        
+        /* Specific theme adjustments if needed to complement the dynamic BG */
+        .theme-light .bracket-card { background-color: rgba(255, 255, 255, 0.85) !important; color: #0F172A; }
     </style>
 </head>
 <body class="theme-dark h-screen flex flex-col transition-colors duration-300">
 
-    <!-- Header / Navbar -->
-    <header class="bg-black/20 backdrop-blur-md border-b border-white/5 px-4 py-3 flex flex-col md:flex-row items-center justify-between gap-4 shrink-0 z-50 sticky top-0 shadow-sm">
-        <div class="flex items-center justify-between w-full md:w-auto">
-            <div class="flex items-center gap-3">
-                <div class="w-9 h-9 bg-gradient-to-br from-indigo-500 to-blue-600 rounded-lg flex items-center justify-center shrink-0 shadow-lg">
-                    <i data-lucide="trophy" class="w-4 h-4 text-white"></i>
-                </div>
-                <span class="font-bold text-base md:hidden tracking-wide text-white">Bagan Turnamen</span>
-            </div>
-            
-            <!-- Tombol Admin Mobile -->
-            <button onclick="loginAdmin()" id="btn-login-mobile" class="md:hidden bg-white/10 hover:bg-white/20 px-3 py-1.5 rounded-md text-xs font-medium flex items-center gap-1.5 transition text-slate-200">
-                <i data-lucide="lock" class="w-3.5 h-3.5"></i> Admin
-            </button>
-        </div>
-
-        <div class="flex flex-wrap items-center justify-end gap-3 w-full md:w-auto" id="toolbar">
-            <div class="text-[11px] text-slate-400 tracking-wide flex items-center gap-2 font-medium" id="sync-status">Menghubungkan...</div>
-            
-            <!-- Tombol Admin Desktop -->
-            <button onclick="loginAdmin()" id="btn-login-desktop" class="hidden md:flex bg-white/10 hover:bg-white/20 px-3 py-1.5 rounded-md text-xs font-medium items-center gap-1.5 transition text-slate-200 shadow-sm">
-                <i data-lucide="lock" class="w-3.5 h-3.5"></i> Admin
-            </button>
-
-            <!-- Admin Tools -->
-            <div id="admin-tools" class="hidden flex-wrap items-center gap-2 bg-black/10 p-1.5 rounded-lg border border-white/5">
-                <!-- Set Jumlah -->
-                <div class="flex items-center gap-1 bg-black/20 rounded-md px-2 py-1.5" title="Jumlah Tim (2-64)">
-                    <i data-lucide="users" class="w-3.5 h-3.5 text-slate-400"></i>
-                    <input type="number" id="size-input" class="w-10 bg-transparent text-center font-semibold outline-none text-sm text-[inherit]" min="2" max="64" value="16">
-                    <button onclick="changeSize()" class="text-blue-400 hover:text-blue-300 p-0.5 rounded transition">
-                        <i data-lucide="check" class="w-4 h-4"></i>
-                    </button>
-                </div>
-                
-                <div class="w-px h-5 bg-white/10 mx-1"></div>
-
-                <!-- Set Tema -->
-                <select id="theme-selector" class="bg-black/20 border-none text-xs md:text-sm font-medium rounded-md px-2 py-1.5 outline-none text-[inherit] cursor-pointer" onchange="changeTheme()">
-                    <option value="theme-dark" class="text-black">🌙 Dark</option>
-                    <option value="theme-light" class="text-black">☀️ Light</option>
-                    <option value="theme-blue" class="text-black">🌊 Blue</option>
-                    <option value="theme-red" class="text-black">🔥 Red</option>
-                    <option value="theme-emerald" class="text-black">🌲 Emerald</option>
-                    <option value="theme-purple" class="text-black">🔮 Purple</option>
-                </select>
-
-                <div class="w-px h-5 bg-white/10 mx-1"></div>
-
-                <!-- Paste -->
-                <button onclick="openBulkModal()" class="bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-300 px-2 py-1.5 rounded-md text-xs md:text-sm flex items-center gap-1.5 transition font-medium">
-                    <i data-lucide="clipboard-paste" class="w-4 h-4"></i> Paste
-                </button>
-                
-                <!-- Shuffle -->
-                <button onclick="shuffleTeams()" class="bg-amber-500/10 hover:bg-amber-500/20 text-amber-300 px-2 py-1.5 rounded-md text-xs md:text-sm flex items-center gap-1.5 transition font-medium" title="Acak Posisi Tim">
-                    <i data-lucide="shuffle" class="w-4 h-4"></i> Acak
-                </button>
-
-                <!-- Dropdown Tes Fitur -->
-                <div class="relative group">
-                    <button class="bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-300 px-2 py-1.5 rounded-md text-xs md:text-sm flex items-center gap-1.5 transition font-medium">
-                        Tes Fitur <i data-lucide="chevron-down" class="w-3 h-3"></i>
-                    </button>
-                    <div class="absolute right-0 top-full mt-1 hidden group-hover:block w-36 bg-slate-800 border border-slate-700 rounded-md shadow-xl overflow-hidden z-[100]">
-                        <button onclick="autoFillNames()" class="w-full text-left px-3 py-2 hover:bg-slate-700 text-xs text-slate-200 transition flex items-center gap-2">
-                            <i data-lucide="bot" class="w-3.5 h-3.5"></i> Isi Nama (Bot)
-                        </button>
-                        <button onclick="autoFillScores()" class="w-full text-left px-3 py-2 hover:bg-slate-700 text-xs text-slate-200 transition flex items-center gap-2">
-                            <i data-lucide="dices" class="w-3.5 h-3.5"></i> Acak Skor (Bot)
-                        </button>
-                    </div>
-                </div>
-
-                <div class="w-px h-5 bg-white/10 mx-1"></div>
-                
-                <!-- Reset & Logout -->
-                <button onclick="resetData()" class="bg-red-500/10 hover:bg-red-500/20 text-red-400 px-2 py-1.5 rounded-md text-xs md:text-sm flex items-center gap-1.5 transition font-medium" title="Hapus Semua Data">
-                    <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
-                </button>
-                
-                <button onclick="logoutAdmin()" class="bg-white/5 hover:bg-white/10 px-2 py-1.5 rounded-md text-xs md:text-sm transition text-slate-300" title="Keluar dari mode Admin">
-                    <i data-lucide="log-out" class="w-4 h-4"></i>
-                </button>
-            </div>
-        </div>
-    </header>
-
     <main class="flex-1 overflow-auto bg-transparent no-scrollbar relative" id="pan-container" style="cursor: grab;">
         
-        <!-- Papan Juara & Judul (Diubah menjadi Sticky) -->
-        <div class="sticky top-0 left-0 w-full flex flex-col items-center pt-8 pb-6 z-30 pointer-events-none drop-shadow-md">
+        <!-- Wrapper Zoom & Scroll Perbaikan Bug -->
+        <!-- Memperbesar padding bottom (pb-32) agar scroll fix melewati footer -->
+        <div id="zoom-wrapper" class="relative p-6 md:p-12 w-max min-w-full h-max min-h-[50vh] mx-auto mt-4 pb-32 flex flex-col justify-start items-center">
             
-            <!-- Judul Turnamen -->
-            <input type="text" id="tournament-title" onchange="updateTitle(this.value)" placeholder="Nama Turnamen..." class="font-extrabold text-3xl md:text-4xl text-center bg-transparent border-none outline-none focus:border-b-2 border-slate-500/50 w-full max-w-2xl text-[inherit] transition-all pointer-events-auto tracking-tight" readonly>
-            
-            <!-- Subjudul Turnamen (Misal: KEN Playstation) -->
-            <input type="text" id="tournament-subtitle" onchange="updateSubtitle(this.value)" placeholder="Subjudul Turnamen (Opsional)" class="font-medium text-base md:text-lg text-center bg-transparent border-none outline-none focus:border-b border-slate-500/50 w-full max-w-xl text-slate-400 mt-1 transition-all pointer-events-auto" readonly>
-            
-            <!-- Papan Juara Otomatis -->
-            <div id="winner-board" class="hidden mt-5 bg-slate-900/95 backdrop-blur-md border border-amber-500/60 rounded-2xl p-5 shadow-[0_0_30px_rgba(245,158,11,0.2)] flex-col items-center w-[90%] max-w-md pointer-events-auto transition-all transform scale-95 opacity-0 duration-500">
-                <div class="text-4xl mb-2 filter drop-shadow-lg">🏆</div>
-                <div class="text-amber-500 text-[10px] font-bold tracking-widest uppercase mb-1">JUARA 1 TURNAMEN</div>
-                <div id="winner-1" class="text-2xl font-black text-white mb-4 text-center tracking-tight bg-gradient-to-r from-amber-200 via-yellow-400 to-amber-200 text-transparent bg-clip-text drop-shadow-sm">NAMA TIM</div>
+            <!-- Papan Juara & Judul (Dipindah ke dalam container bagan agar tepat di tengah-atas babak final) -->
+            <div class="w-full flex flex-col items-center mb-8 z-30 pointer-events-none drop-shadow-md">
                 
-                <div class="w-full h-px bg-gradient-to-r from-transparent via-slate-600 to-transparent my-2"></div>
+                <!-- Judul Turnamen -->
+                <input type="text" id="tournament-title" onchange="updateTitle(this.value)" placeholder="Nama Turnamen..." class="font-extrabold text-3xl md:text-4xl text-center bg-transparent border-none outline-none focus:border-b-2 border-slate-500/50 w-full max-w-2xl text-[inherit] transition-all pointer-events-auto tracking-tight" readonly>
                 
-                <div class="flex w-full justify-around items-end pt-2">
+                <!-- Subjudul Turnamen (Misal: KEN Playstation) -->
+                <input type="text" id="tournament-subtitle" onchange="updateSubtitle(this.value)" placeholder="Subjudul Turnamen (Opsional)" class="font-medium text-base md:text-lg text-center bg-transparent border-none outline-none focus:border-b border-slate-500/50 w-full max-w-xl text-slate-400 mt-1 transition-all pointer-events-auto" readonly>
+                
+                <!-- Jam & Tanggal Realtime -->
+                <div id="realtime-clock" class="text-xs md:text-sm text-slate-300/80 font-medium tracking-wide mt-2 mb-2 pointer-events-none drop-shadow-md text-center"></div>
+
+                <!-- Papan Juara Otomatis -->
+                <div id="winner-board" class="hidden mt-5 bg-slate-900/95 backdrop-blur-md border border-amber-500/60 rounded-2xl p-5 shadow-[0_0_30px_rgba(245,158,11,0.2)] flex-col items-center w-full max-w-md pointer-events-auto transition-all transform scale-95 opacity-0 duration-500">
+                    <div class="text-4xl mb-2 filter drop-shadow-lg">🏆</div>
+                    <div class="text-amber-500 text-[10px] font-bold tracking-widest uppercase mb-1">JUARA 1 TURNAMEN</div>
+                    <div id="winner-1" class="text-2xl font-black text-white mb-4 text-center tracking-tight bg-gradient-to-r from-amber-200 via-yellow-400 to-amber-200 text-transparent bg-clip-text drop-shadow-sm">NAMA TIM</div>
+                    
+                    <div class="w-full h-px bg-gradient-to-r from-transparent via-slate-600 to-transparent my-2"></div>
+                    
+                    <div class="flex w-full justify-around items-end pt-2">
                     <div class="flex flex-col items-center text-center">
-                        <div class="flex items-center gap-1.5 mb-1 text-slate-300">
-                            <span class="text-xs filter grayscale drop-shadow">🥈</span><span class="text-[9px] font-bold uppercase tracking-wider text-slate-400">Juara 2</span>
+                            <div class="flex items-center gap-1.5 mb-1 text-slate-300">
+                                <span class="text-xs filter grayscale drop-shadow">🥈</span><span class="text-[9px] font-bold uppercase tracking-wider text-slate-400">Juara 2</span>
+                            </div>
+                            <div id="winner-2" class="text-sm font-bold text-slate-200">TIM DUA</div>
                         </div>
-                        <div id="winner-2" class="text-sm font-bold text-slate-200">TIM DUA</div>
-                    </div>
-                    <div class="w-px h-6 bg-slate-700 mx-4"></div>
-                    <div class="flex flex-col items-center text-center">
-                        <div class="flex items-center gap-1.5 mb-1 text-amber-700">
+                        <div class="w-px h-6 bg-slate-700 mx-4"></div>
+                        <div class="flex flex-col items-center text-center">
+                            <div class="flex items-center gap-1.5 mb-1 text-amber-700">
                             <span class="text-xs filter sepia drop-shadow">🥉</span><span class="text-[9px] font-bold uppercase tracking-wider text-amber-600">Juara 3</span>
                         </div>
                         <div id="winner-3" class="text-sm font-bold text-slate-300">TIM TIGA</div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Wrapper Zoom & Scroll Perbaikan Bug -->
-        <div id="zoom-wrapper" class="relative p-6 md:p-12 w-max min-w-full h-max min-h-[50vh] mx-auto mt-4 mb-20 flex flex-col justify-start items-center">
-            
-            <div id="bracket-container" class="relative w-max h-max">
+            <!-- Kontainer Utama Bagan -->
+            <div id="bracket-container" class="relative w-max h-max mt-8">
                 <svg id="svg-lines" class="absolute top-0 left-0 pointer-events-none z-0 overflow-visible"></svg>
                 <div id="bracket-content" class="flex gap-8 md:gap-20 items-center justify-center relative z-10 w-full h-full">
                     <!-- Bagan di-render via JS -->
@@ -267,19 +235,57 @@
         </div>
     </div>
 
-    <!-- Bottom Bar (Search & Last Updated) -->
-    <div class="fixed bottom-0 left-0 right-0 bg-black/40 backdrop-blur-lg border-t border-white/5 p-3 flex justify-between items-center z-50">
+    <!-- Bottom Bar (Search, Status & Admin) -->
+    <div class="fixed bottom-0 left-0 right-0 bg-black/40 backdrop-blur-lg border-t border-white/5 p-3 flex justify-between items-center z-50 gap-4 overflow-x-auto no-scrollbar">
         
         <!-- Fitur Search Publik -->
-        <div class="flex items-center bg-black/40 border border-white/10 rounded-full px-3 py-1.5 w-56 md:w-64 focus-within:border-blue-500/50 transition-colors shadow-inner">
+        <div class="flex items-center bg-black/40 border border-white/10 rounded-full px-3 py-1.5 w-48 md:w-64 shrink-0 focus-within:border-blue-500/50 transition-colors shadow-inner">
             <i data-lucide="search" class="w-3.5 h-3.5 text-slate-400 mr-2 shrink-0"></i>
             <input type="text" list="team-list" placeholder="Cari Tim di Bagan..." oninput="searchTeam(this.value)" class="bg-transparent border-none outline-none text-xs md:text-sm text-[inherit] w-full placeholder-slate-500">
             <datalist id="team-list"></datalist>
         </div>
 
-        <!-- Last Updated Info -->
-        <div id="last-updated" class="text-[10px] md:text-xs text-slate-400 font-medium tracking-wide">
-            <!-- Diisi via JS -->
+        <!-- Right Side Container (Admin & Info) -->
+        <div class="flex items-center gap-3 shrink-0 ml-auto">
+            
+            <!-- Info Status -->
+            <div id="sync-status" class="hidden md:flex text-[10px] text-slate-400 font-medium tracking-wide items-center"></div>
+            <div id="last-updated" class="hidden md:block text-[10px] text-slate-400 font-medium tracking-wide"></div>
+
+            <!-- Admin Tools Container -->
+            <div id="admin-tools" class="hidden items-center gap-2 bg-black/40 px-2 py-1 rounded-lg border border-white/10 shrink-0">
+                <div class="flex items-center gap-1 bg-black/40 rounded px-1.5 py-1" title="Jumlah Tim">
+                    <i data-lucide="users" class="w-3 h-3 text-slate-400"></i>
+                    <input type="number" id="size-input" class="w-8 bg-transparent text-center outline-none text-xs text-slate-200" min="2" max="64" value="16">
+                    <button onclick="changeSize()" class="text-blue-400 hover:text-blue-300 p-0.5"><i data-lucide="check" class="w-3 h-3"></i></button>
+                </div>
+                <select id="theme-selector" class="bg-black/40 border-none text-[10px] rounded px-1 py-1 outline-none text-slate-200 cursor-pointer" onchange="changeTheme()">
+                    <option value="theme-dark" class="text-black">Dark</option>
+                    <option value="theme-light" class="text-black">Light</option>
+                    <option value="theme-blue" class="text-black">Blue</option>
+                    <option value="theme-red" class="text-black">Red</option>
+                    <option value="theme-emerald" class="text-black">Emerald</option>
+                    <option value="theme-purple" class="text-black">Purple</option>
+                </select>
+                <button onclick="openBulkModal()" class="text-indigo-400 hover:bg-white/5 p-1 rounded transition" title="Paste Tim"><i data-lucide="clipboard-paste" class="w-3.5 h-3.5"></i></button>
+                <button onclick="shuffleTeams()" class="text-amber-400 hover:bg-white/5 p-1 rounded transition" title="Acak Tim"><i data-lucide="shuffle" class="w-3.5 h-3.5"></i></button>
+                <div class="relative group">
+                    <button class="text-emerald-400 hover:bg-white/5 p-1 rounded transition flex items-center gap-1" title="Tes Bot">
+                        <i data-lucide="bot" class="w-3.5 h-3.5"></i>
+                    </button>
+                    <div class="absolute bottom-full right-0 mb-1 hidden group-hover:block w-32 bg-slate-800 border border-slate-700 rounded-md shadow-xl overflow-hidden z-[100]">
+                        <button onclick="autoFillNames()" class="w-full text-left px-3 py-2 hover:bg-slate-700 text-[10px] text-slate-200 transition">Isi Nama (Bot)</button>
+                        <button onclick="autoFillScores()" class="w-full text-left px-3 py-2 hover:bg-slate-700 text-[10px] text-slate-200 transition">Acak Skor (Bot)</button>
+                    </div>
+                </div>
+                <button onclick="resetData()" class="text-red-400 hover:bg-white/5 p-1 rounded transition" title="Reset Data"><i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i></button>
+                <button onclick="logoutAdmin()" class="text-slate-300 hover:bg-white/5 p-1 rounded transition" title="Logout"><i data-lucide="log-out" class="w-3.5 h-3.5"></i></button>
+            </div>
+            
+            <!-- Admin Login Button -->
+            <button onclick="loginAdmin()" id="btn-login-admin" class="bg-white/10 hover:bg-white/20 px-3 py-1.5 rounded-full text-xs font-medium flex items-center gap-1.5 transition text-slate-200 shadow-sm border border-white/5 shrink-0">
+                <i data-lucide="lock" class="w-3 h-3"></i> Admin
+            </button>
         </div>
     </div>
 
@@ -315,12 +321,24 @@
         window.onload = () => {
             initFirebase();
             setupPanZoom();
+            startRealtimeClock();
             
             window.addEventListener('resize', () => {
                 clearTimeout(svgTimeout);
                 svgTimeout = setTimeout(drawLines, 100);
             });
         };
+
+        function startRealtimeClock() {
+            const updateClock = () => {
+                const now = new Date();
+                const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit' };
+                const clockEl = document.getElementById('realtime-clock');
+                if(clockEl) clockEl.innerText = now.toLocaleDateString('id-ID', options).replace(/\./g, ':');
+            };
+            setInterval(updateClock, 1000);
+            updateClock();
+        }
 
         function initFirebase() {
             try {
@@ -358,9 +376,11 @@
             // Sinkronisasi Input Teks
             const syncInput = (id, field) => {
                 const el = document.getElementById(id);
-                if (document.activeElement !== el) el.value = tournamentData[field] || "";
-                if(isAdmin) { el.removeAttribute('readonly'); el.classList.add('cursor-text'); } 
-                else { el.setAttribute('readonly', true); el.classList.remove('cursor-text'); }
+                if (el && document.activeElement !== el) el.value = tournamentData[field] || "";
+                if (el) {
+                    if(isAdmin) { el.removeAttribute('readonly'); el.classList.add('cursor-text'); } 
+                    else { el.setAttribute('readonly', true); el.classList.remove('cursor-text'); }
+                }
             };
 
             syncInput('tournament-title', 'title');
@@ -368,20 +388,23 @@
             syncInput('tournament-date', 'tournamentDate');
 
             document.body.className = `h-screen flex flex-col transition-colors duration-300 ${tournamentData.theme || 'theme-dark'}`;
-            document.getElementById('theme-selector').value = tournamentData.theme || 'theme-dark';
+            const themeSelector = document.getElementById('theme-selector');
+            if (themeSelector) themeSelector.value = tournamentData.theme || 'theme-dark';
             
             const sizeInput = document.getElementById('size-input');
-            if (document.activeElement !== sizeInput) sizeInput.value = (tournamentData.actualSize || tournamentData.size || 16).toString();
+            if (sizeInput && document.activeElement !== sizeInput) sizeInput.value = (tournamentData.actualSize || tournamentData.size || 16).toString();
 
             // Atur Visibilitas Tombol Admin
-            document.getElementById('btn-login-mobile').classList.toggle('hidden', isAdmin);
-            document.getElementById('btn-login-desktop').classList.toggle('hidden', isAdmin);
+            const btnLoginAdmin = document.getElementById('btn-login-admin');
+            if (btnLoginAdmin) btnLoginAdmin.classList.toggle('hidden', isAdmin);
             
             const adminTools = document.getElementById('admin-tools');
-            if(isAdmin) {
-                adminTools.classList.remove('hidden'); adminTools.classList.add('flex');
-            } else {
-                adminTools.classList.add('hidden'); adminTools.classList.remove('flex');
+            if(adminTools) {
+                if(isAdmin) {
+                    adminTools.classList.remove('hidden'); adminTools.classList.add('flex');
+                } else {
+                    adminTools.classList.add('hidden'); adminTools.classList.remove('flex');
+                }
             }
 
             updateDateDisplay();
@@ -406,7 +429,6 @@
         function centerScroll() {
             const pan = document.getElementById('pan-container');
             const wrap = document.getElementById('zoom-wrapper');
-            // Jika konten lebih lebar dari layar dan baru pertama kali render (scrollLeft = 0)
             if (pan && wrap && pan.scrollWidth > pan.clientWidth && pan.scrollLeft === 0) {
                 pan.scrollLeft = (pan.scrollWidth - pan.clientWidth) / 2;
             }
@@ -485,7 +507,7 @@
         }
 
         function createMatchCard(matchId, nextMatchInfo, side, isFinal = false) {
-            const match = tournamentData.matches[matchId] || { t1: '', s1: '', t2: '', s2: '' };
+            const match = tournamentData.matches[matchId] || { t1: '', s1: '', t2: '', s2: '', time: '' };
             const card = document.createElement('div');
             card.id = `card-${matchId}`;
             
@@ -499,16 +521,14 @@
             const t1Win = isDone && (s1 > s2);
             const t2Win = isDone && (s2 > s1);
 
-            // Hide placeholders on advanced rounds
             const placeholderT1 = matchId.startsWith('r1') ? "Tim 1" : "";
             const placeholderT2 = matchId.startsWith('r1') ? "Tim 2" : "";
 
-            const statusText = isDone ? '<span class="text-emerald-500/90 font-bold tracking-wider">Selesai</span>' : '<span class="opacity-40">Belum Selesai</span>';
-            const titleText = isFinal ? 'FINAL' : (matchId === 'bronze' ? 'PEREBUTAN JUARA 3' : `Match #${matchId.split('_')[2]}`);
+            const statusText = isDone ? '<span class="text-emerald-400 font-bold tracking-wider">Selesai</span>' : '<span class="opacity-40">Belum Selesai</span>';
+            const titleText = isFinal ? 'FINAL' : (matchId === 'bronze' ? 'JUARA 3' : ''); // Removed 'Match #x'
 
             card.className = `match-card rounded-lg border overflow-hidden transition-all ${borderClass}`;
             
-            // Pewarnaan Kondisional
             let t1C = t1Win ? 'text-winner' : (isDone ? 'text-loser' : 'text-[inherit]');
             let t2C = t2Win ? 'text-winner' : (isDone ? 'text-loser' : 'text-[inherit]');
             let s1C = t1Win ? 'text-winner bg-winner' : (isDone ? 'text-loser bg-loser' : 'text-[inherit]');
@@ -523,10 +543,20 @@
                 ? `w-12 h-full text-center text-sm font-semibold outline-none transition-colors ${clr} ${isAdmin?'border-l border-inherit admin-bg cursor-text focus:bg-white/5':'bg-transparent border-l border-inherit pointer-events-none'}`
                 : `w-full px-3 text-[13px] font-medium bg-transparent border-none outline-none transition-colors ${clr} ${isAdmin?'focus:bg-white/5':''}`;
 
+            // Logic to hide time input if empty and not admin
+            const timeVal = match.time || '';
+            const showTimeInput = isAdmin || timeVal !== '';
+            const timeInputHTML = showTimeInput ? `
+                <input type="text" class="w-16 bg-transparent border-b border-dashed border-white/20 outline-none text-right text-slate-400 placeholder-slate-600 transition-colors ${isAdmin?'cursor-text focus:border-white/50 focus:text-slate-200':'pointer-events-none'}" placeholder="Tgl/Jam" value="${timeVal}" ${getReadOnly()} onchange="updateData('${matchId}', 'time', this.value)" title="Atur Tanggal dan Jam Main">
+            ` : '';
+
             card.innerHTML = `
-                <div class="bg-black/30 px-3 py-1.5 flex justify-between items-center text-[9px] font-bold tracking-wider border-b border-inherit backdrop-blur-sm">
-                    <span class="${isFinal ? 'text-amber-500' : 'text-slate-400'} uppercase">${titleText}</span>
-                    <span class="bg-black/40 px-1.5 py-0.5 rounded border border-white/5">${statusText}</span>
+                <div class="bg-black/30 px-3 py-1 flex justify-between items-center text-[9px] font-bold tracking-wider border-b border-inherit backdrop-blur-sm min-h-[28px]">
+                    <span class="${isFinal ? 'text-amber-500' : 'text-slate-400'} uppercase shrink-0">${titleText}</span>
+                    <div class="flex items-center gap-1.5 shrink-0 ml-auto">
+                        ${timeInputHTML}
+                        <span class="bg-black/40 px-1.5 py-0.5 rounded border border-white/5 shrink-0">${statusText}</span>
+                    </div>
                 </div>
                 <div class="flex items-stretch border-b border-inherit team-row h-10 transition-colors">
                     <span class="w-6 text-[10px] font-bold opacity-30 flex items-center justify-center shrink-0 border-r border-inherit bg-black/10">1</span>
@@ -566,7 +596,7 @@
                 let startX, startY, endX, endY;
                 const isActive = card.dataset.winner !== undefined;
                 let strokeClass = isActive ? 'line-path line-active' : 'line-path';
-                if (nextId === 'bronze') strokeClass = 'line-path'; // Bronze match line no glow
+                if (nextId === 'bronze') strokeClass = 'line-path';
 
                 if (side === 'l') {
                     startX = startRect.right - containerRect.left; endX = endRect.left - containerRect.left;
@@ -601,8 +631,9 @@
 
         function updateSyncStatus(isSuccess, msg = null) {
             const statusDiv = document.getElementById('sync-status');
+            if (!statusDiv) return;
+            
             if (isSuccess) {
-                // Ikon Live Bola Merah Berkedip
                 statusDiv.innerHTML = '<span class="text-slate-200 font-medium flex items-center gap-2"><div class="w-2.5 h-2.5 bg-red-500 rounded-full animate-pulse shadow-[0_0_8px_rgba(239,68,68,0.8)]"></div> Live</span>';
             } else {
                 statusDiv.innerHTML = `<span class="text-amber-400 font-medium flex items-center gap-1.5"><i data-lucide="refresh-cw" class="w-3 h-3 animate-spin"></i> ${msg || 'Memproses...'}</span>`;
@@ -616,8 +647,11 @@
 
         function updateData(matchId, field, value) {
             if (!isAdmin) return;
+            // Handle field baru
             tournamentData.matches[matchId][field] = value;
-            processAutoAdvance(matchId);
+            if (field !== 'time') {
+                processAutoAdvance(matchId);
+            }
             applyStateToUI(); saveDataToFirebase();
         }
 
@@ -666,17 +700,17 @@
             const totalRounds = Math.log2(bracketSize);
             const halfSize = bracketSize / 2;
 
+            // Memastikan penambahan property time: '' ketika generate awal
             ['l', 'r'].forEach(side => {
                 for (let round = 1; round < totalRounds; round++) {
                     for (let i = 1; i <= (halfSize / Math.pow(2, round - 1)); i++) {
-                        tournamentData.matches[`r${round}_${side}_${i}`] = { t1: '', s1: '', t2: '', s2: '' };
+                        tournamentData.matches[`r${round}_${side}_${i}`] = { t1: '', s1: '', t2: '', s2: '', time: '' };
                     }
                 }
             });
-            tournamentData.matches['final'] = { t1: '', s1: '', t2: '', s2: '' };
-            tournamentData.matches['bronze'] = { t1: '', s1: '', t2: '', s2: '' };
+            tournamentData.matches['final'] = { t1: '', s1: '', t2: '', s2: '', time: '' };
+            tournamentData.matches['bronze'] = { t1: '', s1: '', t2: '', s2: '', time: '' };
 
-            // Distribusi BYE untuk Kiri dan Kanan seimbang
             let byesCount = bracketSize - actualSize;
             let sortedR1 = [];
             for(let i=1; i<=halfSize; i++) {
