@@ -244,10 +244,8 @@
             matches: {}
         };
         
-        // Path dokumen Firestore (karena ini custom milik user di github, kita buat path unik)
-        // Jika dijalankan di environment preview, gunakan aturan strict path. Jika tidak, gunakan path default.
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'github-deploy-custom';
-        const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'bracket_state');
+        // Path dokumen Firestore (Harus Genap: Collection -> Document)
+        const docRef = doc(db, 'turnamen', 'data_bagan');
 
         let isFirstLoad = true;
 
