@@ -183,15 +183,13 @@
         let isFirstLoad = true;
         let svgTimeout;
         
-        // Data Default yang akan digunakan jika database kosong/error
         let tournamentData = {
             title: "Turnamen PES 2026",
             size: 16,
             theme: "theme-dark",
-            matches: {} // Akan diisi struktur otomatis
+            matches: {}
         };
 
-        // KONFIGURASI FIREBASE ANDA
         const firebaseConfig = {
             apiKey: "AIzaSyA1hCoZklSfmy9ntHFFBvnQk6puBvX6aUI",
             authDomain: "turnamen-bracket-afe1e.firebaseapp.com",
@@ -201,39 +199,49 @@
             appId: "1:486368316980:web:dfa97e7a04f8a33e7b4461"
         };
 
-        // Inisialisasi Firebase
         firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
-        const auth = firebase.auth();
+        // Hapus Auth karena kita pakai rules terbuka (allow read, write: if true)
         
-        // JALUR DATABASE (Sederhana & Genap)
         const docRef = db.collection('turnamen').doc('data_bagan');
 
         // -------------------------------------------------------------
         // 2. APLIKASI UTAMA (INIT)
         // -------------------------------------------------------------
-        async function initApp() {
-            try {
-                // Wajib Login Anonim agar diizinkan read/write (berdasarkan rule)
-                await auth.signInAnonymously();
-                
-                // Mendengarkan perubahan data secara Real-Time
-                docRef.onSnapshot((doc) => {
-                    if (doc.exists) {
-                        const data = doc.data();
-                        // Gabungkan dengan default untuk mencegah properti null
-                        tournamentData = { ...tournamentData, ...data };
-                        
-                        // Jika match kosong dari server, buat strukturnya
-                        if (!tournamentData.matches || Object.keys(tournamentData.matches).length === 0) {
-                            generateEmptyMatches(tournamentData.size);
-                            if(isAdmin) saveDataToFirebase(); // Simpan struktur awal
-                        }
-                    } else {
-                        // Jika belum ada data sama sekali di Firestore (Aman)
+        function initApp() {
+            // Coba langsung load tanpa auth
+            docRef.onSnapshot((doc) => {
+                if (doc.exists) {
+                    const data = doc.data();
+                    tournamentData = { ...tournamentData, ...data };
+                    
+                    if (!tournamentData.matches || Object.keys(tournamentData.matches).length === 0) {
                         generateEmptyMatches(tournamentData.size);
-                        if(isAdmin) saveDataToFirebase();
+                        // Hanya admin yang boleh simpan struktur kosong awal
+                        if(isAdmin) saveDataToFirebase(); 
                     }
+                } else {
+                    generateEmptyMatches(tournamentData.size);
+                    if(isAdmin) saveDataToFirebase();
+                }
+
+                applyStateToUI();
+                updateSyncStatus(true);
+                isFirstLoad = false;
+                
+            }, (error) => {
+                console.error("Firebase Read Error:", error);
+                updateSyncStatus(false, error.message);
+                
+                if(isFirstLoad) {
+                    generateEmptyMatches(tournamentData.size);
+                    applyStateToUI();
+                }
+            });
+
+            window.addEventListener('resize', () => drawLines());
+            setupPanZoom();
+        }
 
                     // Terapkan ke UI
                     applyStateToUI();
@@ -537,56 +545,57 @@
         function updateData(matchId, field, value) {
             if (!isAdmin) return;
             
-            // Pastikan data string/number
-            tournamentData.matches[matchId][field] = value;
+            // Cek jika field dihapus
+            if (value === "") {
+               tournamentData.matches[matchId][field] = "";
+            } else {
+               tournamentData.matches[matchId][field] = value;
+            }
             
-            // Cek Auto-Advance (Jika skor berubah)
             if (field === 's1' || field === 's2') {
                 processAutoAdvance(matchId);
             }
             
+            // Re-render dulu lokal
+            applyStateToUI(); 
+            // Lalu push ke server
             saveDataToFirebase();
-            applyStateToUI(); // Render ulang lokal agar instan sebelum DB membalas
         }
 
         function processAutoAdvance(matchId) {
             const match = tournamentData.matches[matchId];
             if (!match) return;
 
+            // Jangan maju kalau kosong
+            if (match.s1 === '' || match.s2 === '') return;
+
             const s1 = parseInt(match.s1);
             const s2 = parseInt(match.s2);
             
-            // Pastikan kedua skor diisi dan tidak seri
             if (isNaN(s1) || isNaN(s2) || s1 === s2) return;
 
             let winnerName = s1 > s2 ? match.t1 : match.t2;
             let loserName = s1 > s2 ? match.t2 : match.t1;
             
-            // Cari card di DOM untuk tahu tujuan maju
             const card = document.getElementById(`card-${matchId}`);
             if(!card) return;
             
             const nextMatchId = card.dataset.next ? card.dataset.next.replace('card-', '') : null;
-            if(!nextMatchId) return; // Ini Final
+            if(!nextMatchId) return;
 
-            // Menentukan slot di match berikutnya
-            // Format ID: r{round}_{side}_{index} => r1_l_1, r1_l_2...
             const parts = matchId.split('_');
             if (parts.length === 3) {
                 const currentIndex = parseInt(parts[2]);
-                const isSlot1 = currentIndex % 2 !== 0; // Ganjil ke slot 1, Genap ke slot 2
+                const isSlot1 = currentIndex % 2 !== 0; 
                 
-                // Set Pemenang ke babak selanjutnya
                 if (tournamentData.matches[nextMatchId]) {
                     if (isSlot1) tournamentData.matches[nextMatchId].t1 = winnerName;
                     else tournamentData.matches[nextMatchId].t2 = winnerName;
                 }
 
-                // Handle khusus untuk Semifinal (Kalah masuk ke Bronze Match)
                 if (nextMatchId === 'final') {
-                    const side = parts[1]; // 'l' atau 'r'
+                    const side = parts[1]; 
                     if (tournamentData.matches['bronze']) {
-                        // Kiri masuk slot 1, Kanan masuk slot 2
                         if (side === 'l') tournamentData.matches['bronze'].t1 = loserName;
                         if (side === 'r') tournamentData.matches['bronze'].t2 = loserName;
                     }
@@ -596,10 +605,17 @@
 
         function saveDataToFirebase() {
             if(!isAdmin) return;
-            // SetData ke firestore
-            docRef.set(tournamentData).catch(error => {
+            updateSyncStatus(false, "Menyimpan...");
+            
+            // Lakukan deep copy untuk menghindari object referensi yang menyebabkan error firestore
+            const pureData = JSON.parse(JSON.stringify(tournamentData));
+            
+            docRef.set(pureData).then(() => {
+                updateSyncStatus(true);
+            }).catch(error => {
                 console.error("Error saving data:", error);
-                alert("Gagal menyimpan data: " + error.message);
+                alert("GAGAL MENYIMPAN KE SERVER!\nCek Rules Firestore Anda (harus 'allow read, write: if true;').\n\nPesan Error: " + error.message);
+                updateSyncStatus(false, "Gagal Menyimpan");
             });
         }
 
