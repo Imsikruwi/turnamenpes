@@ -50,17 +50,6 @@
         .theme-light .team-row { border-color: #E2E8F0; }
         .theme-light .score-input { background-color: #F1F5F9; border-color: #CBD5E1; color: #0F172A; }
 
-        .bracket-container {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 4rem;
-            width: max-content;
-            min-width: 100%;
-            height: max-content;
-            min-height: 100%;
-        }
-
         .match-card {
             width: 200px;
             margin-bottom: 1.5rem;
@@ -75,19 +64,7 @@
             width: 100%;
         }
 
-        /* SVG Lines */
-        #svg-lines {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 1;
-        }
-
         .line-path {
-            stroke: #475569; /* Warna default */
             stroke-width: 2;
             fill: none;
         }
@@ -108,7 +85,7 @@
 <body class="theme-dark h-screen flex flex-col">
 
     <!-- Header -->
-    <header class="bg-black/20 backdrop-blur-sm border-b border-white/10 px-6 py-4 flex items-center justify-between shrink-0 z-20 sticky top-0">
+    <header class="bg-black/20 backdrop-blur-sm border-b border-white/10 px-6 py-4 flex items-center justify-between shrink-0 z-50 sticky top-0">
         <div class="flex items-center gap-3">
             <div class="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center shrink-0">
                 <i data-lucide="trophy" class="w-6 h-6 text-white"></i>
@@ -122,7 +99,7 @@
         <div class="flex items-center gap-3" id="toolbar">
             <!-- Publik View -->
             <div class="bg-red-500/20 text-red-400 border border-red-500/30 px-3 py-1.5 rounded-md text-sm flex items-center gap-2" id="public-badge">
-                <i data-lucide="lock" class="w-4 h-4"></i> Mode Publik (Hanya Lihat)
+                <i data-lucide="lock" class="w-4 h-4"></i> Mode Publik
             </div>
             <button onclick="loginAdmin()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm flex items-center gap-2 transition" id="btn-login">
                 <i data-lucide="key" class="w-4 h-4"></i> Login Admin
@@ -131,8 +108,8 @@
             <!-- Admin View (Hidden by default) -->
             <div id="admin-tools" class="hidden items-center gap-2">
                 <select id="size-selector" class="bg-dark-800 border border-dark-700 text-sm rounded-md px-3 py-2 text-white outline-none" onchange="changeSize()">
-                    <option value="4">4 Tim (Semifinal)</option>
-                    <option value="8">8 Tim (Perempat)</option>
+                    <option value="4">4 Tim</option>
+                    <option value="8">8 Tim</option>
                     <option value="16" selected>16 Tim</option>
                     <option value="32">32 Tim</option>
                 </select>
@@ -160,20 +137,20 @@
     </header>
 
     <!-- Main Content (Pan/Zoom Area) -->
-    <main class="flex-1 overflow-auto relative bg-transparent no-scrollbar" id="pan-container" style="cursor: grab;">
-        <svg id="svg-lines"></svg>
-        <div class="bracket-container" id="bracket-container">
-            <!-- Bagan akan di-render di sini oleh JavaScript -->
+    <main class="flex-1 overflow-auto bg-transparent no-scrollbar relative" id="pan-container" style="cursor: grab;">
+        <div class="relative p-16 w-max min-w-full h-max min-h-full" id="bracket-container">
+            <svg id="svg-lines" class="absolute top-0 left-0 pointer-events-none z-0"></svg>
+            <div id="bracket-content" class="flex gap-12 items-center justify-center relative z-10 w-full h-full">
+                <!-- Bagan akan di-render di sini oleh JavaScript -->
+            </div>
         </div>
     </main>
 
-    <!-- Firebase SDK Compat (Solid untuk single HTML) -->
-    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+    <!-- Firebase SDK Compat v8 -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
 
     <script>
-        // Inisialisasi Ikon
         lucide.createIcons();
 
         // -------------------------------------------------------------
@@ -201,28 +178,25 @@
 
         firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
-        // Hapus Auth karena kita pakai rules terbuka (allow read, write: if true)
-        
         const docRef = db.collection('turnamen').doc('data_bagan');
 
         // -------------------------------------------------------------
         // 2. APLIKASI UTAMA (INIT)
         // -------------------------------------------------------------
-        function initApp() {
-            // Coba langsung load tanpa auth
+        window.onload = () => {
+            // Listener real-time ke Firebase
             docRef.onSnapshot((doc) => {
                 if (doc.exists) {
                     const data = doc.data();
                     tournamentData = { ...tournamentData, ...data };
                     
+                    // Fallback jika matches terhapus
                     if (!tournamentData.matches || Object.keys(tournamentData.matches).length === 0) {
                         generateEmptyMatches(tournamentData.size);
-                        // Hanya admin yang boleh simpan struktur kosong awal
-                        if(isAdmin) saveDataToFirebase(); 
                     }
                 } else {
+                    // Jika data di server belum pernah ada, buat kosong
                     generateEmptyMatches(tournamentData.size);
-                    if(isAdmin) saveDataToFirebase();
                 }
 
                 applyStateToUI();
@@ -230,124 +204,79 @@
                 isFirstLoad = false;
                 
             }, (error) => {
-                console.error("Firebase Read Error:", error);
+                console.error("Firebase Snapshot Error:", error);
                 updateSyncStatus(false, error.message);
                 
+                // Fallback Offline
                 if(isFirstLoad) {
                     generateEmptyMatches(tournamentData.size);
                     applyStateToUI();
                 }
             });
 
-            window.addEventListener('resize', () => drawLines());
+            window.addEventListener('resize', () => {
+                clearTimeout(svgTimeout);
+                svgTimeout = setTimeout(drawLines, 100);
+            });
             setupPanZoom();
-        }
-
-                    // Terapkan ke UI
-                    applyStateToUI();
-                    updateSyncStatus(true);
-                    
-                }, (error) => {
-                    console.error("Firebase Read Error:", error);
-                    updateSyncStatus(false, error.message);
-                    
-                    // Fallback Offline: Tetap render bagan (kosong) agar UI tidak blank
-                    if(isFirstLoad) {
-                        generateEmptyMatches(tournamentData.size);
-                        applyStateToUI();
-                    }
-                });
-
-                isFirstLoad = false;
-
-                // Event listener resize window untuk menggambar ulang garis
-                window.addEventListener('resize', () => drawLines());
-                
-                // Event Listener Pan / Drag pada background
-                setupPanZoom();
-
-            } catch (error) {
-                console.error("Auth/Init Error:", error);
-                updateSyncStatus(false, "Gagal Login Anonim");
-                
-                // Fallback Offline
-                generateEmptyMatches(tournamentData.size);
-                applyStateToUI();
-            }
-        }
+        };
 
         // -------------------------------------------------------------
         // 3. RENDER UI & BAGAN
         // -------------------------------------------------------------
         function applyStateToUI() {
-            // Update Title
             const titleInput = document.getElementById('tournament-title');
             titleInput.value = tournamentData.title || "Turnamen PES 2026";
+            
             if(isAdmin) {
                 titleInput.removeAttribute('readonly');
-                titleInput.addEventListener('change', (e) => {
+                titleInput.onchange = (e) => {
                     tournamentData.title = e.target.value;
                     saveDataToFirebase();
-                });
+                };
             } else {
                 titleInput.setAttribute('readonly', true);
             }
 
-            // Update Theme
             document.body.className = `h-screen flex flex-col overflow-hidden ${tournamentData.theme || 'theme-dark'}`;
             document.getElementById('theme-selector').value = tournamentData.theme || 'theme-dark';
-            
-            // Update Size selector
             document.getElementById('size-selector').value = (tournamentData.size || 16).toString();
 
-            // Render DOM Bagan
             renderBracketDOM();
             
-            // Gambar Garis SVG (Beri jeda agar DOM ter-render dulu)
             clearTimeout(svgTimeout);
-            svgTimeout = setTimeout(() => {
-                drawLines();
-            }, 100);
+            svgTimeout = setTimeout(drawLines, 150);
         }
 
         function renderBracketDOM() {
-            const container = document.getElementById('bracket-container');
-            container.innerHTML = ''; // Bersihkan container
+            const container = document.getElementById('bracket-content');
+            container.innerHTML = ''; 
             
             const size = parseInt(tournamentData.size) || 16;
-            const totalRounds = Math.log2(size); // e.g. size 16 = 4 rounds (incl Final)
+            const totalRounds = Math.log2(size);
             
-            const bracketWrapper = document.createElement('div');
-            bracketWrapper.className = 'flex gap-12 items-center';
-
-            // --- SAYAP KIRI ---
             for (let round = 1; round < totalRounds; round++) {
-                bracketWrapper.appendChild(createRoundColumn(round, totalRounds, 'l'));
+                container.appendChild(createRoundColumn(round, totalRounds, 'l'));
             }
 
-            // --- TENGAH (FINAL & JUARA 3) ---
-            bracketWrapper.appendChild(createFinalColumn(totalRounds));
+            container.appendChild(createFinalColumn(totalRounds));
 
-            // --- SAYAP KANAN ---
             for (let round = totalRounds - 1; round >= 1; round--) {
-                bracketWrapper.appendChild(createRoundColumn(round, totalRounds, 'r'));
+                container.appendChild(createRoundColumn(round, totalRounds, 'r'));
             }
-
-            container.appendChild(bracketWrapper);
         }
 
         function createRoundColumn(roundNum, totalRounds, side) {
             const col = document.createElement('div');
             col.className = 'flex flex-col gap-6 justify-around h-full';
             
-            // Header Babak
             const header = document.createElement('div');
             header.className = 'text-center text-xs font-bold text-gray-400 uppercase tracking-wider mb-4';
             
-            const size = tournamentData.size;
-            let roundName = "";
+            const size = parseInt(tournamentData.size);
             let matchCountInRound = (size / 2) / Math.pow(2, roundNum - 1);
             
+            let roundName = "";
             if (matchCountInRound === 2) roundName = "SEMIFINAL";
             else if (matchCountInRound === 4) roundName = "PEREMPAT FINAL";
             else roundName = `${matchCountInRound * 2} BESAR`;
@@ -355,21 +284,14 @@
             header.innerText = `${roundName} (${side === 'l' ? 'KIRI' : 'KANAN'})`;
             col.appendChild(header);
 
-            // Match Cards (Kiri/Kanan)
-            const sideMatches = matchCountInRound / 2; // Bagi dua untuk Kiri & Kanan
+            const sideMatches = matchCountInRound / 2; 
             for (let i = 1; i <= sideMatches; i++) {
                 const matchId = `r${roundNum}_${side}_${i}`;
                 
-                // Cari tujuan kemana pemenang maju
                 const nextMatchIndex = Math.ceil(i / 2);
-                let nextMatchId = '';
-                if (roundNum + 1 === totalRounds) {
-                    nextMatchId = 'final';
-                } else {
-                    nextMatchId = `r${roundNum + 1}_${side}_${nextMatchIndex}`;
-                }
+                let nextMatchId = (roundNum + 1 === totalRounds) ? 'final' : `r${roundNum + 1}_${side}_${nextMatchIndex}`;
 
-                col.appendChild(createMatchCard(matchId, { id: nextMatchId, slot: i % 2 !== 0 ? 1 : 2 }, side));
+                col.appendChild(createMatchCard(matchId, { id: nextMatchId }, side));
             }
             return col;
         }
@@ -378,11 +300,9 @@
             const col = document.createElement('div');
             col.className = 'flex flex-col gap-8 justify-center min-h-full shrink-0 mx-8';
             
-            // FINAL
             col.innerHTML += `<div class="text-center text-xs font-bold text-amber-500 uppercase tracking-wider mb-2">BABAK FINAL</div>`;
             col.appendChild(createMatchCard('final', null, 'c', true));
             
-            // BRONZE (Juara 3)
             col.innerHTML += `<div class="text-center text-xs font-bold text-gray-400 uppercase tracking-wider mt-8 mb-2">PEREBUTAN JUARA 3</div>`;
             col.appendChild(createMatchCard('bronze', null, 'c'));
             
@@ -390,14 +310,12 @@
         }
 
         function createMatchCard(matchId, nextMatchInfo, side, isFinal = false) {
-            // Aman dari null
             if (!tournamentData.matches) tournamentData.matches = {};
             const match = tournamentData.matches[matchId] || { t1: '', s1: '', t2: '', s2: '' };
             
             const card = document.createElement('div');
             card.id = `card-${matchId}`;
             
-            // Atribut data untuk garis SVG
             if (nextMatchInfo) {
                 card.dataset.next = `card-${nextMatchInfo.id}`;
                 card.dataset.side = side;
@@ -406,10 +324,8 @@
             let borderClass = isFinal ? 'border-amber-500 is-final' : 'border-dark-700 bracket-card';
             if (matchId === 'bronze') borderClass = 'border-dark-700 bracket-card';
 
-            const statusText = (match.s1 !== '' && match.s2 !== '' && match.s1 !== match.s2) ? 
-                '<span class="text-emerald-400">Selesai</span>' : 
-                '<span class="text-gray-500">Belum Selesai</span>';
-
+            const isDone = (match.s1 !== '' && match.s2 !== '' && match.s1 !== match.s2);
+            const statusText = isDone ? '<span class="text-emerald-400">Selesai</span>' : '<span class="text-gray-500">Belum Selesai</span>';
             const titleText = isFinal ? 'FINAL' : (matchId === 'bronze' ? 'JUARA 3' : `Match #${matchId.split('_')[2]}`);
 
             card.className = `match-card rounded-lg border bg-dark-800 overflow-hidden shadow-lg transition-colors ${borderClass}`;
@@ -421,7 +337,6 @@
                 </div>
             `;
 
-            // Helper untuk input
             const getReadOnly = () => isAdmin ? '' : 'readonly';
             const getInputClass = (isScore) => {
                 let base = isScore ? "w-10 text-center score-input font-bold" : "w-full px-2 text-sm team-name bg-transparent border-none outline-none text-white";
@@ -430,8 +345,7 @@
                 return base;
             };
 
-            // Tim 1
-            const t1Win = match.s1 !== '' && match.s2 !== '' && parseInt(match.s1) > parseInt(match.s2);
+            const t1Win = isDone && parseInt(match.s1) > parseInt(match.s2);
             html += `
                 <div class="flex items-center px-2 py-1.5 border-b border-inherit team-row">
                     <span class="w-4 text-xs text-gray-500 text-center shrink-0">1</span>
@@ -444,8 +358,7 @@
                 </div>
             `;
 
-            // Tim 2
-            const t2Win = match.s1 !== '' && match.s2 !== '' && parseInt(match.s2) > parseInt(match.s1);
+            const t2Win = isDone && parseInt(match.s2) > parseInt(match.s1);
             html += `
                 <div class="flex items-center px-2 py-1.5 team-row">
                     <span class="w-4 text-xs text-gray-500 text-center shrink-0">2</span>
@@ -467,15 +380,20 @@
         // -------------------------------------------------------------
         function drawLines() {
             const svg = document.getElementById('svg-lines');
-            const container = document.getElementById('pan-container');
+            const container = document.getElementById('bracket-container');
+            if(!svg || !container) return;
             
-            // Set ukuran SVG sama dengan scrollHeight container
             svg.style.width = container.scrollWidth + 'px';
             svg.style.height = container.scrollHeight + 'px';
-            svg.innerHTML = ''; // Bersihkan garis lama
+            svg.innerHTML = ''; 
 
+            const containerRect = container.getBoundingClientRect();
             const cards = document.querySelectorAll('.match-card');
             
+            let strokeColor = '#475569'; 
+            if(tournamentData.theme === 'theme-blue') strokeColor = '#213e73';
+            if(tournamentData.theme === 'theme-light') strokeColor = '#CBD5E1';
+
             cards.forEach(card => {
                 const nextId = card.dataset.next;
                 if (!nextId) return;
@@ -483,37 +401,27 @@
                 const nextCard = document.getElementById(nextId);
                 if (!nextCard) return;
 
-                const side = card.dataset.side; // 'l' (kiri) atau 'r' (kanan)
-
-                // Dapatkan koordinat relatif terhadap pan-container
-                const containerRect = container.getBoundingClientRect();
+                const side = card.dataset.side; 
                 const startRect = card.getBoundingClientRect();
                 const endRect = nextCard.getBoundingClientRect();
 
-                // Hitung posisi relatif (ditambah scroll position container)
-                const scrollLeft = container.scrollLeft;
-                const scrollTop = container.scrollTop;
-
                 let startX, startY, endX, endY;
 
-                // Jika sayap kiri, garis keluar dari kanan card
+                // Hitung posisi tanpa mempedulikan scroll
                 if (side === 'l') {
-                    startX = (startRect.right - containerRect.left) + scrollLeft;
-                    endX = (endRect.left - containerRect.left) + scrollLeft;
+                    startX = startRect.right - containerRect.left;
+                    endX = endRect.left - containerRect.left;
+                } else if (side === 'r') {
+                    startX = startRect.left - containerRect.left;
+                    endX = endRect.right - containerRect.left;
                 } else {
-                    // Sayap kanan, garis keluar dari kiri card
-                    startX = (startRect.left - containerRect.left) + scrollLeft;
-                    endX = (endRect.right - containerRect.left) + scrollLeft;
+                    return;
                 }
 
-                // Y selalu berada di tengah card
-                startY = (startRect.top - containerRect.top) + (startRect.height / 2) + scrollTop;
-                endY = (endRect.top - containerRect.top) + (endRect.height / 2) + scrollTop;
+                startY = (startRect.top - containerRect.top) + (startRect.height / 2);
+                endY = (endRect.top - containerRect.top) + (endRect.height / 2);
 
-                // Buat garis melengkung (Bezier Curve)
                 const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
-                
-                // Jarak kontrol lengkungan
                 const deltaX = Math.abs(endX - startX);
                 const controlOffset = deltaX / 2;
 
@@ -525,12 +433,6 @@
                 }
 
                 path.setAttribute('d', d);
-                
-                // Ambil warna tema
-                let strokeColor = '#475569'; // default dark
-                if(tournamentData.theme === 'theme-blue') strokeColor = '#213e73';
-                if(tournamentData.theme === 'theme-light') strokeColor = '#CBD5E1';
-
                 path.setAttribute('class', 'line-path');
                 path.setAttribute('stroke', strokeColor);
 
@@ -538,67 +440,64 @@
             });
         }
 
-
         // -------------------------------------------------------------
         // 5. EVENT HANDLERS & LOGIC UPDATE DATA
         // -------------------------------------------------------------
         function updateData(matchId, field, value) {
             if (!isAdmin) return;
             
-            // Cek jika field dihapus
-            if (value === "") {
-               tournamentData.matches[matchId][field] = "";
-            } else {
-               tournamentData.matches[matchId][field] = value;
-            }
+            tournamentData.matches[matchId][field] = value;
             
             if (field === 's1' || field === 's2') {
                 processAutoAdvance(matchId);
             }
             
-            // Re-render dulu lokal
             applyStateToUI(); 
-            // Lalu push ke server
             saveDataToFirebase();
         }
 
+        // Auto Advance menggunakan perhitungan logika matematika
         function processAutoAdvance(matchId) {
             const match = tournamentData.matches[matchId];
-            if (!match) return;
-
-            // Jangan maju kalau kosong
-            if (match.s1 === '' || match.s2 === '') return;
+            if (!match || match.s1 === '' || match.s2 === '') return;
 
             const s1 = parseInt(match.s1);
             const s2 = parseInt(match.s2);
             
             if (isNaN(s1) || isNaN(s2) || s1 === s2) return;
 
-            let winnerName = s1 > s2 ? match.t1 : match.t2;
-            let loserName = s1 > s2 ? match.t2 : match.t1;
+            const winnerName = s1 > s2 ? match.t1 : match.t2;
+            const loserName = s1 > s2 ? match.t2 : match.t1;
             
-            const card = document.getElementById(`card-${matchId}`);
-            if(!card) return;
-            
-            const nextMatchId = card.dataset.next ? card.dataset.next.replace('card-', '') : null;
-            if(!nextMatchId) return;
-
-            const parts = matchId.split('_');
-            if (parts.length === 3) {
-                const currentIndex = parseInt(parts[2]);
-                const isSlot1 = currentIndex % 2 !== 0; 
+            // Proses Jika babaknya bukan final atau bronze
+            if (matchId.startsWith('r')) {
+                const parts = matchId.split('_');
+                const round = parseInt(parts[0].replace('r', ''));
+                const side = parts[1];
+                const index = parseInt(parts[2]);
+                const totalRounds = Math.log2(parseInt(tournamentData.size));
                 
+                let nextMatchId = '';
+                let isSlot1 = true;
+
+                if (round + 1 === totalRounds) {
+                    nextMatchId = 'final';
+                    isSlot1 = (side === 'l');
+                } else {
+                    const nextIndex = Math.ceil(index / 2);
+                    nextMatchId = `r${round + 1}_${side}_${nextIndex}`;
+                    isSlot1 = (index % 2 !== 0);
+                }
+
                 if (tournamentData.matches[nextMatchId]) {
                     if (isSlot1) tournamentData.matches[nextMatchId].t1 = winnerName;
                     else tournamentData.matches[nextMatchId].t2 = winnerName;
                 }
 
-                if (nextMatchId === 'final') {
-                    const side = parts[1]; 
-                    if (tournamentData.matches['bronze']) {
-                        if (side === 'l') tournamentData.matches['bronze'].t1 = loserName;
-                        if (side === 'r') tournamentData.matches['bronze'].t2 = loserName;
-                    }
+                // Final / Juara 3 Logic
+                if (nextMatchId === 'final' && tournamentData.matches['bronze']) {
+                    if (side === 'l') tournamentData.matches['bronze'].t1 = loserName;
+                    else tournamentData.matches['bronze'].t2 = loserName;
                 }
             }
         }
@@ -607,14 +506,13 @@
             if(!isAdmin) return;
             updateSyncStatus(false, "Menyimpan...");
             
-            // Lakukan deep copy untuk menghindari object referensi yang menyebabkan error firestore
             const pureData = JSON.parse(JSON.stringify(tournamentData));
             
             docRef.set(pureData).then(() => {
                 updateSyncStatus(true);
             }).catch(error => {
-                console.error("Error saving data:", error);
-                alert("GAGAL MENYIMPAN KE SERVER!\nCek Rules Firestore Anda (harus 'allow read, write: if true;').\n\nPesan Error: " + error.message);
+                console.error("GAGAL SIMPAN:", error);
+                alert("GAGAL MENYIMPAN KE SERVER!\nPastikan Rules Firestore sudah diganti ke 'allow read, write: if true;'\n\nError: " + error.message);
                 updateSyncStatus(false, "Gagal Menyimpan");
             });
         }
@@ -658,7 +556,7 @@
                 document.getElementById('admin-tools').classList.add('flex');
                 document.getElementById('btn-login').classList.add('hidden');
                 document.getElementById('public-badge').classList.add('hidden');
-                applyStateToUI(); // Render ulang agar input bisa diedit
+                applyStateToUI();
             } else if (pwd !== null) {
                 alert("Password Salah!");
             }
@@ -704,23 +602,20 @@
 
         const teamNamesPool = [
             "Bayern Munchen", "Nusantara United", "Inter Milan", "AS Roma", 
-            "Juventus", "Singa PES", "Persija Esports", "Napoli",
-            "Bhayangkara PES", "Persib Esports", "Borussia Dortmund", "Real Madrid",
-            "Manchester United", "Bali United Esports", "Liverpool FC", "Atletico Madrid",
-            "Arsenal", "Chelsea", "Man City", "AC Milan", "PSG", "Barcelona", "Ajax", "Benfica",
-            "Porto", "Sporting", "Lazio", "Fiorentina", "Sevilla", "Valencia", "Villareal", "Boca Juniors"
+            "Juventus", "Singa PES", "Persija", "Napoli", "Bhayangkara", 
+            "Persib", "Borussia Dortmund", "Real Madrid", "Man United", 
+            "Bali United", "Liverpool", "Atletico", "Arsenal", "Chelsea", 
+            "Man City", "AC Milan", "PSG", "Barcelona", "Ajax", "Benfica"
         ];
 
         function autoFillNames() {
             if(!isAdmin) return;
-            const size = tournamentData.size;
+            const size = parseInt(tournamentData.size);
             let teamIndex = 0;
-            
-            // Acak array nama
             const shuffledNames = [...teamNamesPool].sort(() => 0.5 - Math.random());
 
             ['l', 'r'].forEach(side => {
-                const matchCount = (size / 2); // Putaran pertama (Round 1)
+                const matchCount = (size / 2);
                 for (let i = 1; i <= matchCount; i++) {
                     const matchId = `r1_${side}_${i}`;
                     if(tournamentData.matches[matchId]) {
@@ -735,20 +630,27 @@
 
         function autoFillScores() {
             if(!isAdmin) return;
-            // Cari pertandingan yang ada namanya tapi belum ada skornya
+            let isChanged = false;
+            
             Object.keys(tournamentData.matches).forEach(id => {
                 const m = tournamentData.matches[id];
-                if (m.t1 !== '' && m.t2 !== '' && (m.s1 === '' || m.s2 === '')) {
-                    // Beri skor random 0-5
+                if (m.t1 !== '' && m.t2 !== '' && m.s1 === '' && m.s2 === '') {
                     let s1 = Math.floor(Math.random() * 5);
                     let s2 = Math.floor(Math.random() * 5);
-                    while(s1 === s2) { s2 = Math.floor(Math.random() * 5); } // Hindari seri
+                    while(s1 === s2) { s2 = Math.floor(Math.random() * 5); } 
                     
                     m.s1 = s1.toString();
                     m.s2 = s2.toString();
-                    updateData(id, 's2', m.s2); // Ini akan men-trigger Auto-Advance
+                    isChanged = true;
                 }
             });
+
+            if (isChanged) {
+                // Proses advance untuk semua bagan
+                Object.keys(tournamentData.matches).forEach(id => processAutoAdvance(id));
+                saveDataToFirebase();
+                applyStateToUI();
+            }
         }
 
         // -------------------------------------------------------------
@@ -763,9 +665,7 @@
             let scrollTop;
 
             container.addEventListener('mousedown', (e) => {
-                // Jangan pan kalau klik input atau select (biar bisa ngetik)
                 if(e.target.tagName === 'INPUT' || e.target.tagName === 'SELECT') return;
-                
                 isDown = true;
                 container.style.cursor = 'grabbing';
                 startX = e.pageX - container.offsetLeft;
@@ -789,26 +689,12 @@
                 e.preventDefault();
                 const x = e.pageX - container.offsetLeft;
                 const y = e.pageY - container.offsetTop;
-                const walkX = (x - startX) * 2; // Kecepatan scroll x2
+                const walkX = (x - startX) * 2;
                 const walkY = (y - startY) * 2;
                 container.scrollLeft = scrollLeft - walkX;
                 container.scrollTop = scrollTop - walkY;
-                
-                // Gambar ulang garis saat digeser (untuk SVG absolute positioning correction)
-                drawLines();
-            });
-            
-            // Gambar ulang saat di scroll
-            container.addEventListener('scroll', () => {
-                drawLines();
             });
         }
-
-        // RUN
-        window.onload = () => {
-            initApp();
-        };
-
     </script>
 </body>
 </html>
