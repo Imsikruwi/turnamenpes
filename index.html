@@ -25,22 +25,19 @@
     <style>
         body { font-family: 'Inter', system-ui, sans-serif; overflow: hidden; overscroll-behavior: none; }
         
-        /* Palet Profesional Baru */
-        /* Tema Gelap (Slate/Modern) */
+        /* Palet Profesional */
         .theme-dark { background-color: #0f172a; color: #f8fafc; }
         .theme-dark .bracket-card { background-color: #1e293b; border-color: #334155; }
         .theme-dark .bracket-card:hover { border-color: #475569; }
         .theme-dark .team-row { border-color: #334155; }
         .theme-dark .admin-bg { background-color: #0f172a; border-color: #334155; }
         
-        /* Tema Biru (Navy Professional) */
         .theme-blue { background-color: #0A192F; color: #E2E8F0; }
         .theme-blue .bracket-card { background-color: #112240; border-color: #233554; }
         .theme-blue .bracket-card:hover { border-color: #303C55; }
         .theme-blue .team-row { border-color: #233554; }
         .theme-blue .admin-bg { background-color: #0A192F; border-color: #233554; }
         
-        /* Tema Terang (Clean White) */
         .theme-light { background-color: #F8FAFC; color: #0F172A; }
         .theme-light .bracket-card { background-color: #FFFFFF; border-color: #E2E8F0; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); }
         .theme-light .bracket-card:hover { border-color: #CBD5E1; }
@@ -49,36 +46,39 @@
         .theme-light input { color: #0F172A !important; }
         .theme-light .bg-black\/20 { background-color: #F1F5F9 !important; }
         
-        /* Tema Merah (Ruby Elegant) */
         .theme-red { background-color: #2C1115; color: #F8FAFC; }
         .theme-red .bracket-card { background-color: #43171D; border-color: #5E1D27; }
         .theme-red .bracket-card:hover { border-color: #792432; }
         .theme-red .team-row { border-color: #5E1D27; }
         .theme-red .admin-bg { background-color: #2C1115; border-color: #5E1D27; }
 
-        /* Tema Hijau (Forest) */
         .theme-emerald { background-color: #0B2519; color: #F8FAFC; }
         .theme-emerald .bracket-card { background-color: #113826; border-color: #195238; }
         .theme-emerald .bracket-card:hover { border-color: #206847; }
         .theme-emerald .team-row { border-color: #195238; }
         .theme-emerald .admin-bg { background-color: #0B2519; border-color: #195238; }
 
-        /* Tema Ungu (Deep Amethyst) */
         .theme-purple { background-color: #190F26; color: #F8FAFC; }
         .theme-purple .bracket-card { background-color: #25173A; border-color: #382257; }
         .theme-purple .bracket-card:hover { border-color: #492D73; }
         .theme-purple .team-row { border-color: #382257; }
         .theme-purple .admin-bg { background-color: #190F26; border-color: #382257; }
+        
+        /* SVG Lines Contrast */
+        .line-path { stroke-width: 2.5; fill: none; transition: all 0.3s ease; stroke: rgba(148, 163, 184, 0.25); } 
+        .theme-dark .line-path.line-active { stroke: #10b981; filter: drop-shadow(0 0 5px rgba(16,185,129,0.6)); } 
+        .theme-blue .line-path.line-active { stroke: #38bdf8; filter: drop-shadow(0 0 5px rgba(56,189,248,0.6)); } 
+        .theme-light .line-path.line-active { stroke: #2563eb; filter: drop-shadow(0 0 5px rgba(37,99,235,0.4)); } 
+        .theme-red .line-path.line-active { stroke: #f43f5e; filter: drop-shadow(0 0 5px rgba(244,63,94,0.6)); } 
+        .theme-emerald .line-path.line-active { stroke: #34d399; filter: drop-shadow(0 0 5px rgba(52,211,153,0.6)); } 
+        .theme-purple .line-path.line-active { stroke: #c084fc; filter: drop-shadow(0 0 5px rgba(192,132,252,0.6)); } 
 
-        /* General UI Elements */
         .match-card {
             width: 210px;
             margin-bottom: 1.5rem;
             position: relative;
             z-index: 10;
         }
-
-        .line-path { stroke-width: 1.5; fill: none; transition: all 0.3s ease; }
         
         @keyframes pulse-border {
             0% { border-color: rgba(245, 158, 11, 0.5); }
@@ -90,7 +90,6 @@
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
-        /* Highlight Search Cerdas */
         .highlight-search {
             background-color: rgba(250, 204, 21, 0.25) !important;
             box-shadow: inset 0 0 0 1px rgba(250, 204, 21, 0.5) !important;
@@ -108,19 +107,20 @@
 
     <!-- Header -->
     <header class="bg-black/20 backdrop-blur-md border-b border-white/5 px-4 py-3 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 shrink-0 z-50 sticky top-0 shadow-sm">
-        <div class="flex items-center gap-3 w-full md:w-1/3">
+        <div class="flex items-center gap-3 w-full md:w-auto">
             <div class="w-10 h-10 bg-gradient-to-br from-indigo-500 to-blue-600 rounded-lg flex items-center justify-center shrink-0 shadow-lg">
                 <i data-lucide="trophy" class="w-5 h-5 text-white"></i>
             </div>
-            <div class="flex-1">
-                <input type="text" id="tournament-title" onchange="updateTitle(this.value)" placeholder="Nama Turnamen..." class="font-bold text-lg md:text-xl bg-transparent border-none outline-none focus:border-b border-blue-500/50 w-full text-[inherit] transition-all" readonly>
-                <div class="text-[11px] text-slate-400 mt-0.5 tracking-wide" id="sync-status">Menghubungkan...</div>
+            <div class="flex-1 md:hidden">
+                <span class="font-bold text-lg">Bagan Turnamen</span>
             </div>
         </div>
 
-        <div class="flex flex-wrap items-center gap-2 w-full md:w-auto" id="toolbar">
+        <div class="flex flex-wrap items-center justify-between md:justify-end gap-2 w-full md:w-auto" id="toolbar">
+            <div class="text-[11px] text-slate-400 tracking-wide flex items-center gap-2" id="sync-status">Menghubungkan...</div>
+            
             <!-- Admin View -->
-            <div id="admin-tools" class="hidden flex-wrap items-center gap-2 w-full md:w-auto bg-black/10 p-1.5 rounded-lg border border-white/5">
+            <div id="admin-tools" class="hidden flex-wrap items-center gap-2 bg-black/10 p-1.5 rounded-lg border border-white/5">
                 <div class="flex items-center gap-1 bg-black/20 rounded-md px-2 py-1.5" title="Jumlah Tim (2-64)">
                     <i data-lucide="users" class="w-3.5 h-3.5 text-slate-400"></i>
                     <input type="number" id="size-input" class="w-10 bg-transparent text-center font-semibold outline-none text-sm text-[inherit]" min="2" max="64" value="16">
@@ -179,42 +179,54 @@
         </div>
     </header>
 
-    <main class="flex-1 overflow-auto bg-transparent no-scrollbar relative" id="pan-container" style="cursor: grab;">
-        <div id="zoom-wrapper" class="relative p-12 md:p-24 w-max min-w-full h-max min-h-full flex items-center justify-center">
-            <div id="bracket-container" class="relative w-max h-max">
+    <main class="flex-1 overflow-auto bg-transparent no-scrollbar relative flex flex-col items-center" id="pan-container" style="cursor: grab;">
+        
+        <!-- Papan Juara & Judul -->
+        <div class="w-full flex flex-col items-center pt-8 pb-4 z-20 shrink-0 sticky top-0 pointer-events-none">
+            <!-- Judul Turnamen -->
+            <input type="text" id="tournament-title" onchange="updateTitle(this.value)" placeholder="Nama Turnamen..." class="font-extrabold text-3xl md:text-4xl text-center bg-transparent border-none outline-none focus:border-b-2 border-amber-500/50 w-full max-w-2xl text-[inherit] transition-all drop-shadow-md pointer-events-auto" readonly>
+            
+            <!-- Papan Juara Otomatis -->
+            <div id="winner-board" class="hidden mt-6 bg-slate-900/90 backdrop-blur-md border border-amber-500/50 rounded-2xl p-6 shadow-[0_0_40px_rgba(245,158,11,0.2)] flex-col items-center w-[90%] max-w-lg pointer-events-auto transition-all transform scale-95 opacity-0 duration-500">
+                <div class="text-5xl mb-3 filter drop-shadow-lg animate-bounce">🏆</div>
+                <div class="text-amber-500 text-xs font-bold tracking-widest uppercase mb-1">JUARA 1 TURNAMEN</div>
+                <div id="winner-1" class="text-3xl font-black text-white mb-5 text-center tracking-tight drop-shadow-md bg-gradient-to-r from-amber-200 via-yellow-400 to-amber-200 text-transparent bg-clip-text">NAMA TIM</div>
+                
+                <div class="w-full h-px bg-gradient-to-r from-transparent via-slate-600 to-transparent my-3"></div>
+                
+                <div class="flex w-full justify-around items-end pt-2">
+                    <div class="flex flex-col items-center text-center">
+                        <div class="flex items-center gap-1.5 mb-1 text-slate-300">
+                            <span class="text-sm filter grayscale drop-shadow">🥈</span><span class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Juara 2</span>
+                        </div>
+                        <div id="winner-2" class="text-base font-bold text-slate-200">TIM DUA</div>
+                    </div>
+                    <div class="w-px h-8 bg-slate-700 mx-4"></div>
+                    <div class="flex flex-col items-center text-center">
+                        <div class="flex items-center gap-1.5 mb-1 text-amber-700">
+                            <span class="text-sm filter sepia drop-shadow">🥉</span><span class="text-[10px] font-bold uppercase tracking-wider text-amber-700/80">Juara 3</span>
+                        </div>
+                        <div id="winner-3" class="text-base font-bold text-slate-300">TIM TIGA</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="zoom-wrapper" class="relative p-8 md:p-12 w-max min-w-full h-max min-h-[60vh] flex items-center justify-center -mt-6">
+            <div id="bracket-container" class="relative w-max h-max mt-8 md:mt-4">
                 <svg id="svg-lines" class="absolute top-0 left-0 pointer-events-none z-0 overflow-visible"></svg>
-                <div id="bracket-content" class="flex gap-8 md:gap-16 items-center justify-center relative z-10 w-full h-full">
-                    <!-- Bagan Di-Render Disini -->
+                <div id="bracket-content" class="flex gap-10 md:gap-20 items-center justify-center relative z-10 w-full h-full">
+                    <!-- Bagan akan di-render di sini via JS -->
                 </div>
             </div>
         </div>
     </main>
 
-    <!-- Bottom Bar (Search & Login Admin) -->
-    <div class="fixed bottom-0 left-0 right-0 bg-black/40 backdrop-blur-lg border-t border-white/5 p-3 flex justify-between items-center z-50">
-        <!-- Fitur Search dengan Datalist -->
-        <div class="flex items-center bg-black/40 border border-white/10 rounded-full px-3 py-1.5 w-56 md:w-72 focus-within:border-blue-500/50 transition-colors shadow-inner">
-            <i data-lucide="search" class="w-4 h-4 text-slate-400 mr-2 shrink-0"></i>
-            <input type="text" list="team-list" placeholder="Cari Tim di Bagan..." oninput="searchTeam(this.value)" class="bg-transparent border-none outline-none text-sm text-[inherit] w-full placeholder-slate-500">
-            <datalist id="team-list">
-                <!-- Diisi otomatis oleh JS -->
-            </datalist>
-        </div>
-
-        <!-- Tombol Login (Hanya muncul jika belum login) -->
-        <button onclick="loginAdmin()" id="btn-login-bottom" class="bg-white/10 hover:bg-white/20 text-white px-3 py-1.5 rounded-md text-xs font-medium flex items-center gap-1.5 transition">
-            <i data-lucide="key" class="w-3.5 h-3.5"></i> Admin
-        </button>
-    </div>
-
-    <!-- Modal Paste Input -->
-    <div id="bulk-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-[100] hidden flex items-center justify-center p-4">
-        <div class="bg-slate-900 border border-slate-700 rounded-xl p-5 w-full max-w-md shadow-2xl">
-            <div class="flex justify-between items-center mb-4">
-                <h3 class="text-white font-bold text-lg flex items-center gap-2"><i data-lucide="clipboard-paste" class="w-5 h-5 text-indigo-400"></i> Paste Daftar Tim</h3>
-                <button onclick="closeBulkModal()" class="text-slate-400 hover:text-white transition"><i data-lucide="x"></i></button>
-            </div>
-            <p class="text-xs text-slate-400 mb-3 leading-relaxed">Copy dari Excel/Notepad lalu paste di bawah. Setiap baris (enter) dihitung sebagai 1 tim. Sistem akan mengisi dari sayap kiri ke kanan secara adil.</p>
+    <!-- Modal Bulk Insert -->
+    <div id="bulk-modal" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-[100] flex items-center justify-center p-4">
+        <div class="bg-slate-900 border border-slate-700 rounded-xl p-6 w-full max-w-lg shadow-2xl">
+            <h3 class="text-lg font-bold text-white mb-2">Paste Nama Tim</h3>
+            <p class="text-xs text-slate-400 mb-3 leading-relaxed">Copy dari Excel/Notepad lalu paste di bawah. Setiap baris (enter) dihitung sebagai 1 tim. Sistem akan membagi ke sayap kiri dan kanan secara adil.</p>
             <textarea id="bulk-textarea" class="w-full h-48 bg-slate-800/50 border border-slate-700 rounded-lg p-3 text-sm text-slate-200 outline-none focus:border-indigo-500 transition-colors" placeholder="Contoh:&#10;Fnatic&#10;Navi&#10;T1&#10;Paper Rex"></textarea>
             <div class="flex justify-end gap-2 mt-4">
                 <button onclick="closeBulkModal()" class="px-4 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-slate-800 transition">Batal</button>
@@ -223,11 +235,34 @@
         </div>
     </div>
 
-    <!-- Firebase SDK Compat -->
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    <!-- Bottom Bar (Search, Date & Login Admin) -->
+    <div class="fixed bottom-0 left-0 right-0 bg-black/40 backdrop-blur-lg border-t border-white/5 p-3 flex justify-between items-center z-50">
+        
+        <div class="flex items-center gap-4">
+            <!-- Fitur Search dengan Datalist -->
+            <div class="flex items-center bg-black/40 border border-white/10 rounded-full px-3 py-1.5 w-48 md:w-64 focus-within:border-blue-500/50 transition-colors shadow-inner">
+                <i data-lucide="search" class="w-4 h-4 text-slate-400 mr-2 shrink-0"></i>
+                <input type="text" list="team-list" placeholder="Cari Tim di Bagan..." oninput="searchTeam(this.value)" class="bg-transparent border-none outline-none text-xs md:text-sm text-[inherit] w-full placeholder-slate-500">
+                <datalist id="team-list"></datalist>
+            </div>
+            <!-- Last Updated Info -->
+            <div id="last-updated" class="hidden md:block text-[10px] text-slate-400 font-medium tracking-wide">
+                <!-- Diisi via JS -->
+            </div>
+        </div>
+
+        <!-- Tombol Login -->
+        <button onclick="loginAdmin()" id="btn-login-bottom" class="bg-white/10 hover:bg-white/20 px-4 py-1.5 rounded-md text-xs font-medium flex items-center gap-2 transition text-slate-200 shadow-sm">
+            <i data-lucide="lock" class="w-3.5 h-3.5"></i> Admin
+        </button>
+    </div>
+
+    <!-- Script Firebase (V8 Compat Mode) -->
+    <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore-compat.js"></script>
 
     <script>
+        // Inisialisasi Ikon Lucide
         lucide.createIcons();
 
         let isAdmin = false;
@@ -238,7 +273,8 @@
             size: 16,        
             actualSize: 16,  
             theme: "theme-dark",
-            matches: {}
+            matches: {},
+            lastUpdated: Date.now()
         };
 
         // KONFIGURASI FIREBASE ANDA
@@ -254,6 +290,16 @@
         let db, docRef;
 
         window.onload = () => {
+            initFirebase();
+            setupPanZoom();
+            
+            window.addEventListener('resize', () => {
+                clearTimeout(svgTimeout);
+                svgTimeout = setTimeout(drawLines, 100);
+            });
+        };
+
+        function initFirebase() {
             try {
                 if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
                 db = firebase.firestore();
@@ -262,7 +308,7 @@
                 docRef.onSnapshot((doc) => {
                     if (doc.exists) {
                         const data = doc.data();
-                        if (!data.matches || Object.keys(data.matches).length === 0) {
+                        if (!data || !data.matches || Object.keys(data.matches).length === 0) {
                             generateEmptyMatches(16, 16);
                             if (isAdmin) saveDataToFirebase();
                         } else {
@@ -281,27 +327,23 @@
             } catch (error) {
                 console.error("Init Error:", error);
                 updateSyncStatus(false, "Koneksi Error");
-                
-                // Fallback Offline agar tetap bisa diakses tanpa internet
                 generateEmptyMatches(16, 16);
                 applyStateToUI();
             }
+        }
 
-            window.addEventListener('resize', () => {
-                clearTimeout(svgTimeout);
-                svgTimeout = setTimeout(drawLines, 100);
-            });
-            setupPanZoom();
-        };
-
-        /* --- UI RENDER LOGIC --- */
         function applyStateToUI() {
             const titleInput = document.getElementById('tournament-title');
             if (document.activeElement !== titleInput) {
                 titleInput.value = tournamentData.title || "Turnamen Bracket Live";
             }
-            if(isAdmin) titleInput.removeAttribute('readonly');
-            else titleInput.setAttribute('readonly', true);
+            if(isAdmin) {
+                titleInput.removeAttribute('readonly');
+                titleInput.classList.add('cursor-text');
+            } else {
+                titleInput.setAttribute('readonly', true);
+                titleInput.classList.remove('cursor-text');
+            }
 
             document.body.className = `h-screen flex flex-col transition-colors duration-300 ${tournamentData.theme || 'theme-dark'}`;
             document.getElementById('theme-selector').value = tournamentData.theme || 'theme-dark';
@@ -320,11 +362,69 @@
                 adminTools.classList.add('hidden'); adminTools.classList.remove('flex');
             }
 
+            updateDateDisplay();
             renderBracketDOM();
             updateDatalist();
+            checkWinnerBoard();
             
             clearTimeout(svgTimeout);
             svgTimeout = setTimeout(drawLines, 150);
+        }
+
+        function updateDateDisplay() {
+            const dateEl = document.getElementById('last-updated');
+            if(!tournamentData.lastUpdated) {
+                dateEl.innerText = "";
+                return;
+            }
+            
+            const date = new Date(tournamentData.lastUpdated);
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute:'2-digit' };
+            const formatted = date.toLocaleDateString('id-ID', options);
+            dateEl.innerText = `Update: ${formatted}`;
+        }
+
+        function checkWinnerBoard() {
+            const finalMatch = tournamentData.matches['final'];
+            const bronzeMatch = tournamentData.matches['bronze'];
+            const board = document.getElementById('winner-board');
+            
+            if (!finalMatch) return;
+
+            const s1 = parseInt(finalMatch.s1);
+            const s2 = parseInt(finalMatch.s2);
+            
+            // Cek apakah Final sudah selesai
+            if (!isNaN(s1) && !isNaN(s2) && s1 !== s2 && finalMatch.t1 && finalMatch.t2) {
+                const winner = s1 > s2 ? finalMatch.t1 : finalMatch.t2;
+                const runnerUp = s1 > s2 ? finalMatch.t2 : finalMatch.t1;
+                
+                document.getElementById('winner-1').innerText = winner;
+                document.getElementById('winner-2').innerText = runnerUp;
+                
+                let thirdPlace = "MENUNGGU HASIL";
+                if (bronzeMatch) {
+                    const bs1 = parseInt(bronzeMatch.s1);
+                    const bs2 = parseInt(bronzeMatch.s2);
+                    if (!isNaN(bs1) && !isNaN(bs2) && bs1 !== bs2 && bronzeMatch.t1 && bronzeMatch.t2) {
+                        thirdPlace = bs1 > bs2 ? bronzeMatch.t1 : bronzeMatch.t2;
+                    }
+                }
+                document.getElementById('winner-3').innerText = thirdPlace;
+
+                // Tampilkan Papan Juara
+                board.classList.remove('hidden');
+                void board.offsetWidth; // Reflow
+                board.classList.remove('scale-95', 'opacity-0');
+                board.classList.add('scale-100', 'opacity-100', 'flex');
+            } else {
+                board.classList.add('scale-95', 'opacity-0');
+                board.classList.remove('scale-100', 'opacity-100');
+                setTimeout(() => {
+                    if(board.classList.contains('opacity-0')) board.classList.add('hidden');
+                    board.classList.remove('flex');
+                }, 500);
+            }
         }
 
         function updateDatalist() {
@@ -387,9 +487,9 @@
         function createFinalColumn() {
             const col = document.createElement('div');
             col.className = 'flex flex-col gap-8 justify-center min-h-full shrink-0 mx-4 z-10 relative';
-            col.innerHTML += `<div class="text-center text-[10px] font-bold text-amber-500 uppercase tracking-widest mb-0">BABAK FINAL</div>`;
+            col.innerHTML += `<div class="text-center text-[10px] font-bold text-amber-500 bg-amber-500/10 py-1 px-4 rounded-full border border-amber-500/20 uppercase tracking-widest mb-0 backdrop-blur-sm self-center">BABAK FINAL</div>`;
             col.appendChild(createMatchCard('final', null, 'c', true));
-            col.innerHTML += `<div class="text-center text-[10px] font-bold opacity-50 uppercase tracking-widest mt-10 mb-0">PEREBUTAN JUARA 3</div>`;
+            col.innerHTML += `<div class="text-center text-[10px] font-bold opacity-70 uppercase tracking-widest mt-12 mb-0 bg-black/20 py-1 px-4 rounded-full border border-white/10 backdrop-blur-sm self-center">JUARA 3 (BRONZE MATCH)</div>`;
             col.appendChild(createMatchCard('bronze', null, 'c'));
             return col;
         }
@@ -413,38 +513,45 @@
             const t1Win = isDone && (s1 > s2);
             const t2Win = isDone && (s2 > s1);
 
-            const statusText = isDone ? '<span class="text-emerald-500/90 font-bold tracking-wider">✓ SELESAI</span>' : '<span class="opacity-40">MENUNGGU</span>';
-            const titleText = isFinal ? 'FINAL' : (matchId === 'bronze' ? 'JUARA 3' : `Match #${matchId.split('_')[2]}`);
+            // Placeholder "Tim 1/2" hanya di ronde pertama. Setelah itu kotak dibiarkan kosong
+            const placeholderT1 = matchId.startsWith('r1') ? "Tim 1" : "";
+            const placeholderT2 = matchId.startsWith('r1') ? "Tim 2" : "";
 
-            card.className = `match-card rounded-lg border overflow-hidden shadow-md transition-all ${borderClass}`;
+            const statusText = isDone ? '<span class="text-emerald-500/90 font-bold tracking-wider">Selesai</span>' : '<span class="opacity-40">Belum Selesai</span>';
+            const titleText = isFinal ? 'FINAL' : (matchId === 'bronze' ? 'PEREBUTAN JUARA 3' : `Match #${matchId.split('_')[2]}`);
+
+            card.className = `match-card rounded-lg border overflow-hidden shadow-lg transition-all ${borderClass}`;
             
-            // Pewarnaan Spesifik (Menang = Hijau, Kalah = Redup)
-            let n1C = t1Win ? 'text-emerald-500 font-bold' : (isDone ? 'opacity-40' : 'text-[inherit]');
-            let n2C = t2Win ? 'text-emerald-500 font-bold' : (isDone ? 'opacity-40' : 'text-[inherit]');
-            let s1C = t1Win ? 'text-emerald-500 font-bold bg-emerald-500/10' : (isDone ? 'opacity-40 bg-black/10' : 'text-[inherit]');
-            let s2C = t2Win ? 'text-emerald-500 font-bold bg-emerald-500/10' : (isDone ? 'opacity-40 bg-black/10' : 'text-[inherit]');
+            // Pewarnaan teks khusus tim yang menang/kalah
+            let t1C = t1Win ? 'text-emerald-500 font-bold' : (isDone ? 'text-red-400 opacity-60' : 'text-[inherit]');
+            let t2C = t2Win ? 'text-emerald-500 font-bold' : (isDone ? 'text-red-400 opacity-60' : 'text-[inherit]');
+            let s1C = t1Win ? 'text-emerald-500 font-bold bg-emerald-500/10' : (isDone ? 'text-red-400 opacity-40 bg-black/10' : 'text-[inherit]');
+            let s2C = t2Win ? 'text-emerald-500 font-bold bg-emerald-500/10' : (isDone ? 'text-red-400 opacity-40 bg-black/10' : 'text-[inherit]');
 
-            if (match.t1 === 'BYE') n1C = 'opacity-30 italic font-normal text-[inherit]';
-            if (match.t2 === 'BYE') n2C = 'opacity-30 italic font-normal text-[inherit]';
+            // Tandai card yang selesai untuk logic SVG Line
+            if(isDone) card.dataset.winner = t1Win ? '1' : '2';
+
+            if (match.t1 === 'BYE') t1C = 'opacity-30 italic font-normal text-[inherit]';
+            if (match.t2 === 'BYE') t2C = 'opacity-30 italic font-normal text-[inherit]';
 
             const getReadOnly = () => isAdmin ? '' : 'readonly';
             const getInpCls = (isScore, clr) => isScore 
-                ? `w-10 h-full text-center outline-none transition-colors ${clr} ${isAdmin?'border-l border-inherit admin-bg cursor-text':'bg-transparent border-none pointer-events-none'}`
-                : `w-full px-2.5 text-[13px] font-medium bg-transparent border-none outline-none transition-colors ${clr}`;
+                ? `w-12 h-full text-center text-sm font-semibold outline-none transition-colors ${clr} ${isAdmin?'border-l border-inherit admin-bg cursor-text focus:bg-white/5':'bg-transparent border-l border-inherit pointer-events-none'}`
+                : `w-full px-3 text-[13px] font-medium bg-transparent border-none outline-none transition-colors ${clr} ${isAdmin?'focus:bg-white/5':''}`;
 
             card.innerHTML = `
-                <div class="bg-black/20 px-3 py-1.5 flex justify-between items-center text-[9px] uppercase font-bold tracking-wider border-b border-inherit">
-                    <span class="opacity-70">${titleText}</span>
-                    <span>${statusText}</span>
+                <div class="bg-black/30 px-3 py-1.5 flex justify-between items-center text-[9px] font-bold tracking-wider border-b border-inherit backdrop-blur-sm">
+                    <span class="${isFinal ? 'text-amber-500' : 'text-slate-400'} uppercase">${titleText}</span>
+                    <span class="bg-black/40 px-1.5 py-0.5 rounded border border-white/5">${statusText}</span>
                 </div>
-                <div class="flex items-stretch border-b border-inherit team-row h-9 transition-colors">
-                    <span class="w-6 text-[9px] font-bold opacity-30 flex items-center justify-center shrink-0 border-r border-inherit">1</span>
-                    <input type="text" class="${getInpCls(false, n1C)}" value="${match.t1}" placeholder="Tim 1" ${getReadOnly()} onchange="updateData('${matchId}', 't1', this.value)">
+                <div class="flex items-stretch border-b border-inherit team-row h-10 transition-colors">
+                    <span class="w-7 text-[10px] font-bold opacity-40 flex items-center justify-center shrink-0 border-r border-inherit bg-black/10">1</span>
+                    <input type="text" class="${getInpCls(false, t1C)}" value="${match.t1}" placeholder="${placeholderT1}" ${getReadOnly()} onchange="updateData('${matchId}', 't1', this.value)">
                     <input type="number" class="${getInpCls(true, s1C)}" value="${match.s1}" placeholder="-" ${getReadOnly()} onchange="updateData('${matchId}', 's1', this.value)">
                 </div>
-                <div class="flex items-stretch team-row h-9 transition-colors">
-                    <span class="w-6 text-[9px] font-bold opacity-30 flex items-center justify-center shrink-0 border-r border-inherit">2</span>
-                    <input type="text" class="${getInpCls(false, n2C)}" value="${match.t2}" placeholder="Tim 2" ${getReadOnly()} onchange="updateData('${matchId}', 't2', this.value)">
+                <div class="flex items-stretch team-row h-10 transition-colors">
+                    <span class="w-7 text-[10px] font-bold opacity-40 flex items-center justify-center shrink-0 border-r border-inherit bg-black/10">2</span>
+                    <input type="text" class="${getInpCls(false, t2C)}" value="${match.t2}" placeholder="${placeholderT2}" ${getReadOnly()} onchange="updateData('${matchId}', 't2', this.value)">
                     <input type="number" class="${getInpCls(true, s2C)}" value="${match.s2}" placeholder="-" ${getReadOnly()} onchange="updateData('${matchId}', 's2', this.value)">
                 </div>
             `;
@@ -464,9 +571,6 @@
 
             const containerRect = container.getBoundingClientRect();
             const cards = document.querySelectorAll('.match-card');
-            
-            const isLight = tournamentData.theme === 'theme-light';
-            let strokeColor = isLight ? 'rgba(0,0,0,0.12)' : 'rgba(255,255,255,0.12)'; 
 
             cards.forEach(card => {
                 const nextId = card.dataset.next;
@@ -479,8 +583,13 @@
                 const endRect = nextCard.getBoundingClientRect();
 
                 let startX, startY, endX, endY;
+                
+                const isActive = card.dataset.winner !== undefined;
+                let strokeClass = isActive ? 'line-path line-active' : 'line-path';
+                
+                // Bronze match garisnya tidak glowing
+                if (nextId === 'bronze') strokeClass = 'line-path';
 
-                // Hitung koordinat murni tanpa perlu memikirkan zoom karena scale dihapus
                 if (side === 'l') {
                     startX = startRect.right - containerRect.left;
                     endX = endRect.left - containerRect.left;
@@ -493,15 +602,13 @@
                 endY = (endRect.top - containerRect.top) + (endRect.height / 2);
 
                 const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
-                const controlOffset = Math.abs(endX - startX) / 2;
-
-                let d = side === 'l' 
-                    ? `M ${startX} ${startY} C ${startX + controlOffset} ${startY}, ${endX - controlOffset} ${endY}, ${endX} ${endY}`
-                    : `M ${startX} ${startY} C ${startX - controlOffset} ${startY}, ${endX + controlOffset} ${endY}, ${endX} ${endY}`;
+                
+                // Garis dengan sikuan kaku
+                let d = `M ${startX} ${startY} L ${startX + (side==='l'?1:-1)*(Math.abs(endX-startX)/2)} ${startY} L ${startX + (side==='l'?1:-1)*(Math.abs(endX-startX)/2)} ${endY} L ${endX} ${endY}`;
 
                 path.setAttribute('d', d);
-                path.setAttribute('class', 'line-path');
-                path.setAttribute('stroke', strokeColor);
+                path.setAttribute('class', strokeClass);
+                
                 svg.appendChild(path);
             });
         }
@@ -517,6 +624,8 @@
         function processAutoAdvance(matchId) {
             const match = tournamentData.matches[matchId];
             if (!match) return;
+
+            tournamentData.lastUpdated = Date.now();
 
             const s1 = parseInt(match.s1);
             const s2 = parseInt(match.s2);
@@ -554,20 +663,20 @@
         function saveDataToFirebase() {
             if(!isAdmin || !docRef) return;
             updateSyncStatus(false, "Menyimpan...");
-            const pureData = JSON.parse(JSON.stringify(tournamentData)); // Bersihkan tipe data aneh
+            const pureData = JSON.parse(JSON.stringify(tournamentData)); 
             
             docRef.set(pureData).then(() => {
                 updateSyncStatus(true);
             }).catch(error => {
                 console.error("Gagal Simpan:", error);
-                alert("Simpan Gagal!\nPastikan Rules Firestore Anda sudah diatur ke: allow read, write: if true;");
+                alert("Simpan Gagal!\nPastikan Rules Firestore Anda sudah allow read, write: if true;");
                 updateSyncStatus(false, "Gagal Simpan");
             });
         }
 
         function updateSyncStatus(isSuccess, msg = null) {
             const statusDiv = document.getElementById('sync-status');
-            if (isSuccess) statusDiv.innerHTML = '<span class="text-emerald-400 font-medium flex items-center gap-1.5"><i data-lucide="radio" class="w-3.5 h-3.5 animate-pulse"></i> Tersinkron Live</span>';
+            if (isSuccess) statusDiv.innerHTML = '<span class="text-emerald-400 font-medium flex items-center gap-1.5"><i data-lucide="radio" class="w-3.5 h-3.5 animate-pulse"></i> Live</span>';
             else statusDiv.innerHTML = `<span class="text-amber-400 font-medium flex items-center gap-1.5"><i data-lucide="refresh-cw" class="w-3.5 h-3.5 animate-spin"></i> ${msg || 'Memproses...'}</span>`;
             lucide.createIcons();
         }
@@ -587,11 +696,7 @@
             tournamentData.matches['final'] = { t1: '', s1: '', t2: '', s2: '' };
             tournamentData.matches['bronze'] = { t1: '', s1: '', t2: '', s2: '' };
 
-            // Distribusi BYE merata (kiri-kanan)
             let byesCount = bracketSize - actualSize;
-            let r1Keys = Object.keys(tournamentData.matches).filter(k => k.startsWith('r1_'));
-            
-            // Urutkan kunci secara selang-seling (L-R) agar adil
             let sortedR1 = [];
             for(let i=1; i<=halfSize; i++) {
                 sortedR1.push(`r1_l_${i}`);
@@ -607,6 +712,16 @@
             Object.keys(tournamentData.matches).forEach(id => {
                 if(tournamentData.matches[id].t2 === 'BYE') processAutoAdvance(id);
             });
+        }
+
+        function loginAdmin() {
+            const pwd = prompt("Masukkan password Admin (Default: admin):");
+            if (pwd === "admin") { isAdmin = true; applyStateToUI(); }
+            else if (pwd !== null) alert("Password Salah!");
+        }
+
+        function logoutAdmin() {
+            isAdmin = false; applyStateToUI();
         }
 
         function changeSize() {
@@ -629,16 +744,6 @@
             }
         }
 
-        function loginAdmin() {
-            const pwd = prompt("Masukkan password Admin (Default: admin):");
-            if (pwd === "admin") { isAdmin = true; applyStateToUI(); }
-            else if (pwd !== null) alert("Password Salah!");
-        }
-
-        function logoutAdmin() {
-            isAdmin = false; applyStateToUI();
-        }
-
         function changeTheme() {
             if(!isAdmin) return;
             tournamentData.theme = document.getElementById('theme-selector').value;
@@ -654,10 +759,9 @@
         }
 
         const teamNamesPool = [
-            "Fnatic", "Navi", "T1", "Paper Rex", "Loud", "Sentinels", "Gen.G", "DRX",
-            "G2 Esports", "Cloud9", "Team Liquid", "Vitality", "Karmine Corp", "Faze Clan",
-            "RRQ Hoshi", "Evos Legends", "Onic Esports", "Alter Ego", "Bigetron", "Geek Fam",
-            "Zeta Div", "Talon", "Secret", "Boom Esports", "Optic", "NIP", "Leviatan"
+            "Team Liquid", "Cloud9", "Faze Clan", "Gen.G", "Sentinels", "Paper Rex", "Loud", "Fnatic",
+            "Navi", "T1", "DRX", "G2 Esports", "Vitality", "Karmine Corp", "Leviatan", "NIP",
+            "RRQ", "Evos Legends", "Onic", "Alter Ego", "Bigetron", "Geek Fam", "Zeta Div", "Talon"
         ];
 
         function autoFillNames() {
@@ -668,7 +772,6 @@
             Object.keys(tournamentData.matches).forEach(id => {
                 if(id.startsWith('r1_')) {
                     let m = tournamentData.matches[id];
-                    // Loop ulang ke awal jika bank nama habis
                     if (m.t1 === '' && m.t1 !== 'BYE') m.t1 = shuffledNames[teamIndex++ % shuffledNames.length];
                     if (m.t2 === '' && m.t2 !== 'BYE') m.t2 = shuffledNames[teamIndex++ % shuffledNames.length];
                     processAutoAdvance(id);
@@ -706,11 +809,9 @@
             const lines = document.getElementById('bulk-textarea').value.split('\n').map(t => t.trim()).filter(t => t.length > 0);
             if(lines.length === 0) return closeBulkModal();
 
-            // Kumpulkan semua slot ronde 1 yang bukan BYE secara selang-seling (L-R) agar adil
             let availableSlots = [];
             const r1Keys = Object.keys(tournamentData.matches).filter(k => k.startsWith('r1_'));
             
-            // Sort agar kiri dan kanan terdistribusi rapi
             r1Keys.sort((a,b) => {
                let numA = parseInt(a.split('_')[2]); let numB = parseInt(b.split('_')[2]);
                if(numA === numB) return a.includes('l') ? -1 : 1;
@@ -722,7 +823,6 @@
                 if (tournamentData.matches[k].t2 !== 'BYE') availableSlots.push({key: k, slot: 't2'});
             });
 
-            // Isi slot dengan data yang di paste
             availableSlots.forEach((info, idx) => {
                 if(lines[idx] !== undefined) {
                     tournamentData.matches[info.key][info.slot] = lines[idx];
@@ -756,7 +856,6 @@
             });
 
             let idx = 0;
-            // Gunakan metode sort yang sama dengan paste agar distribusinya bagus
             r1Keys.sort((a,b) => parseInt(a.split('_')[2]) - parseInt(b.split('_')[2]));
             r1Keys.forEach(k => {
                 let m = tournamentData.matches[k];
