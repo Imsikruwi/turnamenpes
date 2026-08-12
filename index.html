@@ -30,6 +30,15 @@
     <style>
         body { font-family: 'Inter', system-ui, sans-serif; overflow: hidden; overscroll-behavior: none; color: #f8fafc; }
 
+        :root {
+            --team-font-size: 14px;
+        }
+
+        .team-row input[type="text"] {
+            font-size: var(--team-font-size) !important;
+            line-height: 1.2;
+        }
+
         /* 10 BACKGROUND GRADIENTS */
         @keyframes gradient-xy {
             0% { background-position: 0% 50%; }
@@ -130,10 +139,45 @@
         .is-final { animation: pulse-border 3s infinite; z-index: 15; }
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        /* ANIMASI DETIK JAM */
+        @keyframes tick {
+            0% { transform: translateY(-5px) scale(1.1); opacity: 0.8; }
+            40% { transform: translateY(0) scale(1); opacity: 1; }
+            100% { transform: translateY(0) scale(1); opacity: 1; }
+        }
+        .animate-tick { display: inline-block; animation: tick 1s ease-out infinite; }
+
+        /* ANIMASI DEBU / BINTANG (PARTICLES) */
+        @keyframes floatUp {
+            0% { transform: translateY(0) translateX(0) scale(1); opacity: 0; }
+            10% { opacity: var(--max-opacity, 0.6); }
+            90% { opacity: var(--max-opacity, 0.6); }
+            100% { transform: translateY(-110vh) translateX(20px) scale(0.5); opacity: 0; }
+        }
+
+        /* ANIMASI GARIS MENGALIR (GLOW FLOW DARI A KE B) */
+        @keyframes flow-line {
+            to { stroke-dashoffset: -24; }
+        }
+        .line-active {
+            stroke-dasharray: 12 12;
+            animation: flow-line 1s linear infinite;
+        }
     </style>
 </head>
 
 <body id="app-body" class="theme-emerald bg-grad-1 bg-animated h-screen flex flex-col transition-colors duration-700 relative">
+
+    <!-- PARTICLE CONTAINER (DEBU/BINTANG) -->
+    <div id="particles-container" class="fixed inset-0 pointer-events-none z-[1] overflow-hidden"></div>
+
+    <!-- TOGGLE SETTINGS (POJOK KANAN ATAS) -->
+    <div class="fixed top-4 right-4 z-[70] flex flex-col gap-2 pointer-events-auto">
+        <button onclick="toggleHeaderShrink()" id="btn-toggle-header" class="bg-black/50 backdrop-blur-md border border-white/20 p-2.5 rounded-full text-white hover:bg-white/10 transition shadow-xl" title="Pin / Unpin Header">
+            <i data-lucide="pin" id="icon-header-toggle" class="w-4 h-4"></i>
+        </button>
+    </div>
 
     <!-- Efek Floating Circles (Animasi Background Latar) -->
     <div class="fixed inset-0 overflow-hidden pointer-events-none z-0">
@@ -154,8 +198,8 @@
         
         <!-- Tanggal & Jam Real-time -->
         <div id="clock-container" class="mt-4 flex flex-col items-center text-white drop-shadow-xl transition-all duration-300">
-            <span id="realtime-clock" class="text-4xl md:text-5xl font-black tracking-widest tabular-nums font-mono mb-1 text-transparent bg-clip-text bg-gradient-to-r from-slate-100 to-slate-400">00:00:00</span>
-            <span id="realtime-date" class="text-sm md:text-base font-bold tracking-widest uppercase text-slate-300">HARI, TANGGAL BULAN TAHUN</span>
+            <span id="realtime-clock" class="text-5xl md:text-6xl font-black tracking-widest tabular-nums font-mono mb-2 text-transparent bg-clip-text bg-gradient-to-r from-slate-100 to-slate-400"><span id="clock-hm">00:00:</span><span id="clock-s" class="animate-tick text-amber-300 drop-shadow-md">00</span></span>
+            <span id="realtime-date" class="text-base md:text-lg font-bold tracking-widest uppercase text-slate-300">HARI, TANGGAL BULAN TAHUN</span>
         </div>
 
         <!-- Papan Juara Otomatis (Muncul saat final selesai) -->
@@ -197,8 +241,18 @@
             </div>
 
             <!-- Footer Custom (Periode Turnamen) -->
-            <div class="mt-20 z-20 pointer-events-auto w-full flex justify-center">
+            <div class="mt-20 z-20 pointer-events-auto w-full flex flex-col items-center justify-center gap-4">
                 <input type="text" id="tournament-period" onchange="updatePeriod(this.value)" placeholder="Teks Footer / Tanggal Periode Turnamen" class="bg-transparent text-center border-none outline-none hover:border-b focus:border-b border-white/30 text-slate-400 font-bold tracking-widest text-xs md:text-sm w-full max-w-2xl transition-all placeholder-slate-600 uppercase" readonly>
+                
+                <!-- Link Lokasi Google Maps -->
+                <div class="flex items-center gap-2">
+                    <a href="https://maps.app.goo.gl/reHkx6shAXRKqTq99" id="location-link" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 text-xs md:text-sm text-blue-300 hover:text-blue-200 transition-all bg-blue-900/30 hover:bg-blue-800/40 px-5 py-2.5 rounded-full border border-blue-500/40 shadow-[0_0_15px_rgba(59,130,246,0.2)]">
+                        <i data-lucide="map-pin" class="w-4 h-4"></i> Lokasi Turnamen
+                    </a>
+                    <button id="btn-edit-location" onclick="editLocationPrompt()" class="hidden bg-black/50 backdrop-blur-md border border-white/20 p-2 rounded-full text-slate-300 hover:text-white transition shadow-lg" title="Edit Link Maps">
+                        <i data-lucide="edit-3" class="w-4 h-4"></i>
+                    </button>
+                </div>
             </div>
 
         </div>
@@ -226,14 +280,37 @@
                 <div id="admin-tools" class="hidden flex-wrap justify-end items-center gap-2 bg-black/70 backdrop-blur-md p-2 rounded-xl border border-white/20 shadow-2xl max-w-2xl">
                     
                     <!-- Ukuran -->
-                    <div class="flex items-center gap-1.5 bg-white/5 rounded-lg px-2.5 py-2" title="Jumlah Tim (2-64)">
+                    <div class="flex items-center gap-1.5 bg-white/5 rounded-lg px-2.5 py-2" title="Jumlah Tim (2-32)">
                         <i data-lucide="users" class="w-4 h-4 text-slate-300"></i>
-                        <input type="number" id="size-input" class="w-12 bg-transparent text-center font-bold outline-none text-sm text-white" min="2" max="64" value="16">
-                        <button onclick="changeSize()" class="text-emerald-400 hover:text-emerald-300 hover:scale-110 p-1 rounded transition-transform">
+                        <input type="number" id="size-input" class="w-12 bg-transparent text-center font-bold outline-none text-sm text-white" min="2" max="32" value="16" onkeydown="if(event.key === 'Enter') changeSize()">
+                        <button onclick="changeSize()" class="text-emerald-400 hover:text-emerald-300 hover:scale-110 p-1 rounded transition-transform cursor-pointer pointer-events-auto">
                             <i data-lucide="check" class="w-4 h-4"></i>
                         </button>
                     </div>
                     
+                    <div class="w-px h-6 bg-white/10 mx-1"></div>
+
+                    <!-- Ukuran Font Tim (Perbesar/Perkecil) -->
+                    <div class="flex items-center gap-1.5 bg-white/5 rounded-lg px-2 py-1.5 border border-white/5" title="Perbesar/Perkecil Nama Peserta">
+                        <i data-lucide="type" class="w-4 h-4 text-blue-300"></i>
+                        <button onclick="changeFontSize(-1)" class="p-1 text-slate-300 hover:text-white hover:bg-white/10 rounded transition cursor-pointer pointer-events-auto"><i data-lucide="minus" class="w-3 h-3"></i></button>
+                        <span id="font-size-disp" class="text-xs font-bold text-white min-w-[20px] text-center">14</span>
+                        <button onclick="changeFontSize(1)" class="p-1 text-slate-300 hover:text-white hover:bg-white/10 rounded transition cursor-pointer pointer-events-auto"><i data-lucide="plus" class="w-3 h-3"></i></button>
+                    </div>
+
+                    <div class="w-px h-6 bg-white/10 mx-1"></div>
+
+                    <!-- Efek Partikel Selector -->
+                    <div class="flex items-center gap-1.5 bg-white/5 rounded-lg px-2 py-1.5 border border-white/5" title="Efek Animasi Latar">
+                        <i data-lucide="sparkles" class="w-4 h-4 text-amber-300"></i>
+                        <select id="particle-selector" class="bg-transparent text-xs font-bold outline-none text-white cursor-pointer hover:bg-white/5 transition" onchange="changeParticle()">
+                            <option value="none" class="text-black">Efek: Off</option>
+                            <option value="star" class="text-black">Bintang</option>
+                            <option value="dust" class="text-black">Debu</option>
+                            <option value="bubble" class="text-black">Gelembung</option>
+                        </select>
+                    </div>
+
                     <div class="w-px h-6 bg-white/10 mx-1"></div>
 
                     <!-- 10 Background Selector -->
@@ -351,6 +428,9 @@
 
         let isAdmin = false;
         let svgTimeout;
+        let isHeaderShrinkEnabled = true;
+        let particleInterval;
+        let currentParticleType = null;
         
         let tournamentData = {
             title: "Turnamen Bracket Live",
@@ -360,6 +440,9 @@
             actualSize: 16,  
             theme: "theme-emerald",
             bgTheme: "bg-grad-1",
+            particleType: "star",
+            locationUrl: "https://maps.app.goo.gl/reHkx6shAXRKqTq99",
+            teamFontSize: 14,
             matches: {}
         };
 
@@ -384,54 +467,116 @@
             });
         };
 
-        function setupScrollHeaderBehavior() {
+        // --- Fitur Toggle Pojok Kanan Atas ---
+        function toggleHeaderShrink() {
+            isHeaderShrinkEnabled = !isHeaderShrinkEnabled;
+            document.getElementById('icon-header-toggle').setAttribute('data-lucide', isHeaderShrinkEnabled ? 'pin' : 'pin-off');
+            lucide.createIcons();
+            handleScroll(); // Sesuaikan ulang layout berdasarkan statenya
+        }
+
+        function startParticles(type) {
+            if (particleInterval) clearInterval(particleInterval);
+            if (type === 'none') {
+                const container = document.getElementById('particles-container');
+                if(container) container.innerHTML = '';
+                return;
+            }
+            let freq = type === 'dust' ? 250 : (type === 'bubble' ? 500 : 400);
+            particleInterval = setInterval(() => createParticle(type), freq);
+        }
+
+        function createParticle(type) {
+            const container = document.getElementById('particles-container');
+            if (!container || document.visibilityState !== 'visible') return;
+            
+            const p = document.createElement('div');
+            let size;
+            
+            if (type === 'bubble') {
+                size = Math.random() * 12 + 4; 
+                p.className = 'absolute pointer-events-none border border-white/30 rounded-full bg-white/5 backdrop-blur-sm';
+            } else if (type === 'dust') {
+                size = Math.random() * 4 + 1;
+                p.className = 'absolute pointer-events-none bg-slate-300 rounded-full opacity-60';
+            } else {
+                // star
+                size = Math.random() * 4 + 2; 
+                p.className = 'absolute pointer-events-none bg-amber-200 shadow-[0_0_5px_#fde047] rounded-full';
+            }
+            
+            p.style.width = `${size}px`;
+            p.style.height = `${size}px`;
+            p.style.left = `${Math.random() * 100}vw`;
+            p.style.bottom = '-20px';
+            p.style.setProperty('--max-opacity', Math.random() * 0.5 + 0.2);
+            p.style.animation = `floatUp ${Math.random() * 8 + 6}s linear forwards`;
+            
+            container.appendChild(p);
+            // Hapus elemen setelah animasi selesai (sekitar 14 detik maksimal)
+            setTimeout(() => { if (p.parentNode) p.remove(); }, 14000);
+        }
+
+        // --- Logika Header Menyusut ---
+        function handleScroll() {
             const panContainer = document.getElementById('pan-container');
             const header = document.getElementById('main-header');
             const title = document.getElementById('tournament-title');
             const subtitle = document.getElementById('tournament-subtitle');
             const clockContainer = document.getElementById('clock-container');
 
-            panContainer.addEventListener('scroll', () => {
-                if (panContainer.scrollTop > 40) {
-                    // Header menyusut dan background blur
-                    header.classList.add('bg-slate-900/90', 'backdrop-blur-xl', 'border-b', 'border-white/10', 'shadow-2xl');
-                    header.classList.remove('pt-8', 'pb-6');
-                    header.classList.add('pt-3', 'pb-3');
-                    
-                    title.classList.replace('text-4xl', 'text-2xl');
-                    title.classList.replace('md:text-5xl', 'md:text-3xl');
-                    
-                    subtitle.classList.replace('text-lg', 'text-sm');
-                    subtitle.classList.replace('md:text-xl', 'text-sm');
-                    subtitle.classList.replace('mt-2', 'mt-0');
-                    
-                    clockContainer.classList.add('scale-y-0', 'h-0', 'opacity-0');
-                    clockContainer.classList.remove('mt-4');
-                } else {
-                    // Header kembali membesar (Normal)
-                    header.classList.remove('bg-slate-900/90', 'backdrop-blur-xl', 'border-b', 'border-white/10', 'shadow-2xl');
-                    header.classList.remove('pt-3', 'pb-3');
-                    header.classList.add('pt-8', 'pb-6');
-                    
-                    title.classList.replace('text-2xl', 'text-4xl');
-                    title.classList.replace('md:text-3xl', 'md:text-5xl');
-                    
-                    subtitle.classList.replace('text-sm', 'text-lg');
-                    subtitle.classList.replace('text-sm', 'md:text-xl');
-                    subtitle.classList.replace('mt-0', 'mt-2');
-                    
-                    clockContainer.classList.remove('scale-y-0', 'h-0', 'opacity-0');
-                    clockContainer.classList.add('mt-4');
-                }
-            });
+            if (isHeaderShrinkEnabled && panContainer.scrollTop > 40) {
+                // Header menyusut dan background blur
+                header.classList.add('bg-slate-900/90', 'backdrop-blur-xl', 'border-b', 'border-white/10', 'shadow-2xl');
+                header.classList.remove('pt-8', 'pb-6');
+                header.classList.add('pt-3', 'pb-3');
+                
+                title.classList.replace('text-4xl', 'text-2xl');
+                title.classList.replace('md:text-5xl', 'md:text-3xl');
+                
+                subtitle.classList.replace('text-lg', 'text-sm');
+                subtitle.classList.replace('md:text-xl', 'text-sm');
+                subtitle.classList.replace('mt-2', 'mt-0');
+                
+                clockContainer.classList.add('scale-y-0', 'h-0', 'opacity-0');
+                clockContainer.classList.remove('mt-4');
+            } else {
+                // Header kembali membesar (Normal) atau saat Auto-Shrink mati
+                header.classList.remove('bg-slate-900/90', 'backdrop-blur-xl', 'border-b', 'border-white/10', 'shadow-2xl');
+                header.classList.remove('pt-3', 'pb-3');
+                header.classList.add('pt-8', 'pb-6');
+                
+                title.classList.replace('text-2xl', 'text-4xl');
+                title.classList.replace('md:text-3xl', 'md:text-5xl');
+                
+                subtitle.classList.replace('text-sm', 'text-lg');
+                subtitle.classList.replace('text-sm', 'md:text-xl');
+                subtitle.classList.replace('mt-0', 'mt-2');
+                
+                clockContainer.classList.remove('scale-y-0', 'h-0', 'opacity-0');
+                clockContainer.classList.add('mt-4');
+            }
+        }
+
+        function setupScrollHeaderBehavior() {
+            const panContainer = document.getElementById('pan-container');
+            panContainer.addEventListener('scroll', handleScroll);
         }
 
         function startRealtimeClock() {
-            const clockEl = document.getElementById('realtime-clock');
+            const hmEl = document.getElementById('clock-hm');
+            const sEl = document.getElementById('clock-s');
             const dateEl = document.getElementById('realtime-date');
+            
             setInterval(() => {
                 const now = new Date();
-                clockEl.innerText = now.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+                const hh = now.getHours().toString().padStart(2, '0');
+                const mm = now.getMinutes().toString().padStart(2, '0');
+                const ss = now.getSeconds().toString().padStart(2, '0');
+                
+                hmEl.innerText = `${hh}:${mm}:`;
+                sEl.innerText = ss;
+                
                 dateEl.innerText = now.toLocaleDateString('id-ID', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
             }, 1000);
         }
@@ -482,18 +627,40 @@
             document.getElementById('theme-selector').value = tournamentData.theme || 'theme-emerald';
             document.getElementById('bg-selector').value = tournamentData.bgTheme || 'bg-grad-1';
             
+            const partSel = document.getElementById('particle-selector');
+            if (partSel) partSel.value = tournamentData.particleType || 'star';
+
+            const locLink = document.getElementById('location-link');
+            if (locLink) locLink.href = tournamentData.locationUrl || "https://maps.app.goo.gl/reHkx6shAXRKqTq99";
+            
             const sizeInput = document.getElementById('size-input');
             if (document.activeElement !== sizeInput) sizeInput.value = (tournamentData.actualSize || tournamentData.size || 16).toString();
 
-            const btnLogin = document.getElementById('btn-login');
+            // Setel Ukuran Font Tim
+            const fSize = tournamentData.teamFontSize || 14;
+            document.documentElement.style.setProperty('--team-font-size', `${fSize}px`);
+            const fontDisp = document.getElementById('font-size-disp');
+            if (fontDisp) fontDisp.innerText = fSize;
+
             const adminTools = document.getElementById('admin-tools');
+            const btnEditLoc = document.getElementById('btn-edit-location');
+            const btnLogin = document.getElementById('btn-login'); // <- Variabel ini yang sebelumnya terlewat
             
             if(isAdmin) {
-                btnLogin.classList.add('hidden');
+                if(btnLogin) btnLogin.classList.add('hidden');
                 adminTools.classList.remove('hidden'); adminTools.classList.add('flex');
+                if (btnEditLoc) btnEditLoc.classList.remove('hidden');
             } else {
-                btnLogin.classList.remove('hidden');
+                if(btnLogin) btnLogin.classList.remove('hidden');
                 adminTools.classList.add('hidden'); adminTools.classList.remove('flex');
+                if (btnEditLoc) btnEditLoc.classList.add('hidden');
+            }
+
+            // Sinkronisasi tipe partikel dari Firebase
+            const pType = tournamentData.particleType || 'star';
+            if (currentParticleType !== pType) {
+                currentParticleType = pType;
+                startParticles(pType);
             }
 
             renderBracketDOM();
@@ -574,11 +741,22 @@
 
         function createFinalColumn() {
             const col = document.createElement('div');
-            col.className = 'flex flex-col gap-12 justify-center min-h-full shrink-0 mx-6 z-10 relative';
-            col.innerHTML += `<div class="text-center text-[12px] font-black text-amber-400 bg-amber-500/20 py-1.5 px-6 rounded-full border border-amber-500/40 uppercase tracking-widest backdrop-blur-md self-center shadow-[0_0_15px_rgba(245,158,11,0.2)]">BABAK FINAL</div>`;
-            col.appendChild(createMatchCard('final', null, 'c', true));
-            col.innerHTML += `<div class="text-center text-[10px] font-bold opacity-70 uppercase tracking-widest mt-10 bg-black/40 py-1.5 px-5 rounded-full border border-white/20 backdrop-blur-md self-center text-white">PEREBUTAN JUARA 3</div>`;
-            col.appendChild(createMatchCard('bronze', null, 'c'));
+            col.className = 'flex flex-col items-center justify-center min-h-full shrink-0 mx-6 z-10 relative';
+            
+            // Kotak Final ditaruh di dalam container agar tingginya di tengah layar secara akurat
+            const finalWrapper = document.createElement('div');
+            finalWrapper.className = 'flex flex-col gap-4 items-center relative z-20';
+            finalWrapper.innerHTML = `<div class="text-center text-[12px] font-black text-amber-400 bg-amber-500/20 py-1.5 px-6 rounded-full border border-amber-500/40 uppercase tracking-widest backdrop-blur-md self-center shadow-[0_0_15px_rgba(245,158,11,0.2)]">BABAK FINAL</div>`;
+            finalWrapper.appendChild(createMatchCard('final', null, 'c', true));
+            col.appendChild(finalWrapper);
+
+            // Kotak Juara 3 diposisikan Absolute supaya TIDAK MENGUBAH titik pusat (center) babak Final
+            const bronzeWrapper = document.createElement('div');
+            bronzeWrapper.className = 'absolute top-1/2 mt-[140px] flex flex-col gap-3 items-center z-10 w-full';
+            bronzeWrapper.innerHTML = `<div class="text-center text-[10px] font-bold opacity-70 uppercase tracking-widest bg-black/40 py-1.5 px-5 rounded-full border border-white/20 backdrop-blur-md self-center text-white">PEREBUTAN JUARA 3</div>`;
+            bronzeWrapper.appendChild(createMatchCard('bronze', null, 'c'));
+            col.appendChild(bronzeWrapper);
+            
             return col;
         }
 
@@ -625,10 +803,10 @@
             if (match.t2 === 'BYE') t2C = 'opacity-30 italic font-normal text-slate-400';
 
             const getReadOnly = () => isAdmin ? '' : 'readonly';
-            // Menghilangkan label angka "1" dan "2", menambahkan padding kiri px-3 pada text input
+            // Menghapus text-[14px] agar diwariskan dari CSS Variabel `--team-font-size` secara dinamis
             const getInpCls = (isScore, clr) => isScore 
                 ? `w-14 h-full text-center text-[15px] font-bold outline-none transition-colors pointer-events-auto ${clr} ${isAdmin?'border-l border-white/10 cursor-text focus:bg-white/20':'border-l border-white/10'}`
-                : `w-full pl-4 pr-2 text-[14px] font-semibold bg-transparent border-none outline-none transition-colors pointer-events-auto placeholder-slate-500 ${clr} ${isAdmin?'focus:bg-white/10':''}`;
+                : `w-full pl-4 pr-2 font-semibold bg-transparent border-none outline-none transition-colors pointer-events-auto placeholder-slate-500 ${clr} ${isAdmin?'focus:bg-white/10':''}`;
 
             card.innerHTML = `
                 <div class="bg-black/40 px-3 py-1.5 flex justify-between items-center text-[9px] tracking-wider border-b border-white/10 backdrop-blur-sm min-h-[30px]">
@@ -686,7 +864,10 @@
                 endY = (endRect.top - containerRect.top) + (endRect.height / 2);
 
                 const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
-                let d = `M ${startX} ${startY} L ${startX + (side==='l'?1:-1)*(Math.abs(endX-startX)/2)} ${startY} L ${startX + (side==='l'?1:-1)*(Math.abs(endX-startX)/2)} ${endY} L ${endX} ${endY}`;
+                
+                // Menggunakan Cubic Bezier Curve agar garis melengkung indah dan tidak pernah bersilangan memotong kotak lainnya
+                const midX = startX + (side==='l'?1:-1)*(Math.abs(endX-startX)/2);
+                const d = `M ${startX} ${startY} C ${midX} ${startY}, ${midX} ${endY}, ${endX} ${endY}`;
 
                 path.setAttribute('d', d); path.setAttribute('class', strokeClass);
                 svg.appendChild(path);
@@ -813,16 +994,43 @@
 
         function logoutAdmin() { isAdmin = false; applyStateToUI(); }
 
+        function changeFontSize(diff) {
+            if(!isAdmin) return;
+            let currentSize = tournamentData.teamFontSize || 14;
+            currentSize += diff;
+            
+            // Batas ukuran (min 10px, max 30px)
+            if (currentSize < 10) currentSize = 10;
+            if (currentSize > 30) currentSize = 30;
+            
+            tournamentData.teamFontSize = currentSize;
+            saveDataToFirebase(); applyStateToUI();
+        }
+
         function changeSize() {
             if(!isAdmin) return;
-            const inputVal = parseInt(document.getElementById('size-input').value);
-            if(isNaN(inputVal) || inputVal < 2 || inputVal > 64) return alert("Min 2, Max 64");
+            const sizeInput = document.getElementById('size-input');
+            const inputVal = parseInt(sizeInput.value);
+            
+            if(isNaN(inputVal) || inputVal < 2 || inputVal > 32) {
+                alert("Jumlah tim minimal 2 dan maksimal 32!");
+                sizeInput.value = tournamentData.actualSize;
+                return;
+            }
+            
             if(confirm(`Membuat bagan baru untuk ${inputVal} tim akan MENGHAPUS semua nama & skor. Lanjut?`)) {
                 tournamentData.actualSize = inputVal;
-                let bSize = 2; while (bSize < inputVal) bSize *= 2; if (bSize < 4) bSize = 4;
-                tournamentData.size = bSize; generateEmptyMatches(bSize, inputVal);
-                saveDataToFirebase(); applyStateToUI();
-            } else document.getElementById('size-input').value = tournamentData.actualSize; 
+                let bSize = 2; 
+                while (bSize < inputVal) bSize *= 2; 
+                if (bSize < 4) bSize = 4;
+                
+                tournamentData.size = bSize; 
+                generateEmptyMatches(bSize, inputVal);
+                saveDataToFirebase(); 
+                applyStateToUI();
+            } else {
+                sizeInput.value = tournamentData.actualSize; 
+            }
         }
 
         function changeThemeAndBg() {
@@ -830,6 +1038,22 @@
             tournamentData.theme = document.getElementById('theme-selector').value;
             tournamentData.bgTheme = document.getElementById('bg-selector').value;
             saveDataToFirebase(); applyStateToUI();
+        }
+
+        function changeParticle() {
+            if(!isAdmin) return;
+            tournamentData.particleType = document.getElementById('particle-selector').value;
+            saveDataToFirebase(); applyStateToUI();
+        }
+
+        function editLocationPrompt() {
+            if(!isAdmin) return;
+            const current = tournamentData.locationUrl || "https://maps.app.goo.gl/reHkx6shAXRKqTq99";
+            const newUrl = prompt("Masukkan Link Google Maps Baru (URL):", current);
+            if(newUrl !== null && newUrl.trim() !== "") {
+                tournamentData.locationUrl = newUrl.trim();
+                saveDataToFirebase(); applyStateToUI();
+            }
         }
 
         function resetData() {
