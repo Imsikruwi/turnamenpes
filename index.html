@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bagan Turnamen - Live</title>
+    <title>Bagan Turnamen</title>
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -15,7 +15,7 @@
             theme: {
                 extend: {
                     colors: {
-                        dark: { 900: '#0F172A', 800: '#1E293B', 700: '#334155' }
+                        slate: { 750: '#293548', 850: '#151f32' }
                     }
                 }
             }
@@ -23,54 +23,54 @@
     </script>
 
     <style>
-        body { font-family: 'Inter', sans-serif; overflow: hidden; overscroll-behavior: none; }
+        body { font-family: 'Inter', system-ui, sans-serif; overflow: hidden; overscroll-behavior: none; }
         
-        /* Tema Gelap (Default) */
-        .theme-dark { background-color: #0F172A; color: #F8FAFC; }
-        .theme-dark .bracket-card { background-color: #1E293B; border-color: #334155; }
+        /* Palet Profesional Baru */
+        /* Tema Gelap (Slate/Modern) */
+        .theme-dark { background-color: #0f172a; color: #f8fafc; }
+        .theme-dark .bracket-card { background-color: #1e293b; border-color: #334155; }
         .theme-dark .bracket-card:hover { border-color: #475569; }
         .theme-dark .team-row { border-color: #334155; }
-        .theme-dark .admin-bg { background-color: #0F172A; border-color: #334155; }
+        .theme-dark .admin-bg { background-color: #0f172a; border-color: #334155; }
         
-        /* Tema Biru */
-        .theme-blue { background-color: #0c1527; color: #F8FAFC; }
-        .theme-blue .bracket-card { background-color: #132442; border-color: #213e73; }
-        .theme-blue .bracket-card:hover { border-color: #3058a3; }
-        .theme-blue .team-row { border-color: #1a315a; }
-        .theme-blue .admin-bg { background-color: #0c1527; border-color: #213e73; }
+        /* Tema Biru (Navy Professional) */
+        .theme-blue { background-color: #0A192F; color: #E2E8F0; }
+        .theme-blue .bracket-card { background-color: #112240; border-color: #233554; }
+        .theme-blue .bracket-card:hover { border-color: #303C55; }
+        .theme-blue .team-row { border-color: #233554; }
+        .theme-blue .admin-bg { background-color: #0A192F; border-color: #233554; }
         
-        /* Tema Terang (Fixed) */
+        /* Tema Terang (Clean White) */
         .theme-light { background-color: #F8FAFC; color: #0F172A; }
-        .theme-light .bracket-card { background-color: white; border-color: #CBD5E1; }
-        .theme-light .bracket-card:hover { border-color: #94A3B8; }
-        .theme-light .team-row { border-color: #E2E8F0; }
-        .theme-light .admin-bg { background-color: #F1F5F9; border-color: #CBD5E1; }
-        .theme-light .text-white { color: #0F172A !important; }
+        .theme-light .bracket-card { background-color: #FFFFFF; border-color: #E2E8F0; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); }
+        .theme-light .bracket-card:hover { border-color: #CBD5E1; }
+        .theme-light .team-row { border-color: #F1F5F9; }
+        .theme-light .admin-bg { background-color: #F8FAFC; border-color: #E2E8F0; }
+        .theme-light input { color: #0F172A !important; }
+        .theme-light .bg-black\/20 { background-color: #F1F5F9 !important; }
         
-        /* Tema Merah (Ruby) */
-        .theme-red { background-color: #2a0f12; color: #F8FAFC; }
-        .theme-red .bracket-card { background-color: #40151a; border-color: #73212b; }
-        .theme-red .bracket-card:hover { border-color: #a3303d; }
-        .theme-red .team-row { border-color: #5a1a22; }
-        .theme-red .admin-bg { background-color: #2a0f12; border-color: #73212b; }
+        /* Tema Merah (Ruby Elegant) */
+        .theme-red { background-color: #2C1115; color: #F8FAFC; }
+        .theme-red .bracket-card { background-color: #43171D; border-color: #5E1D27; }
+        .theme-red .bracket-card:hover { border-color: #792432; }
+        .theme-red .team-row { border-color: #5E1D27; }
+        .theme-red .admin-bg { background-color: #2C1115; border-color: #5E1D27; }
 
-        /* Tema Hijau (Emerald) */
-        .theme-emerald { background-color: #0f2a1b; color: #F8FAFC; }
-        .theme-emerald .bracket-card { background-color: #154029; border-color: #21734b; }
-        .theme-emerald .bracket-card:hover { border-color: #30a36a; }
-        .theme-emerald .team-row { border-color: #1a5a38; }
-        .theme-emerald .admin-bg { background-color: #0f2a1b; border-color: #21734b; }
+        /* Tema Hijau (Forest) */
+        .theme-emerald { background-color: #0B2519; color: #F8FAFC; }
+        .theme-emerald .bracket-card { background-color: #113826; border-color: #195238; }
+        .theme-emerald .bracket-card:hover { border-color: #206847; }
+        .theme-emerald .team-row { border-color: #195238; }
+        .theme-emerald .admin-bg { background-color: #0B2519; border-color: #195238; }
 
-        /* Tema Ungu (Amethyst) */
-        .theme-purple { background-color: #1a0f2a; color: #F8FAFC; }
-        .theme-purple .bracket-card { background-color: #281540; border-color: #462173; }
-        .theme-purple .bracket-card:hover { border-color: #6330a3; }
-        .theme-purple .team-row { border-color: #381a5a; }
-        .theme-purple .admin-bg { background-color: #1a0f2a; border-color: #462173; }
+        /* Tema Ungu (Deep Amethyst) */
+        .theme-purple { background-color: #190F26; color: #F8FAFC; }
+        .theme-purple .bracket-card { background-color: #25173A; border-color: #382257; }
+        .theme-purple .bracket-card:hover { border-color: #492D73; }
+        .theme-purple .team-row { border-color: #382257; }
+        .theme-purple .admin-bg { background-color: #190F26; border-color: #382257; }
 
         /* General UI Elements */
-        .team-name, .score-input { color: inherit; } 
-
         .match-card {
             width: 210px;
             margin-bottom: 1.5rem;
@@ -78,153 +78,147 @@
             z-index: 10;
         }
 
-        .line-path { stroke-width: 2; fill: none; transition: all 0.3s ease; }
+        .line-path { stroke-width: 1.5; fill: none; transition: all 0.3s ease; }
         
         @keyframes pulse-border {
-            0% { border-color: #f59e0b; }
-            50% { border-color: #fbbf24; box-shadow: 0 0 15px rgba(245, 158, 11, 0.4); }
-            100% { border-color: #f59e0b; }
+            0% { border-color: rgba(245, 158, 11, 0.5); }
+            50% { border-color: rgba(245, 158, 11, 1); box-shadow: 0 0 15px rgba(245, 158, 11, 0.3); }
+            100% { border-color: rgba(245, 158, 11, 0.5); }
         }
-        .is-final { animation: pulse-border 2.5s infinite; }
+        .is-final { animation: pulse-border 3s infinite; }
         
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
-        /* Efek Pencarian (Highlight) */
+        /* Highlight Search Cerdas */
         .highlight-search {
-            box-shadow: inset 0 0 0 2px #facc15 !important;
-            background-color: rgba(250, 204, 21, 0.2) !important;
+            background-color: rgba(250, 204, 21, 0.25) !important;
+            box-shadow: inset 0 0 0 1px rgba(250, 204, 21, 0.5) !important;
+            color: #facc15 !important;
+            font-weight: bold;
             transition: all 0.2s;
         }
-
-        #bracket-container {
-            transform-origin: top left;
-            transition: transform 0.25s ease-out;
+        .theme-light .highlight-search {
+            background-color: rgba(250, 204, 21, 0.4) !important;
+            color: #854d0e !important;
         }
     </style>
 </head>
-<body class="theme-dark h-screen flex flex-col">
+<body class="theme-dark h-screen flex flex-col transition-colors duration-300">
 
-    <!-- Header Responsif (Kolom di HP, Baris di PC) -->
-    <header class="bg-black/30 backdrop-blur-md border-b border-white/10 px-4 py-3 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4 shrink-0 z-50 sticky top-0 shadow-lg">
-        <div class="flex items-center gap-3 w-full lg:w-1/3">
-            <div class="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center shrink-0 shadow-lg shadow-blue-500/30">
-                <i data-lucide="trophy" class="w-6 h-6 text-white"></i>
+    <!-- Header -->
+    <header class="bg-black/20 backdrop-blur-md border-b border-white/5 px-4 py-3 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 shrink-0 z-50 sticky top-0 shadow-sm">
+        <div class="flex items-center gap-3 w-full md:w-1/3">
+            <div class="w-10 h-10 bg-gradient-to-br from-indigo-500 to-blue-600 rounded-lg flex items-center justify-center shrink-0 shadow-lg">
+                <i data-lucide="trophy" class="w-5 h-5 text-white"></i>
             </div>
             <div class="flex-1">
-                <input type="text" id="tournament-title" onchange="updateTitle(this.value)" placeholder="Nama Turnamen..." class="font-bold text-lg md:text-xl bg-transparent border-none outline-none focus:border-b border-blue-500 w-full text-white" readonly>
-                <div class="text-xs text-gray-400 mt-0.5" id="sync-status">Menghubungkan ke server...</div>
+                <input type="text" id="tournament-title" onchange="updateTitle(this.value)" placeholder="Nama Turnamen..." class="font-bold text-lg md:text-xl bg-transparent border-none outline-none focus:border-b border-blue-500/50 w-full text-[inherit] transition-all" readonly>
+                <div class="text-[11px] text-slate-400 mt-0.5 tracking-wide" id="sync-status">Menghubungkan...</div>
             </div>
-            <!-- Tombol Login (Pindah ke atas di HP agar tidak tertumpuk) -->
-            <button onclick="loginAdmin()" class="lg:hidden bg-blue-600 hover:bg-blue-700 text-white px-3 py-2 rounded-md text-sm flex items-center gap-2 transition whitespace-nowrap" id="btn-login-mobile">
-                <i data-lucide="key" class="w-4 h-4"></i> Login
-            </button>
         </div>
 
-        <div class="flex flex-wrap items-center gap-2 w-full lg:w-auto" id="toolbar">
-            <!-- Tombol Login (Desktop) -->
-            <button onclick="loginAdmin()" class="hidden lg:flex bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm items-center gap-2 transition shadow-lg shadow-blue-500/20" id="btn-login-desktop">
-                <i data-lucide="key" class="w-4 h-4"></i> Login Admin
-            </button>
-
+        <div class="flex flex-wrap items-center gap-2 w-full md:w-auto" id="toolbar">
             <!-- Admin View -->
-            <div id="admin-tools" class="hidden flex-wrap items-center gap-2 w-full lg:w-auto">
-                <div class="flex items-center gap-1 bg-black/20 border border-white/10 rounded-md px-2 py-1.5" title="Ketik angka peserta, sisanya jadi BYE">
-                    <span class="text-xs font-semibold uppercase opacity-70">Tim:</span>
-                    <input type="number" id="size-input" class="w-10 bg-transparent border-b border-white/30 text-center font-bold outline-none text-sm text-white" min="2" max="64" value="16">
-                    <button onclick="changeSize()" class="bg-blue-600 hover:bg-blue-500 text-white p-1 rounded transition">
-                        <i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i>
+            <div id="admin-tools" class="hidden flex-wrap items-center gap-2 w-full md:w-auto bg-black/10 p-1.5 rounded-lg border border-white/5">
+                <div class="flex items-center gap-1 bg-black/20 rounded-md px-2 py-1.5" title="Jumlah Tim (2-64)">
+                    <i data-lucide="users" class="w-3.5 h-3.5 text-slate-400"></i>
+                    <input type="number" id="size-input" class="w-10 bg-transparent text-center font-semibold outline-none text-sm text-[inherit]" min="2" max="64" value="16">
+                    <button onclick="changeSize()" class="text-blue-400 hover:text-blue-300 p-0.5 rounded transition">
+                        <i data-lucide="check" class="w-4 h-4"></i>
                     </button>
                 </div>
                 
-                <select id="theme-selector" class="bg-black/20 border border-white/10 text-xs md:text-sm font-semibold rounded-md px-2 py-2 outline-none text-white" onchange="changeTheme()">
-                    <option value="theme-dark" class="text-black">🌙 Gelap</option>
-                    <option value="theme-light" class="text-black">☀️ Terang</option>
-                    <option value="theme-blue" class="text-black">🌊 Biru</option>
-                    <option value="theme-red" class="text-black">🔥 Merah</option>
-                    <option value="theme-emerald" class="text-black">🌲 Hijau</option>
-                    <option value="theme-purple" class="text-black">🔮 Ungu</option>
+                <div class="w-px h-5 bg-white/10 mx-1"></div>
+
+                <select id="theme-selector" class="bg-black/20 border-none text-xs md:text-sm font-medium rounded-md px-2 py-1.5 outline-none text-[inherit] cursor-pointer" onchange="changeTheme()">
+                    <option value="theme-dark" class="text-black">🌙 Modern Dark</option>
+                    <option value="theme-light" class="text-black">☀️ Clean Light</option>
+                    <option value="theme-blue" class="text-black">🌊 Navy Blue</option>
+                    <option value="theme-red" class="text-black">🔥 Ruby Red</option>
+                    <option value="theme-emerald" class="text-black">🌲 Forest Green</option>
+                    <option value="theme-purple" class="text-black">🔮 Deep Amethyst</option>
                 </select>
 
-                <div class="h-6 w-px bg-white/20 mx-1 hidden sm:block"></div>
+                <div class="w-px h-5 bg-white/10 mx-1"></div>
 
-                <!-- Modifikasi Tombol Admin -->
-                <button onclick="openBulkModal()" class="bg-indigo-600/20 hover:bg-indigo-600/40 text-indigo-400 border border-indigo-600/50 px-2 py-1.5 rounded-md text-xs md:text-sm flex items-center gap-1.5 transition font-medium">
-                    <i data-lucide="clipboard-paste" class="w-4 h-4"></i> Paste Tim
+                <button onclick="openBulkModal()" class="bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-300 px-2 py-1.5 rounded-md text-xs md:text-sm flex items-center gap-1.5 transition font-medium">
+                    <i data-lucide="clipboard-paste" class="w-4 h-4"></i> Paste
                 </button>
                 
-                <button onclick="shuffleTeams()" class="bg-purple-600/20 hover:bg-purple-600/40 text-purple-400 border border-purple-600/50 px-2 py-1.5 rounded-md text-xs md:text-sm flex items-center gap-1.5 transition font-medium" title="Acak urutan tim yang sudah diinput">
-                    <i data-lucide="shuffle" class="w-4 h-4"></i> Acak Posisi
+                <button onclick="shuffleTeams()" class="bg-purple-500/10 hover:bg-purple-500/20 text-purple-300 px-2 py-1.5 rounded-md text-xs md:text-sm flex items-center gap-1.5 transition font-medium">
+                    <i data-lucide="shuffle" class="w-4 h-4"></i> Acak
                 </button>
 
-                <button onclick="autoFillNames()" class="bg-emerald-600/20 hover:bg-emerald-600/40 text-emerald-400 border border-emerald-600/50 px-2 py-1.5 rounded-md text-xs md:text-sm flex items-center gap-1.5 transition font-medium" title="Isi dengan tim palsu">
-                    <i data-lucide="bot" class="w-4 h-4"></i> Auto Tim
+                <!-- Dropdown Tes Fitur -->
+                <div class="relative group">
+                    <button class="bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-300 px-2 py-1.5 rounded-md text-xs md:text-sm flex items-center gap-1.5 transition font-medium">
+                        Tes Fitur <i data-lucide="chevron-down" class="w-3 h-3"></i>
+                    </button>
+                    <!-- Kotak Dropdown (Muncul saat di-hover) -->
+                    <div class="absolute right-0 top-full mt-1 hidden group-hover:block w-36 bg-slate-800 border border-slate-700 rounded-md shadow-xl overflow-hidden z-[100]">
+                        <button onclick="autoFillNames()" class="w-full text-left px-3 py-2 hover:bg-slate-700 text-xs md:text-sm text-slate-200 transition flex items-center gap-2">
+                            <i data-lucide="bot" class="w-4 h-4"></i> Auto Tim
+                        </button>
+                        <button onclick="autoFillScores()" class="w-full text-left px-3 py-2 hover:bg-slate-700 text-xs md:text-sm text-slate-200 transition flex items-center gap-2">
+                            <i data-lucide="dices" class="w-4 h-4"></i> Acak Skor
+                        </button>
+                    </div>
+                </div>
+
+                <div class="w-px h-5 bg-white/10 mx-1"></div>
+                
+                <button onclick="resetData()" class="bg-red-500/10 hover:bg-red-500/20 text-red-400 px-2 py-1.5 rounded-md text-xs md:text-sm flex items-center gap-1.5 transition font-medium" title="Hapus Data">
+                    <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
                 </button>
                 
-                <button onclick="autoFillScores()" class="bg-amber-600/20 hover:bg-amber-600/40 text-amber-400 border border-amber-600/50 px-2 py-1.5 rounded-md text-xs md:text-sm flex items-center gap-1.5 transition font-medium">
-                    <i data-lucide="dices" class="w-4 h-4"></i> Acak Skor
-                </button>
-                
-                <button onclick="resetData()" class="bg-red-600/20 hover:bg-red-600/40 text-red-400 border border-red-600/50 px-2 py-1.5 rounded-md text-xs md:text-sm flex items-center gap-1.5 transition font-medium">
-                    <i data-lucide="trash-2" class="w-4 h-4"></i> Reset
-                </button>
-                
-                <button onclick="logoutAdmin()" class="bg-white/10 hover:bg-white/20 px-2 py-1.5 rounded-md text-xs md:text-sm transition text-white">
-                    Keluar
+                <button onclick="logoutAdmin()" class="bg-white/5 hover:bg-white/10 px-2 py-1.5 rounded-md text-xs md:text-sm transition text-slate-300" title="Keluar">
+                    <i data-lucide="log-out" class="w-4 h-4"></i>
                 </button>
             </div>
         </div>
     </header>
 
-    <!-- Canvas Bagan -->
     <main class="flex-1 overflow-auto bg-transparent no-scrollbar relative" id="pan-container" style="cursor: grab;">
-        <!-- Wrapper tambahan untuk mempermudah sistem Zoom / Fit Screen -->
-        <div id="zoom-wrapper" class="relative p-8 md:p-16 w-max min-w-full h-max min-h-full flex items-center justify-center">
+        <div id="zoom-wrapper" class="relative p-12 md:p-24 w-max min-w-full h-max min-h-full flex items-center justify-center">
             <div id="bracket-container" class="relative w-max h-max">
                 <svg id="svg-lines" class="absolute top-0 left-0 pointer-events-none z-0 overflow-visible"></svg>
                 <div id="bracket-content" class="flex gap-8 md:gap-16 items-center justify-center relative z-10 w-full h-full">
-                    <!-- Injeksi JS -->
+                    <!-- Bagan Di-Render Disini -->
                 </div>
             </div>
         </div>
     </main>
 
-    <!-- Floating Bottom Bar (Pencarian & Zoom) -->
-    <div class="fixed bottom-0 left-0 right-0 bg-black/60 backdrop-blur-md border-t border-white/10 p-3 flex justify-between items-center z-50">
-        <!-- Pencarian Publik -->
-        <div class="flex items-center bg-black/40 border border-white/20 rounded-full px-3 py-1.5 w-48 md:w-64 focus-within:border-amber-400 transition-colors">
-            <i data-lucide="search" class="w-4 h-4 text-gray-400 mr-2"></i>
-            <input type="text" placeholder="Cari Tim..." oninput="searchTeam(this.value)" class="bg-transparent border-none outline-none text-sm text-white w-full placeholder-gray-500">
+    <!-- Bottom Bar (Search & Login Admin) -->
+    <div class="fixed bottom-0 left-0 right-0 bg-black/40 backdrop-blur-lg border-t border-white/5 p-3 flex justify-between items-center z-50">
+        <!-- Fitur Search dengan Datalist -->
+        <div class="flex items-center bg-black/40 border border-white/10 rounded-full px-3 py-1.5 w-56 md:w-72 focus-within:border-blue-500/50 transition-colors shadow-inner">
+            <i data-lucide="search" class="w-4 h-4 text-slate-400 mr-2 shrink-0"></i>
+            <input type="text" list="team-list" placeholder="Cari Tim di Bagan..." oninput="searchTeam(this.value)" class="bg-transparent border-none outline-none text-sm text-[inherit] w-full placeholder-slate-500">
+            <datalist id="team-list">
+                <!-- Diisi otomatis oleh JS -->
+            </datalist>
         </div>
 
-        <!-- Zoom Controls -->
-        <div class="flex items-center gap-1.5 bg-black/40 border border-white/20 rounded-lg p-1">
-            <button onclick="changeZoom(-0.1)" class="p-1.5 hover:bg-white/10 text-white rounded transition" title="Zoom Out">
-                <i data-lucide="zoom-out" class="w-4 h-4"></i>
-            </button>
-            <span id="zoom-text" class="text-xs font-bold text-white w-10 text-center">100%</span>
-            <button onclick="changeZoom(0.1)" class="p-1.5 hover:bg-white/10 text-white rounded transition" title="Zoom In">
-                <i data-lucide="zoom-in" class="w-4 h-4"></i>
-            </button>
-            <div class="w-px h-4 bg-white/20 mx-1"></div>
-            <button onclick="fitScreen()" class="px-2 py-1.5 bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold rounded flex items-center gap-1 transition shadow" title="Fit to Screen 1080p">
-                <i data-lucide="maximize" class="w-3 h-3"></i> Fit Layar
-            </button>
-        </div>
+        <!-- Tombol Login (Hanya muncul jika belum login) -->
+        <button onclick="loginAdmin()" id="btn-login-bottom" class="bg-white/10 hover:bg-white/20 text-white px-3 py-1.5 rounded-md text-xs font-medium flex items-center gap-1.5 transition">
+            <i data-lucide="key" class="w-3.5 h-3.5"></i> Admin
+        </button>
     </div>
 
-    <!-- Modal Paste Input (Bulk) -->
+    <!-- Modal Paste Input -->
     <div id="bulk-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-[100] hidden flex items-center justify-center p-4">
         <div class="bg-slate-900 border border-slate-700 rounded-xl p-5 w-full max-w-md shadow-2xl">
             <div class="flex justify-between items-center mb-4">
-                <h3 class="text-white font-bold text-lg flex items-center gap-2"><i data-lucide="clipboard-paste"></i> Paste Daftar Tim</h3>
-                <button onclick="closeBulkModal()" class="text-slate-400 hover:text-white"><i data-lucide="x"></i></button>
+                <h3 class="text-white font-bold text-lg flex items-center gap-2"><i data-lucide="clipboard-paste" class="w-5 h-5 text-indigo-400"></i> Paste Daftar Tim</h3>
+                <button onclick="closeBulkModal()" class="text-slate-400 hover:text-white transition"><i data-lucide="x"></i></button>
             </div>
-            <p class="text-xs text-slate-400 mb-3">Copy dari Notepad/Excel dan Paste di bawah ini (Satu tim per baris). Sistem akan otomatis mengabaikan slot "BYE".</p>
-            <textarea id="bulk-textarea" class="w-full h-48 bg-slate-800 border border-slate-600 rounded p-3 text-sm text-white outline-none focus:border-blue-500" placeholder="Contoh:&#10;RRQ Hoshi&#10;Evos Legends&#10;Onic Esports..."></textarea>
+            <p class="text-xs text-slate-400 mb-3 leading-relaxed">Copy dari Excel/Notepad lalu paste di bawah. Setiap baris (enter) dihitung sebagai 1 tim. Sistem akan mengisi dari sayap kiri ke kanan secara adil.</p>
+            <textarea id="bulk-textarea" class="w-full h-48 bg-slate-800/50 border border-slate-700 rounded-lg p-3 text-sm text-slate-200 outline-none focus:border-indigo-500 transition-colors" placeholder="Contoh:&#10;Fnatic&#10;Navi&#10;T1&#10;Paper Rex"></textarea>
             <div class="flex justify-end gap-2 mt-4">
-                <button onclick="closeBulkModal()" class="px-4 py-2 rounded text-sm text-slate-300 hover:bg-slate-800 transition">Batal</button>
-                <button onclick="saveBulkModal()" class="px-4 py-2 rounded text-sm bg-blue-600 hover:bg-blue-500 text-white font-bold transition">Simpan Daftar Tim</button>
+                <button onclick="closeBulkModal()" class="px-4 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-slate-800 transition">Batal</button>
+                <button onclick="saveBulkModal()" class="px-4 py-2 rounded-lg text-sm font-medium bg-indigo-600 hover:bg-indigo-500 text-white shadow-lg transition">Simpan & Terapkan</button>
             </div>
         </div>
     </div>
@@ -236,20 +230,18 @@
     <script>
         lucide.createIcons();
 
-        // 1. STATE & KONFIGURASI
         let isAdmin = false;
         let svgTimeout;
-        let zoomLevel = 1;
         
         let tournamentData = {
-            title: "Turnamen PES 2026",
+            title: "Turnamen Bracket Live",
             size: 16,        
             actualSize: 16,  
             theme: "theme-dark",
             matches: {}
         };
 
-        // KONFIGURASI FIREBASE (SUDAH MILIK ANDA SESUAI SCREENSHOT)
+        // KONFIGURASI FIREBASE ANDA
         const firebaseConfig = {
             apiKey: "AIzaSyA1hCoZklSfmy9ntHFFBvnQk6puBvX6aUI",
             authDomain: "turnamen-bracket-afe1e.firebaseapp.com",
@@ -261,18 +253,15 @@
 
         let db, docRef;
 
-        // 2. INISIALISASI
         window.onload = () => {
             try {
                 if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
                 db = firebase.firestore();
                 docRef = db.collection('turnamen').doc('data_bagan');
 
-                // Listener Realtime (Tanpa Authentication agar aman di Github)
                 docRef.onSnapshot((doc) => {
                     if (doc.exists) {
                         const data = doc.data();
-                        // Jika dokumen baru dibuat dan kosong (matches tidak ada)
                         if (!data.matches || Object.keys(data.matches).length === 0) {
                             generateEmptyMatches(16, 16);
                             if (isAdmin) saveDataToFirebase();
@@ -280,21 +269,22 @@
                             tournamentData = { ...tournamentData, ...data };
                         }
                     } else {
-                        // Jika database benar-benar kosong dari sananya
                         generateEmptyMatches(16, 16);
                         if(isAdmin) saveDataToFirebase(); 
                     }
-
                     applyStateToUI();
                     updateSyncStatus(true);
                 }, (error) => {
-                    console.error("Firebase Error:", error);
-                    updateSyncStatus(false, error.message);
+                    console.error("Firebase Sync Error:", error);
+                    updateSyncStatus(false, "Terputus");
                 });
-
             } catch (error) {
                 console.error("Init Error:", error);
-                updateSyncStatus(false, "Koneksi Terputus");
+                updateSyncStatus(false, "Koneksi Error");
+                
+                // Fallback Offline agar tetap bisa diakses tanpa internet
+                generateEmptyMatches(16, 16);
+                applyStateToUI();
             }
 
             window.addEventListener('resize', () => {
@@ -304,16 +294,16 @@
             setupPanZoom();
         };
 
-        // 3. RENDER UI
+        /* --- UI RENDER LOGIC --- */
         function applyStateToUI() {
             const titleInput = document.getElementById('tournament-title');
             if (document.activeElement !== titleInput) {
-                titleInput.value = tournamentData.title || "Turnamen PES";
+                titleInput.value = tournamentData.title || "Turnamen Bracket Live";
             }
             if(isAdmin) titleInput.removeAttribute('readonly');
             else titleInput.setAttribute('readonly', true);
 
-            document.body.className = `h-screen flex flex-col overflow-hidden ${tournamentData.theme || 'theme-dark'}`;
+            document.body.className = `h-screen flex flex-col transition-colors duration-300 ${tournamentData.theme || 'theme-dark'}`;
             document.getElementById('theme-selector').value = tournamentData.theme || 'theme-dark';
             
             const sizeInput = document.getElementById('size-input');
@@ -321,11 +311,32 @@
                 sizeInput.value = (tournamentData.actualSize || tournamentData.size || 16).toString();
             }
 
+            // Atur Visibilitas Tombol Admin
+            document.getElementById('btn-login-bottom').classList.toggle('hidden', isAdmin);
+            const adminTools = document.getElementById('admin-tools');
+            if(isAdmin) {
+                adminTools.classList.remove('hidden'); adminTools.classList.add('flex');
+            } else {
+                adminTools.classList.add('hidden'); adminTools.classList.remove('flex');
+            }
+
             renderBracketDOM();
+            updateDatalist();
             
-            // Jeda agar DOM dan flexbox matang sebelum gambar garis SVG
             clearTimeout(svgTimeout);
             svgTimeout = setTimeout(drawLines, 150);
+        }
+
+        function updateDatalist() {
+            let allTeams = new Set();
+            Object.values(tournamentData.matches).forEach(m => {
+                if(m.t1 && m.t1 !== 'BYE') allTeams.add(m.t1);
+                if(m.t2 && m.t2 !== 'BYE') allTeams.add(m.t2);
+            });
+            const datalist = document.getElementById('team-list');
+            if (datalist) {
+                datalist.innerHTML = Array.from(allTeams).map(t => `<option value="${t}">`).join('');
+            }
         }
 
         function updateTitle(val) {
@@ -341,15 +352,15 @@
             const size = parseInt(tournamentData.size) || 16;
             const totalRounds = Math.log2(size);
             
-            // Render Sayap Kiri
+            // Sayap Kiri
             for (let round = 1; round < totalRounds; round++) {
                 container.appendChild(createRoundColumn(round, totalRounds, 'l'));
             }
 
-            // Render Final (Tengah)
+            // Tengah (Final)
             container.appendChild(createFinalColumn(totalRounds));
 
-            // Render Sayap Kanan (Mundur)
+            // Sayap Kanan (Mundur)
             for (let round = totalRounds - 1; round >= 1; round--) {
                 container.appendChild(createRoundColumn(round, totalRounds, 'r'));
             }
@@ -357,24 +368,17 @@
 
         function createRoundColumn(roundNum, totalRounds, side) {
             const col = document.createElement('div');
-            col.className = 'flex flex-col gap-6 justify-around h-full z-10';
+            col.className = 'flex flex-col gap-6 justify-around h-full z-10 relative';
             
             const size = parseInt(tournamentData.size);
             let matchCountInRound = (size / 2) / Math.pow(2, roundNum - 1);
             
-            let roundName = "";
-            if (matchCountInRound === 2) roundName = "SEMIFINAL";
-            else if (matchCountInRound === 4) roundName = "PEREMPAT FINAL";
-            else roundName = `${matchCountInRound * 2} BESAR`;
-            
-            col.innerHTML = `<div class="text-center text-[11px] font-bold opacity-60 uppercase tracking-wider mb-2">${roundName} (${side === 'l' ? 'KIRI' : 'KANAN'})</div>`;
+            let roundName = matchCountInRound === 2 ? "SEMIFINAL" : (matchCountInRound === 4 ? "PEREMPAT FINAL" : `${matchCountInRound * 2} BESAR`);
+            col.innerHTML = `<div class="text-center text-[10px] font-bold opacity-50 uppercase tracking-widest mb-2">${roundName} (${side === 'l' ? 'KIRI' : 'KANAN'})</div>`;
 
-            const sideMatches = matchCountInRound / 2; 
-            for (let i = 1; i <= sideMatches; i++) {
+            for (let i = 1; i <= matchCountInRound / 2; i++) {
                 const matchId = `r${roundNum}_${side}_${i}`;
-                const nextMatchIndex = Math.ceil(i / 2);
-                let nextMatchId = (roundNum + 1 === totalRounds) ? 'final' : `r${roundNum + 1}_${side}_${nextMatchIndex}`;
-
+                const nextMatchId = (roundNum + 1 === totalRounds) ? 'final' : `r${roundNum + 1}_${side}_${Math.ceil(i / 2)}`;
                 col.appendChild(createMatchCard(matchId, { id: nextMatchId }, side));
             }
             return col;
@@ -382,94 +386,71 @@
 
         function createFinalColumn() {
             const col = document.createElement('div');
-            col.className = 'flex flex-col gap-8 justify-center min-h-full shrink-0 mx-4 z-10';
-            
-            col.innerHTML += `<div class="text-center text-xs font-bold text-amber-500 uppercase tracking-wider mb-0">BABAK FINAL</div>`;
+            col.className = 'flex flex-col gap-8 justify-center min-h-full shrink-0 mx-4 z-10 relative';
+            col.innerHTML += `<div class="text-center text-[10px] font-bold text-amber-500 uppercase tracking-widest mb-0">BABAK FINAL</div>`;
             col.appendChild(createMatchCard('final', null, 'c', true));
-            
-            col.innerHTML += `<div class="text-center text-xs font-bold opacity-60 uppercase tracking-wider mt-12 mb-0">PEREBUTAN JUARA 3</div>`;
+            col.innerHTML += `<div class="text-center text-[10px] font-bold opacity-50 uppercase tracking-widest mt-10 mb-0">PEREBUTAN JUARA 3</div>`;
             col.appendChild(createMatchCard('bronze', null, 'c'));
-            
             return col;
         }
 
         function createMatchCard(matchId, nextMatchInfo, side, isFinal = false) {
-            if (!tournamentData.matches) return document.createElement('div');
             const match = tournamentData.matches[matchId] || { t1: '', s1: '', t2: '', s2: '' };
-            
             const card = document.createElement('div');
+            
             card.id = `card-${matchId}`;
             if (nextMatchInfo) {
                 card.dataset.next = `card-${nextMatchInfo.id}`;
                 card.dataset.side = side;
             }
 
-            let borderClass = isFinal ? 'border-amber-500 is-final shadow-amber-500/20' : 'bracket-card';
-            if (matchId === 'bronze') borderClass = 'bracket-card border-opacity-50';
+            let borderClass = isFinal ? 'border-amber-500 is-final shadow-amber-500/10' : 'bracket-card';
+            if (matchId === 'bronze') borderClass = 'bracket-card opacity-90';
 
-            const isDone = (match.s1 !== '' && match.s2 !== '' && parseInt(match.s1) !== parseInt(match.s2));
-            const statusText = isDone ? '<span class="text-emerald-500 font-bold">✓ Selesai</span>' : '<span class="opacity-50">Belum Selesai</span>';
-            const titleText = isFinal ? 'FINAL' : (matchId === 'bronze' ? 'JUARA 3' : `Match #${matchId.split('_')[2]}`);
-
-            card.className = `match-card rounded-lg border overflow-hidden shadow-xl transition-all ${borderClass}`;
-            
-            let html = `
-                <div class="bg-black/20 px-3 py-1.5 flex justify-between items-center text-[10px] uppercase font-bold tracking-wider opacity-80 border-b border-inherit">
-                    <span>${titleText}</span>
-                    <span>${statusText}</span>
-                </div>
-            `;
-
-            // Logika Warna Menang / Kalah (Hijau Terang / Merah Redup)
             const s1 = parseInt(match.s1);
             const s2 = parseInt(match.s2);
+            const isDone = (!isNaN(s1) && !isNaN(s2) && s1 !== s2);
             const t1Win = isDone && (s1 > s2);
             const t2Win = isDone && (s2 > s1);
 
-            let name1Color = t1Win ? 'text-emerald-400 font-bold' : (isDone ? 'text-red-400/60' : 'text-[inherit]');
-            let name2Color = t2Win ? 'text-emerald-400 font-bold' : (isDone ? 'text-red-400/60' : 'text-[inherit]');
-            let score1Color = t1Win ? 'text-emerald-400 font-bold bg-emerald-500/10' : (isDone ? 'text-red-400/60 bg-red-500/10' : 'text-[inherit]');
-            let score2Color = t2Win ? 'text-emerald-400 font-bold bg-emerald-500/10' : (isDone ? 'text-red-400/60 bg-red-500/10' : 'text-[inherit]');
+            const statusText = isDone ? '<span class="text-emerald-500/90 font-bold tracking-wider">✓ SELESAI</span>' : '<span class="opacity-40">MENUNGGU</span>';
+            const titleText = isFinal ? 'FINAL' : (matchId === 'bronze' ? 'JUARA 3' : `Match #${matchId.split('_')[2]}`);
 
-            // Pengecualian visual untuk BYE
-            if (match.t1 === 'BYE') name1Color = 'opacity-30 italic font-normal text-[inherit]';
-            if (match.t2 === 'BYE') name2Color = 'opacity-30 italic font-normal text-[inherit]';
+            card.className = `match-card rounded-lg border overflow-hidden shadow-md transition-all ${borderClass}`;
+            
+            // Pewarnaan Spesifik (Menang = Hijau, Kalah = Redup)
+            let n1C = t1Win ? 'text-emerald-500 font-bold' : (isDone ? 'opacity-40' : 'text-[inherit]');
+            let n2C = t2Win ? 'text-emerald-500 font-bold' : (isDone ? 'opacity-40' : 'text-[inherit]');
+            let s1C = t1Win ? 'text-emerald-500 font-bold bg-emerald-500/10' : (isDone ? 'opacity-40 bg-black/10' : 'text-[inherit]');
+            let s2C = t2Win ? 'text-emerald-500 font-bold bg-emerald-500/10' : (isDone ? 'opacity-40 bg-black/10' : 'text-[inherit]');
+
+            if (match.t1 === 'BYE') n1C = 'opacity-30 italic font-normal text-[inherit]';
+            if (match.t2 === 'BYE') n2C = 'opacity-30 italic font-normal text-[inherit]';
 
             const getReadOnly = () => isAdmin ? '' : 'readonly';
-            const getInputClass = (isScore, colorClass) => {
-                let base = isScore ? `w-10 h-full text-center outline-none transition-colors ${colorClass}` : `w-full px-2 text-sm bg-transparent border-none outline-none transition-colors ${colorClass}`;
-                if(isScore && isAdmin) base += " border-l border-inherit admin-bg cursor-text";
-                if(isScore && !isAdmin) base += " bg-transparent border-none pointer-events-none";
-                return base;
-            };
+            const getInpCls = (isScore, clr) => isScore 
+                ? `w-10 h-full text-center outline-none transition-colors ${clr} ${isAdmin?'border-l border-inherit admin-bg cursor-text':'bg-transparent border-none pointer-events-none'}`
+                : `w-full px-2.5 text-[13px] font-medium bg-transparent border-none outline-none transition-colors ${clr}`;
 
-            // HTML Input
-            html += `
+            card.innerHTML = `
+                <div class="bg-black/20 px-3 py-1.5 flex justify-between items-center text-[9px] uppercase font-bold tracking-wider border-b border-inherit">
+                    <span class="opacity-70">${titleText}</span>
+                    <span>${statusText}</span>
+                </div>
                 <div class="flex items-stretch border-b border-inherit team-row h-9 transition-colors">
-                    <span class="w-5 text-[10px] font-bold opacity-40 flex items-center justify-center shrink-0 border-r border-inherit">1</span>
-                    <input type="text" class="${getInputClass(false, name1Color)}" 
-                           value="${match.t1}" placeholder="Tim 1" ${getReadOnly()}
-                           onchange="updateData('${matchId}', 't1', this.value)">
-                    <input type="number" class="${getInputClass(true, score1Color)}" 
-                           value="${match.s1}" placeholder="-" ${getReadOnly()}
-                           onchange="updateData('${matchId}', 's1', this.value)">
+                    <span class="w-6 text-[9px] font-bold opacity-30 flex items-center justify-center shrink-0 border-r border-inherit">1</span>
+                    <input type="text" class="${getInpCls(false, n1C)}" value="${match.t1}" placeholder="Tim 1" ${getReadOnly()} onchange="updateData('${matchId}', 't1', this.value)">
+                    <input type="number" class="${getInpCls(true, s1C)}" value="${match.s1}" placeholder="-" ${getReadOnly()} onchange="updateData('${matchId}', 's1', this.value)">
                 </div>
                 <div class="flex items-stretch team-row h-9 transition-colors">
-                    <span class="w-5 text-[10px] font-bold opacity-40 flex items-center justify-center shrink-0 border-r border-inherit">2</span>
-                    <input type="text" class="${getInputClass(false, name2Color)}" 
-                           value="${match.t2}" placeholder="Tim 2" ${getReadOnly()}
-                           onchange="updateData('${matchId}', 't2', this.value)">
-                    <input type="number" class="${getInputClass(true, score2Color)}" 
-                           value="${match.s2}" placeholder="-" ${getReadOnly()}
-                           onchange="updateData('${matchId}', 's2', this.value)">
+                    <span class="w-6 text-[9px] font-bold opacity-30 flex items-center justify-center shrink-0 border-r border-inherit">2</span>
+                    <input type="text" class="${getInpCls(false, n2C)}" value="${match.t2}" placeholder="Tim 2" ${getReadOnly()} onchange="updateData('${matchId}', 't2', this.value)">
+                    <input type="number" class="${getInpCls(true, s2C)}" value="${match.s2}" placeholder="-" ${getReadOnly()} onchange="updateData('${matchId}', 's2', this.value)">
                 </div>
             `;
-
-            card.innerHTML = html;
             return card;
         }
 
-        // 4. MENGGAMBAR GARIS SVG (ANTI-ERROR BOUNDING BOX)
         function drawLines() {
             const svg = document.getElementById('svg-lines');
             const container = document.getElementById('bracket-container');
@@ -477,7 +458,6 @@
             
             if(!svg || !container || !content) return;
             
-            // Set SVG agar sebesar konten bagan sepenuhnya
             svg.setAttribute('width', content.scrollWidth);
             svg.setAttribute('height', content.scrollHeight);
             svg.innerHTML = ''; 
@@ -485,57 +465,47 @@
             const containerRect = container.getBoundingClientRect();
             const cards = document.querySelectorAll('.match-card');
             
-            // Warna garis adaptif
             const isLight = tournamentData.theme === 'theme-light';
-            let strokeColor = isLight ? 'rgba(0,0,0,0.15)' : 'rgba(255,255,255,0.15)'; 
+            let strokeColor = isLight ? 'rgba(0,0,0,0.12)' : 'rgba(255,255,255,0.12)'; 
 
             cards.forEach(card => {
                 const nextId = card.dataset.next;
                 if (!nextId) return;
-
                 const nextCard = document.getElementById(nextId);
                 if (!nextCard) return;
 
                 const side = card.dataset.side; 
-                
-                // Kalkulasi Koordinat Relatif terhadap Container yang di-Zoom (Anti-Melenceng)
                 const startRect = card.getBoundingClientRect();
                 const endRect = nextCard.getBoundingClientRect();
 
-                // Kita bagi dengan zoomLevel agar koordinat SVG (yang belum di-scale) cocok dengan layar yang di-scale
                 let startX, startY, endX, endY;
 
+                // Hitung koordinat murni tanpa perlu memikirkan zoom karena scale dihapus
                 if (side === 'l') {
-                    startX = (startRect.right - containerRect.left) / zoomLevel;
-                    endX = (endRect.left - containerRect.left) / zoomLevel;
+                    startX = startRect.right - containerRect.left;
+                    endX = endRect.left - containerRect.left;
                 } else if (side === 'r') {
-                    startX = (startRect.left - containerRect.left) / zoomLevel;
-                    endX = (endRect.right - containerRect.left) / zoomLevel;
+                    startX = startRect.left - containerRect.left;
+                    endX = endRect.right - containerRect.left;
                 } else return;
 
-                startY = ((startRect.top - containerRect.top) / zoomLevel) + (startRect.height / zoomLevel / 2);
-                endY = ((endRect.top - containerRect.top) / zoomLevel) + (endRect.height / zoomLevel / 2);
+                startY = (startRect.top - containerRect.top) + (startRect.height / 2);
+                endY = (endRect.top - containerRect.top) + (endRect.height / 2);
 
                 const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
-                const deltaX = Math.abs(endX - startX);
-                const controlOffset = deltaX / 2;
+                const controlOffset = Math.abs(endX - startX) / 2;
 
-                let d = "";
-                if (side === 'l') {
-                    d = `M ${startX} ${startY} C ${startX + controlOffset} ${startY}, ${endX - controlOffset} ${endY}, ${endX} ${endY}`;
-                } else {
-                    d = `M ${startX} ${startY} C ${startX - controlOffset} ${startY}, ${endX + controlOffset} ${endY}, ${endX} ${endY}`;
-                }
+                let d = side === 'l' 
+                    ? `M ${startX} ${startY} C ${startX + controlOffset} ${startY}, ${endX - controlOffset} ${endY}, ${endX} ${endY}`
+                    : `M ${startX} ${startY} C ${startX - controlOffset} ${startY}, ${endX + controlOffset} ${endY}, ${endX} ${endY}`;
 
                 path.setAttribute('d', d);
                 path.setAttribute('class', 'line-path');
                 path.setAttribute('stroke', strokeColor);
-
                 svg.appendChild(path);
             });
         }
 
-        // 5. UPDATE & AUTO-ADVANCE LOGIC
         function updateData(matchId, field, value) {
             if (!isAdmin) return;
             tournamentData.matches[matchId][field] = value;
@@ -550,11 +520,8 @@
 
             const s1 = parseInt(match.s1);
             const s2 = parseInt(match.s2);
-            
-            let winnerName = '';
-            let loserName = '';
+            let winnerName = '', loserName = '';
 
-            // Cek pemenang jika skor valid & tidak sama
             if (!isNaN(s1) && !isNaN(s2) && s1 !== s2) {
                 winnerName = s1 > s2 ? match.t1 : match.t2;
                 loserName = s1 > s2 ? match.t2 : match.t1;
@@ -567,18 +534,16 @@
                 const index = parseInt(parts[2]);
                 const totalRounds = Math.log2(parseInt(tournamentData.size));
                 
-                let nextMatchId = (round + 1 === totalRounds) ? 'final' : `r${round + 1}_${side}_${Math.ceil(index / 2)}`;
+                let nextId = (round + 1 === totalRounds) ? 'final' : `r${round + 1}_${side}_${Math.ceil(index / 2)}`;
                 let isSlot1 = (round + 1 === totalRounds) ? (side === 'l') : (index % 2 !== 0);
 
-                if (tournamentData.matches[nextMatchId]) {
-                    if (isSlot1) tournamentData.matches[nextMatchId].t1 = winnerName;
-                    else tournamentData.matches[nextMatchId].t2 = winnerName;
-                    
-                    // Rekursi untuk merambat ke final jika nama berubah
-                    processAutoAdvance(nextMatchId);
+                if (tournamentData.matches[nextId]) {
+                    if (isSlot1) tournamentData.matches[nextId].t1 = winnerName;
+                    else tournamentData.matches[nextId].t2 = winnerName;
+                    processAutoAdvance(nextId);
                 }
 
-                if (nextMatchId === 'final' && tournamentData.matches['bronze']) {
+                if (nextId === 'final' && tournamentData.matches['bronze']) {
                     if (side === 'l') tournamentData.matches['bronze'].t1 = loserName;
                     else tournamentData.matches['bronze'].t2 = loserName;
                     processAutoAdvance('bronze');
@@ -589,66 +554,56 @@
         function saveDataToFirebase() {
             if(!isAdmin || !docRef) return;
             updateSyncStatus(false, "Menyimpan...");
-            
-            // Sanitasi data: hindari object aneh ter-upload
-            const pureData = JSON.parse(JSON.stringify(tournamentData));
+            const pureData = JSON.parse(JSON.stringify(tournamentData)); // Bersihkan tipe data aneh
             
             docRef.set(pureData).then(() => {
                 updateSyncStatus(true);
             }).catch(error => {
                 console.error("Gagal Simpan:", error);
-                alert("Simpan Gagal! Cek Rules Firestore Anda.\nPesan Asli: " + error.message);
-                updateSyncStatus(false, "Error Tersimpan");
+                alert("Simpan Gagal!\nPastikan Rules Firestore Anda sudah diatur ke: allow read, write: if true;");
+                updateSyncStatus(false, "Gagal Simpan");
             });
         }
 
         function updateSyncStatus(isSuccess, msg = null) {
             const statusDiv = document.getElementById('sync-status');
-            if (isSuccess) {
-                statusDiv.innerHTML = '<span class="text-emerald-400 font-medium flex items-center gap-1.5"><i data-lucide="radio" class="w-3.5 h-3.5 animate-pulse"></i> Live tersinkron</span>';
-            } else {
-                statusDiv.innerHTML = `<span class="text-amber-400 font-medium flex items-center gap-1.5"><i data-lucide="refresh-cw" class="w-3.5 h-3.5 animate-spin"></i> ${msg || 'Memproses...'}</span>`;
-            }
+            if (isSuccess) statusDiv.innerHTML = '<span class="text-emerald-400 font-medium flex items-center gap-1.5"><i data-lucide="radio" class="w-3.5 h-3.5 animate-pulse"></i> Tersinkron Live</span>';
+            else statusDiv.innerHTML = `<span class="text-amber-400 font-medium flex items-center gap-1.5"><i data-lucide="refresh-cw" class="w-3.5 h-3.5 animate-spin"></i> ${msg || 'Memproses...'}</span>`;
             lucide.createIcons();
         }
 
-        // 6. ADMIN TOOLS & BYE GENERATOR
         function generateEmptyMatches(bracketSize, actualSize) {
             tournamentData.matches = {};
             const totalRounds = Math.log2(bracketSize);
             const halfSize = bracketSize / 2;
 
-            if(!actualSize) actualSize = bracketSize;
-            let byesCount = bracketSize - actualSize;
-
             ['l', 'r'].forEach(side => {
                 for (let round = 1; round < totalRounds; round++) {
-                    const matchCount = halfSize / Math.pow(2, round - 1);
-                    for (let i = 1; i <= matchCount; i++) {
+                    for (let i = 1; i <= (halfSize / Math.pow(2, round - 1)); i++) {
                         tournamentData.matches[`r${round}_${side}_${i}`] = { t1: '', s1: '', t2: '', s2: '' };
                     }
                 }
             });
-
             tournamentData.matches['final'] = { t1: '', s1: '', t2: '', s2: '' };
             tournamentData.matches['bronze'] = { t1: '', s1: '', t2: '', s2: '' };
 
-            // Distribusi BYE Adil (Selang-seling Kiri dan Kanan)
-            let byeMatches = [];
-            for(let i=1; i<=halfSize; i++) {
-                byeMatches.push(`r1_l_${i}`);
-                byeMatches.push(`r1_r_${i}`);
-            }
+            // Distribusi BYE merata (kiri-kanan)
+            let byesCount = bracketSize - actualSize;
+            let r1Keys = Object.keys(tournamentData.matches).filter(k => k.startsWith('r1_'));
             
+            // Urutkan kunci secara selang-seling (L-R) agar adil
+            let sortedR1 = [];
+            for(let i=1; i<=halfSize; i++) {
+                sortedR1.push(`r1_l_${i}`);
+                sortedR1.push(`r1_r_${i}`);
+            }
+
             for(let k=0; k<byesCount; k++) {
-                if(byeMatches[k]) {
-                    let m = tournamentData.matches[byeMatches[k]];
-                    m.t2 = 'BYE';
-                    m.s1 = '1';
-                    m.s2 = '0';
+                if(sortedR1[k]) {
+                    let m = tournamentData.matches[sortedR1[k]];
+                    m.t2 = 'BYE'; m.s1 = '1'; m.s2 = '0';
                 }
             }
-            
             Object.keys(tournamentData.matches).forEach(id => {
                 if(tournamentData.matches[id].t2 === 'BYE') processAutoAdvance(id);
             });
@@ -657,75 +612,52 @@
         function changeSize() {
             if(!isAdmin) return;
             const inputVal = parseInt(document.getElementById('size-input').value);
-            if(isNaN(inputVal) || inputVal < 2 || inputVal > 64) {
-                return alert("Masukkan angka valid antara 2 hingga 64 tim!");
-            }
+            if(isNaN(inputVal) || inputVal < 2 || inputVal > 64) return alert("Angka harus 2 hingga 64!");
 
-            if(confirm(`Membuat bagan untuk ${inputVal} tim akan MENGHAPUS semua nama & skor saat ini. Lanjutkan?`)) {
+            if(confirm(`Membuat bagan untuk ${inputVal} tim akan MENGHAPUS semua nama & skor saat ini. Lanjut?`)) {
                 tournamentData.actualSize = inputVal;
-                
                 let bSize = 2;
                 while (bSize < inputVal) bSize *= 2;
                 if (bSize < 4) bSize = 4;
                 
                 tournamentData.size = bSize;
-                
                 generateEmptyMatches(bSize, inputVal);
                 saveDataToFirebase();
                 applyStateToUI();
-                
-                // Auto Fit ke layar jika bagan berubah
-                setTimeout(fitScreen, 300);
             } else {
                 document.getElementById('size-input').value = tournamentData.actualSize;
             }
         }
 
         function loginAdmin() {
-            const pwd = prompt("Masukkan password Admin:");
-            if (pwd === "admin") {
-                isAdmin = true;
-                document.getElementById('admin-tools').classList.remove('hidden');
-                document.getElementById('admin-tools').classList.add('flex');
-                document.getElementById('btn-login-desktop').classList.add('hidden');
-                document.getElementById('btn-login-mobile').classList.add('hidden');
-                applyStateToUI();
-            } else if (pwd !== null) alert("Password Salah!");
+            const pwd = prompt("Masukkan password Admin (Default: admin):");
+            if (pwd === "admin") { isAdmin = true; applyStateToUI(); }
+            else if (pwd !== null) alert("Password Salah!");
         }
 
         function logoutAdmin() {
-            isAdmin = false;
-            document.getElementById('admin-tools').classList.add('hidden');
-            document.getElementById('admin-tools').classList.remove('flex');
-            document.getElementById('btn-login-desktop').classList.remove('hidden');
-            document.getElementById('btn-login-mobile').classList.remove('hidden');
-            applyStateToUI();
+            isAdmin = false; applyStateToUI();
         }
 
         function changeTheme() {
             if(!isAdmin) return;
             tournamentData.theme = document.getElementById('theme-selector').value;
-            saveDataToFirebase();
-            applyStateToUI();
+            saveDataToFirebase(); applyStateToUI();
         }
 
         function resetData() {
             if(!isAdmin) return;
-            if(confirm("Hapus semua nama dan skor? (Sistem ukuran tidak berubah)")) {
+            if(confirm("Hapus semua nama dan skor?")) {
                 generateEmptyMatches(tournamentData.size, tournamentData.actualSize);
-                saveDataToFirebase();
-                applyStateToUI();
+                saveDataToFirebase(); applyStateToUI();
             }
         }
 
-        // TIM ESPORTS POPULER / BOLA
         const teamNamesPool = [
-            "RRQ Hoshi", "Evos Legends", "Onic Esports", "Alter Ego", "Bigetron", 
-            "Aura Fire", "Geek Fam", "Rebellion", "Dewa United", "Pendekar Esports",
-            "Fnatic", "Navi", "Team Liquid", "Cloud9", "G2 Esports", "T1", "Paper Rex",
-            "Secret", "Boom Esports", "Talon", "Zeta Div", "Sentinels", "Loud", "Optic",
-            "Faze Clan", "NIP", "Vitality", "Karmine Corp", "DRX", "Gen.G",
-            "Persija", "Persib", "Bali United", "Persebaya", "Arema", "PSM Makassar"
+            "Fnatic", "Navi", "T1", "Paper Rex", "Loud", "Sentinels", "Gen.G", "DRX",
+            "G2 Esports", "Cloud9", "Team Liquid", "Vitality", "Karmine Corp", "Faze Clan",
+            "RRQ Hoshi", "Evos Legends", "Onic Esports", "Alter Ego", "Bigetron", "Geek Fam",
+            "Zeta Div", "Talon", "Secret", "Boom Esports", "Optic", "NIP", "Leviatan"
         ];
 
         function autoFillNames() {
@@ -736,47 +668,76 @@
             Object.keys(tournamentData.matches).forEach(id => {
                 if(id.startsWith('r1_')) {
                     let m = tournamentData.matches[id];
-                    if (m.t1 === '' && m.t1 !== 'BYE') m.t1 = shuffledNames[teamIndex++] || `Tim ${teamIndex}`;
-                    if (m.t2 === '' && m.t2 !== 'BYE') m.t2 = shuffledNames[teamIndex++] || `Tim ${teamIndex}`;
+                    // Loop ulang ke awal jika bank nama habis
+                    if (m.t1 === '' && m.t1 !== 'BYE') m.t1 = shuffledNames[teamIndex++ % shuffledNames.length];
+                    if (m.t2 === '' && m.t2 !== 'BYE') m.t2 = shuffledNames[teamIndex++ % shuffledNames.length];
                     processAutoAdvance(id);
                 }
             });
-            saveDataToFirebase();
-            applyStateToUI();
+            saveDataToFirebase(); applyStateToUI();
         }
 
         function autoFillScores() {
             if(!isAdmin) return;
             let isChanged = false;
-            
             Object.keys(tournamentData.matches).forEach(id => {
                 const m = tournamentData.matches[id];
                 if (m.t1 === 'BYE' || m.t2 === 'BYE') return;
-
                 if (m.t1 !== '' && m.t2 !== '' && m.s1 === '' && m.s2 === '') {
-                    let s1 = Math.floor(Math.random() * 5);
-                    let s2 = Math.floor(Math.random() * 5);
-                    while(s1 === s2) s2 = Math.floor(Math.random() * 5);
-                    
-                    m.s1 = s1.toString();
-                    m.s2 = s2.toString();
+                    let s1 = Math.floor(Math.random() * 4);
+                    let s2 = Math.floor(Math.random() * 4);
+                    while(s1 === s2) s2 = Math.floor(Math.random() * 4);
+                    m.s1 = s1.toString(); m.s2 = s2.toString();
                     isChanged = true;
                 }
             });
-
             if (isChanged) {
                 Object.keys(tournamentData.matches).forEach(id => processAutoAdvance(id));
-                saveDataToFirebase();
-                applyStateToUI();
+                saveDataToFirebase(); applyStateToUI();
             }
         }
 
-        // FITUR BARU: ACAK POSISI
+        // Paste Nama Masal
+        function openBulkModal() { document.getElementById('bulk-modal').classList.remove('hidden'); }
+        function closeBulkModal() { document.getElementById('bulk-modal').classList.add('hidden'); document.getElementById('bulk-textarea').value = ''; }
+        
+        function saveBulkModal() {
+            if(!isAdmin) return;
+            const lines = document.getElementById('bulk-textarea').value.split('\n').map(t => t.trim()).filter(t => t.length > 0);
+            if(lines.length === 0) return closeBulkModal();
+
+            // Kumpulkan semua slot ronde 1 yang bukan BYE secara selang-seling (L-R) agar adil
+            let availableSlots = [];
+            const r1Keys = Object.keys(tournamentData.matches).filter(k => k.startsWith('r1_'));
+            
+            // Sort agar kiri dan kanan terdistribusi rapi
+            r1Keys.sort((a,b) => {
+               let numA = parseInt(a.split('_')[2]); let numB = parseInt(b.split('_')[2]);
+               if(numA === numB) return a.includes('l') ? -1 : 1;
+               return numA - numB;
+            });
+
+            r1Keys.forEach(k => {
+                if (tournamentData.matches[k].t1 !== 'BYE') availableSlots.push({key: k, slot: 't1'});
+                if (tournamentData.matches[k].t2 !== 'BYE') availableSlots.push({key: k, slot: 't2'});
+            });
+
+            // Isi slot dengan data yang di paste
+            availableSlots.forEach((info, idx) => {
+                if(lines[idx] !== undefined) {
+                    tournamentData.matches[info.key][info.slot] = lines[idx];
+                    processAutoAdvance(info.key);
+                }
+            });
+
+            closeBulkModal();
+            saveDataToFirebase(); applyStateToUI();
+        }
+
         function shuffleTeams() {
             if(!isAdmin) return;
-            if(!confirm("Ini akan mengacak ulang posisi tim ronde 1 (dan me-reset skor seluruh turnamen). Lanjutkan?")) return;
+            if(!confirm("Ini akan mengacak ulang posisi tim ronde 1 (dan me-reset skor). Lanjutkan?")) return;
 
-            // Kumpulkan semua nama tim di Ronde 1 yang bukan BYE
             let currentTeams = [];
             let r1Keys = Object.keys(tournamentData.matches).filter(k => k.startsWith('r1_'));
             
@@ -786,66 +747,30 @@
                 if(m.t2 && m.t2 !== 'BYE') currentTeams.push(m.t2);
             });
 
-            // Acak array
             currentTeams.sort(() => Math.random() - 0.5);
 
-            // Bersihkan SELURUH skor turnamen agar auto-advance tidak bug
             Object.keys(tournamentData.matches).forEach(k => {
                 let m = tournamentData.matches[k];
-                // Jangan hapus skor BYE default (1 - 0)
                 if (m.t1 !== 'BYE' && m.t2 !== 'BYE') { m.s1 = ''; m.s2 = ''; }
-                if (!k.startsWith('r1_')) { m.t1 = ''; m.t2 = ''; } // Bersihkan nama di ronde lanjut
+                if (!k.startsWith('r1_')) { m.t1 = ''; m.t2 = ''; } 
             });
 
-            // Kembalikan nama tim yang sudah diacak ke slot Ronde 1
             let idx = 0;
+            // Gunakan metode sort yang sama dengan paste agar distribusinya bagus
+            r1Keys.sort((a,b) => parseInt(a.split('_')[2]) - parseInt(b.split('_')[2]));
             r1Keys.forEach(k => {
                 let m = tournamentData.matches[k];
                 if(m.t1 !== 'BYE') { m.t1 = currentTeams[idx] || ''; idx++; }
                 if(m.t2 !== 'BYE') { m.t2 = currentTeams[idx] || ''; idx++; }
-                processAutoAdvance(k); // Trigger auto-advance (berguna jika dia melawan BYE)
+                processAutoAdvance(k); 
             });
 
-            saveDataToFirebase();
-            applyStateToUI();
+            saveDataToFirebase(); applyStateToUI();
         }
 
-        // FITUR BARU: BULK INPUT / PASTE
-        function openBulkModal() {
-            document.getElementById('bulk-modal').classList.remove('hidden');
-        }
-        function closeBulkModal() {
-            document.getElementById('bulk-modal').classList.add('hidden');
-            document.getElementById('bulk-textarea').value = '';
-        }
-        function saveBulkModal() {
-            if(!isAdmin) return;
-            const text = document.getElementById('bulk-textarea').value;
-            const lines = text.split('\n').map(t => t.trim()).filter(t => t.length > 0);
-            
-            if(lines.length === 0) return closeBulkModal();
-
-            // Masukkan ke slot ronde 1 berurutan
-            let r1Keys = Object.keys(tournamentData.matches).filter(k => k.startsWith('r1_'));
-            let idx = 0;
-            
-            r1Keys.forEach(k => {
-                let m = tournamentData.matches[k];
-                if(m.t1 !== 'BYE') { m.t1 = lines[idx] || m.t1; idx++; }
-                if(m.t2 !== 'BYE') { m.t2 = lines[idx] || m.t2; idx++; }
-                processAutoAdvance(k);
-            });
-
-            closeBulkModal();
-            saveDataToFirebase();
-            applyStateToUI();
-        }
-
-        // FITUR BARU: PENCARIAN PUBLIK
         function searchTeam(query) {
             const searchStr = query.toLowerCase().trim();
             const inputs = document.querySelectorAll('.match-card input[type="text"]');
-            
             inputs.forEach(input => {
                 input.classList.remove('highlight-search');
                 if (searchStr.length > 0 && input.value && input.value.toLowerCase().includes(searchStr)) {
@@ -854,48 +779,6 @@
             });
         }
 
-        // FITUR BARU: FIT TO SCREEN & ZOOM (1080p Support)
-        function changeZoom(delta) {
-            zoomLevel += delta;
-            if (zoomLevel < 0.2) zoomLevel = 0.2;
-            if (zoomLevel > 2.0) zoomLevel = 2.0;
-            applyZoomDOM();
-        }
-
-        function fitScreen() {
-            const pan = document.getElementById('pan-container');
-            const content = document.getElementById('bracket-content');
-            
-            // Kalkulasi skala yang dibutuhkan agar muat (ditambah padding)
-            const padding = window.innerWidth < 768 ? 50 : 150;
-            const scaleX = pan.clientWidth / (content.scrollWidth + padding);
-            const scaleY = (pan.clientHeight - 80) / (content.scrollHeight + padding); // -80 untuk bottom bar
-            
-            // Pilih scale terkecil agar muat utuh, maksimal 1 (jangan terlalu besar)
-            let idealScale = Math.min(scaleX, scaleY);
-            if (idealScale > 1) idealScale = 1;
-            
-            zoomLevel = idealScale;
-            applyZoomDOM();
-            
-            // Posisikan scroll ke tengah
-            setTimeout(() => {
-                pan.scrollLeft = (content.scrollWidth * zoomLevel - pan.clientWidth) / 2;
-                pan.scrollTop = (content.scrollHeight * zoomLevel - pan.clientHeight) / 2;
-            }, 50);
-        }
-
-        function applyZoomDOM() {
-            const container = document.getElementById('bracket-container');
-            container.style.transform = `scale(${zoomLevel})`;
-            document.getElementById('zoom-text').innerText = Math.round(zoomLevel * 100) + '%';
-            
-            // Gambar ulang garis dengan Math zoom yang disesuaikan
-            clearTimeout(svgTimeout);
-            svgTimeout = setTimeout(drawLines, 100);
-        }
-
-        // 7. DRAG TO PAN CANVAS
         function setupPanZoom() {
             const container = document.getElementById('pan-container');
             let isDown = false;
@@ -918,10 +801,8 @@
             container.addEventListener('mousemove', (e) => {
                 if (!isDown) return;
                 e.preventDefault();
-                const x = e.pageX - container.offsetLeft;
-                const y = e.pageY - container.offsetTop;
-                container.scrollLeft = scrollLeft - (x - startX);
-                container.scrollTop = scrollTop - (y - startY);
+                container.scrollLeft = scrollLeft - ((e.pageX - container.offsetLeft) - startX);
+                container.scrollTop = scrollTop - ((e.pageY - container.offsetTop) - startY);
             });
         }
     </script>
