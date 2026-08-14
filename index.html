@@ -46,23 +46,23 @@
             100% { background-position: 0% 50%; }
         }
         .bg-animated { background-size: 200% 200% !important; animation: gradient-xy 15s ease-in-out infinite !important; }
-        .bg-grad-1 { background: linear-gradient(-45deg, #020617, #0f172a, #172554, #052e16, #2e1065); } /* Default Dark */
-        .bg-grad-2 { background: linear-gradient(-45deg, #1a0505, #3f0909, #290000, #4a0404, #000000); } /* Blood */
-        .bg-grad-3 { background: linear-gradient(-45deg, #041f2e, #033a4f, #011b2b, #042f3a, #000000); } /* Ocean */
-        .bg-grad-4 { background: linear-gradient(-45deg, #021a0f, #053b23, #022915, #084a2f, #000000); } /* Forest */
-        .bg-grad-5 { background: linear-gradient(-45deg, #120b1f, #2d1b4e, #1a0d33, #3f2273, #05020a); } /* Void */
-        .bg-grad-6 { background: linear-gradient(-45deg, #2e1304, #542204, #361002, #5c2005, #120501); } /* Sunset */
-        .bg-grad-7 { background: linear-gradient(-45deg, #0f0726, #360c40, #130a38, #451052, #070314); } /* Cyberpunk */
-        .bg-grad-8 { background: linear-gradient(-45deg, #000000, #0a0a0a, #141414, #1a1a1a, #050505); } /* Abyss */
-        .bg-grad-9 { background: linear-gradient(-45deg, #1f1805, #3d2f09, #241c03, #4a3a0a, #0a0801); } /* Earth */
-        .bg-grad-10 { background: linear-gradient(-45deg, #171c23, #2a3441, #1e252e, #364252, #0b0d12); }/* Phantom */
-        .bg-grad-11 { background: linear-gradient(-45deg, #475569, #334155, #64748b, #1e293b, #475569); } /* Steel Blue */
-        .bg-grad-12 { background: linear-gradient(-45deg, #a16207, #854d0e, #ca8a04, #713f12, #422006); } /* Ochre Sun */
-        .bg-grad-13 { background: linear-gradient(-45deg, #2563eb, #1d4ed8, #3b82f6, #1e40af, #1e3a8a); } /* Azure Sky */
-        .bg-grad-14 { background: linear-gradient(-45deg, #059669, #047857, #10b981, #064e3b, #022c22); } /* Teal Mint */
-        .bg-grad-15 { background: linear-gradient(-45deg, #be123c, #9f1239, #e11d48, #831843, #4c0519); } /* Magenta Rose */
+        .bg-grad-1 { background: linear-gradient(-45deg, #020617, #0f172a, #172554, #052e16, #2e1065); }
+        .bg-grad-2 { background: linear-gradient(-45deg, #1a0505, #3f0909, #290000, #4a0404, #000000); }
+        .bg-grad-3 { background: linear-gradient(-45deg, #041f2e, #033a4f, #011b2b, #042f3a, #000000); }
+        .bg-grad-4 { background: linear-gradient(-45deg, #021a0f, #053b23, #022915, #084a2f, #000000); }
+        .bg-grad-5 { background: linear-gradient(-45deg, #120b1f, #2d1b4e, #1a0d33, #3f2273, #05020a); }
+        .bg-grad-6 { background: linear-gradient(-45deg, #2e1304, #542204, #361002, #5c2005, #120501); }
+        .bg-grad-7 { background: linear-gradient(-45deg, #0f0726, #360c40, #130a38, #451052, #070314); }
+        .bg-grad-8 { background: linear-gradient(-45deg, #000000, #0a0a0a, #141414, #1a1a1a, #050505); }
+        .bg-grad-9 { background: linear-gradient(-45deg, #1f1805, #3d2f09, #241c03, #4a3a0a, #0a0801); }
+        .bg-grad-10 { background: linear-gradient(-45deg, #171c23, #2a3441, #1e252e, #364252, #0b0d12); }
+        .bg-grad-11 { background: linear-gradient(-45deg, #475569, #334155, #64748b, #1e293b, #475569); }
+        .bg-grad-12 { background: linear-gradient(-45deg, #a16207, #854d0e, #ca8a04, #713f12, #422006); }
+        .bg-grad-13 { background: linear-gradient(-45deg, #2563eb, #1d4ed8, #3b82f6, #1e40af, #1e3a8a); }
+        .bg-grad-14 { background: linear-gradient(-45deg, #059669, #047857, #10b981, #064e3b, #022c22); }
+        .bg-grad-15 { background: linear-gradient(-45deg, #be123c, #9f1239, #e11d48, #831843, #4c0519); }
 
-        /* FLOATING CIRCLES ANIMATION */
+        /* FLOATING CIRCLES */
         .glass-circle {
             position: absolute; border-radius: 50%;
             background: radial-gradient(circle, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0) 70%);
@@ -74,63 +74,51 @@
             100% { transform: translateY(20px) translateX(-40px) scale(0.9) rotate(360deg); }
         }
 
-        /* 10 THEMES FOR BRACKET CARDS (Border, Hover, Glow) */
+        /* 10 THEMES */
         .bracket-card { background-color: rgba(15, 23, 42, 0.4); backdrop-filter: blur(10px); border-width: 2px; }
         
-        /* 1. Emerald */
         .theme-emerald .bracket-card { border-color: #10b981; }
         .theme-emerald .bracket-card:hover { border-color: #34d399; box-shadow: 0 0 20px rgba(52, 211, 153, 0.5); transform: scale(1.03); z-index: 20; }
         .theme-emerald .line-path.line-active { stroke: #10b981; filter: drop-shadow(0 0 5px rgba(16,185,129,0.7)); }
         
-        /* 2. Red */
         .theme-red .bracket-card { border-color: #ef4444; }
         .theme-red .bracket-card:hover { border-color: #f87171; box-shadow: 0 0 20px rgba(248, 113, 113, 0.5); transform: scale(1.03); z-index: 20; }
         .theme-red .line-path.line-active { stroke: #ef4444; filter: drop-shadow(0 0 5px rgba(239,68,68,0.7)); }
 
-        /* 3. Blue */
         .theme-blue .bracket-card { border-color: #3b82f6; }
         .theme-blue .bracket-card:hover { border-color: #60a5fa; box-shadow: 0 0 20px rgba(96, 165, 250, 0.5); transform: scale(1.03); z-index: 20; }
         .theme-blue .line-path.line-active { stroke: #3b82f6; filter: drop-shadow(0 0 5px rgba(59,130,246,0.7)); }
 
-        /* 4. Purple */
         .theme-purple .bracket-card { border-color: #a855f7; }
         .theme-purple .bracket-card:hover { border-color: #c084fc; box-shadow: 0 0 20px rgba(192, 132, 252, 0.5); transform: scale(1.03); z-index: 20; }
         .theme-purple .line-path.line-active { stroke: #a855f7; filter: drop-shadow(0 0 5px rgba(168,85,247,0.7)); }
 
-        /* 5. Gold */
         .theme-gold .bracket-card { border-color: #f59e0b; }
         .theme-gold .bracket-card:hover { border-color: #fbbf24; box-shadow: 0 0 20px rgba(251, 191, 36, 0.5); transform: scale(1.03); z-index: 20; }
         .theme-gold .line-path.line-active { stroke: #f59e0b; filter: drop-shadow(0 0 5px rgba(245,158,11,0.7)); }
 
-        /* 6. Cyan */
         .theme-cyan .bracket-card { border-color: #06b6d4; }
         .theme-cyan .bracket-card:hover { border-color: #22d3ee; box-shadow: 0 0 20px rgba(34, 211, 238, 0.5); transform: scale(1.03); z-index: 20; }
         .theme-cyan .line-path.line-active { stroke: #06b6d4; filter: drop-shadow(0 0 5px rgba(6,182,212,0.7)); }
 
-        /* 7. Pink */
         .theme-pink .bracket-card { border-color: #ec4899; }
         .theme-pink .bracket-card:hover { border-color: #f472b6; box-shadow: 0 0 20px rgba(244, 114, 182, 0.5); transform: scale(1.03); z-index: 20; }
         .theme-pink .line-path.line-active { stroke: #ec4899; filter: drop-shadow(0 0 5px rgba(236,72,153,0.7)); }
 
-        /* 8. Orange */
         .theme-orange .bracket-card { border-color: #f97316; }
         .theme-orange .bracket-card:hover { border-color: #fb923c; box-shadow: 0 0 20px rgba(251, 146, 60, 0.5); transform: scale(1.03); z-index: 20; }
         .theme-orange .line-path.line-active { stroke: #f97316; filter: drop-shadow(0 0 5px rgba(249,115,22,0.7)); }
 
-        /* 9. Silver */
         .theme-silver .bracket-card { border-color: #94a3b8; }
         .theme-silver .bracket-card:hover { border-color: #cbd5e1; box-shadow: 0 0 20px rgba(203, 213, 225, 0.5); transform: scale(1.03); z-index: 20; }
         .theme-silver .line-path.line-active { stroke: #94a3b8; filter: drop-shadow(0 0 5px rgba(148,163,184,0.7)); }
 
-        /* 10. Neon */
         .theme-neon .bracket-card { border-color: #84cc16; }
         .theme-neon .bracket-card:hover { border-color: #a3e635; box-shadow: 0 0 20px rgba(163, 230, 53, 0.5); transform: scale(1.03); z-index: 20; }
         .theme-neon .line-path.line-active { stroke: #84cc16; filter: drop-shadow(0 0 5px rgba(132,204,22,0.7)); }
 
-        /* Utility Lines */
         .line-path { stroke-width: 2.5; fill: none; transition: all 0.3s ease; stroke: rgba(148, 163, 184, 0.15); } 
-        /* Rapatkan margin-bottom */
-        .match-card { width: 220px; margin-bottom: 0.75rem; position: relative; z-index: 10; }
+        .match-card { width: 220px; position: relative; z-index: 10; }
         
         .text-winner { color: #fff !important; font-weight: 800 !important; text-shadow: 0 0 8px rgba(255,255,255,0.4); }
         .text-loser { opacity: 0.4 !important; color: #ef4444 !important; }
@@ -142,18 +130,14 @@
             50% { border-color: rgba(251, 191, 36, 1); box-shadow: 0 0 25px rgba(245, 158, 11, 0.6); transform: scale(1.18); }
             100% { border-color: rgba(245, 158, 11, 0.5); transform: scale(1.15); }
         }
-        .is-final { animation: pulse-border 3s infinite; z-index: 15; transform-origin: center; margin: 1rem 0; }
+        /* Dihapus margin 1rem 0 pada final agar sejajar sempurna dengan semifinal */
+        .is-final { animation: pulse-border 3s infinite; z-index: 15; transform-origin: center; }
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
-        /* ANIMASI DETIK JAM */
-        @keyframes tick {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0; }
-        }
+        @keyframes tick { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
         .animate-tick { display: inline-block; animation: tick 1s steps(1, end) infinite; margin: 0 2px; }
 
-        /* ANIMASI DEBU / BINTANG (PARTICLES) */
         @keyframes floatUp {
             0% { transform: translateY(0) translateX(0) scale(1); opacity: 0; }
             10% { opacity: var(--max-opacity, 0.6); }
@@ -161,49 +145,69 @@
             100% { transform: translateY(-110vh) translateX(20px) scale(0.5); opacity: 0; }
         }
 
-        /* ANIMASI LENS FLARE */
+        /* PERBAIKAN ANIMASI LENS FLARE */
         @keyframes flarePan {
-            0% { left: -50vw; opacity: 0; }
-            50% { opacity: var(--max-opacity, 0.4); }
-            100% { left: 120vw; opacity: 0; }
+            0% { left: -50vw; opacity: 0; transform: scale(1) rotate(var(--rot, 0deg)); }
+            20% { opacity: var(--max-opacity, 0.4); transform: scale(1.2) rotate(var(--rot, 0deg)); }
+            80% { opacity: var(--max-opacity, 0.4); transform: scale(1.2) rotate(var(--rot, 0deg)); }
+            100% { left: 150vw; opacity: 0; transform: scale(1) rotate(var(--rot, 0deg)); }
         }
 
-        /* ANIMASI GARIS MENGALIR (GLOW FLOW DARI A KE B) */
-        @keyframes flow-line {
-            to { stroke-dashoffset: -24; }
-        }
-        .line-active {
-            stroke-dasharray: 12 12;
-            animation: flow-line 1s linear infinite;
-        }
+        @keyframes flow-line { to { stroke-dashoffset: -24; } }
+        .line-active { stroke-dasharray: 12 12; animation: flow-line 1s linear infinite; }
 
-        /* ANIMASI ROULETTE SHUFFLE */
         @keyframes rouletteSpin {
             0% { transform: translateY(100%); opacity: 0; }
             50% { transform: translateY(0); opacity: 1; }
             100% { transform: translateY(-100%); opacity: 0; }
         }
-        .anim-roulette {
-            animation: rouletteSpin 0.15s infinite linear;
+        .anim-roulette { animation: rouletteSpin 0.15s infinite linear; }
+        
+        /* EFEK DETAK PADA TITIK DUA JAM */
+        @keyframes heartbeatTick {
+            0% { transform: scale(1); opacity: 1; }
+            15% { transform: scale(1.3); opacity: 0.8; }
+            30% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1); opacity: 0.2; }
+            100% { transform: scale(1); opacity: 1; }
         }
+        .animate-heartbeat { display: inline-block; animation: heartbeatTick 1s infinite; transform-origin: center; }
 
-        /* Kelas Transisi Zoom */
-        #zoom-wrapper {
-            will-change: transform;
+        #zoom-wrapper { transition: transform 0.2s ease-out; will-change: transform; transform-origin: center top; }
+        
+        /* Mengamankan tampilan garis SVG agar merentang penuh */
+        #svg-lines {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 0;
+            pointer-events: none;
         }
     </style>
 </head>
 
 <body id="app-body" class="theme-emerald bg-grad-1 bg-animated h-screen flex flex-col transition-colors duration-700 relative">
 
+    <!-- TEKS LIVE KIRI ATAS -->
+    <div class="fixed top-6 left-6 z-[80] flex items-center gap-2.5 pointer-events-none">
+        <div class="w-3.5 h-3.5 bg-red-600 rounded-full animate-pulse shadow-[0_0_10px_rgba(220,38,38,0.9)]"></div>
+        <span class="text-red-500 font-black tracking-widest text-sm drop-shadow-md uppercase">Live</span>
+    </div>
+
     <!-- PARTICLE CONTAINER (DEBU/BINTANG) -->
     <div id="particles-container" class="fixed inset-0 pointer-events-none z-[1] overflow-hidden"></div>
 
     <!-- TOGGLE SETTINGS (POJOK KANAN ATAS) -->
-    <div class="fixed top-4 right-4 z-[70] flex flex-col gap-2 pointer-events-auto">
+    <div id="top-controls" class="fixed top-4 right-4 z-[70] flex flex-col gap-2 pointer-events-auto transition-opacity duration-300">
         <!-- Tombol Layar Penuh -->
         <button onclick="toggleFullscreen()" id="btn-fullscreen" class="bg-black/50 backdrop-blur-md border border-white/20 p-2.5 rounded-full text-white hover:bg-white/10 transition shadow-xl" title="Layar Penuh">
             <i data-lucide="maximize" id="icon-fullscreen" class="w-4 h-4"></i>
+        </button>
+        <!-- Tombol Fit To Screen -->
+        <button onclick="toggleFitToScreen()" id="btn-fit-screen" class="bg-black/50 backdrop-blur-md border border-white/20 p-2.5 rounded-full text-white hover:bg-white/10 transition shadow-xl" title="Paskan Semua Bagan di Layar">
+            <i data-lucide="monitor-dot" id="icon-fit-screen" class="w-4 h-4"></i>
         </button>
         <!-- Tombol Pin Header -->
         <button onclick="toggleHeaderShrink()" id="btn-toggle-header" class="bg-black/50 backdrop-blur-md border border-white/20 p-2.5 rounded-full text-white hover:bg-white/10 transition shadow-xl" title="Pin / Unpin Header">
@@ -219,29 +223,21 @@
         <div class="glass-circle w-48 h-48 bottom-[-10%] left-[10%]" style="animation-delay: -8s; animation-duration: 18s;"></div>
     </div>
 
-    <!-- Header Fixed: Tidak akan terhalang bagan, menyusut saat discroll -->
+    <!-- Header Fixed -->
     <div id="main-header" class="fixed top-0 left-0 w-full flex flex-col items-center pt-8 pb-6 z-[60] transition-all duration-300 pointer-events-none">
+        <input type="text" id="tournament-title" onchange="updateTitle(this.value)" placeholder="Nama Turnamen..." class="font-extrabold text-4xl md:text-5xl text-center bg-transparent border-none outline-none focus:border-b-2 border-white/50 w-[95%] max-w-6xl text-white transition-all pointer-events-auto tracking-tight drop-shadow-2xl" readonly>
+        <input type="text" id="tournament-subtitle" onchange="updateSubtitle(this.value)" placeholder="Subjudul Turnamen (Opsional)" class="font-bold text-lg md:text-xl text-center bg-transparent border-none outline-none focus:border-b border-white/30 w-[90%] max-w-5xl text-slate-200 mt-2 transition-all pointer-events-auto drop-shadow-lg" readonly>
         
-        <!-- Judul Turnamen (Bisa sangat panjang) -->
-        <input type="text" id="tournament-title" onchange="updateTitle(this.value)" placeholder="Nama Turnamen..." class="font-extrabold text-4xl md:text-5xl text-center bg-transparent border-none outline-none focus:border-b-2 border-white/50 w-[95%] max-w-6xl text-white transition-all pointer-events-auto tracking-tight drop-shadow-lg" readonly>
-        
-        <!-- Subjudul Turnamen (Bisa sangat panjang) -->
-        <input type="text" id="tournament-subtitle" onchange="updateSubtitle(this.value)" placeholder="Subjudul Turnamen (Opsional)" class="font-bold text-lg md:text-xl text-center bg-transparent border-none outline-none focus:border-b border-white/30 w-[90%] max-w-5xl text-slate-300 mt-2 transition-all pointer-events-auto drop-shadow-md" readonly>
-        
-        <!-- Tanggal & Jam Real-time -->
         <div id="clock-container" class="mt-4 flex flex-col items-center text-white drop-shadow-xl transition-all duration-300">
-            <span id="realtime-clock" class="text-5xl md:text-6xl font-black tracking-widest tabular-nums font-mono mb-2 text-transparent bg-clip-text bg-gradient-to-r from-slate-100 to-slate-400"><span id="clock-hm">00:00</span><span class="animate-tick text-slate-300">:</span><span id="clock-s" class="text-amber-300 drop-shadow-md">00</span></span>
+            <span id="realtime-clock" class="text-5xl md:text-6xl font-black tracking-widest tabular-nums font-mono mb-2 text-transparent bg-clip-text bg-gradient-to-r from-slate-100 to-slate-400"><span id="clock-hm">00:00</span><span class="animate-heartbeat text-slate-300 mx-1">:</span><span id="clock-s" class="text-amber-300 drop-shadow-md">00</span></span>
             <span id="realtime-date" class="text-base md:text-lg font-bold tracking-widest uppercase text-slate-300">HARI, TANGGAL BULAN TAHUN</span>
         </div>
 
-        <!-- Papan Juara Otomatis (Muncul saat final selesai) -->
         <div id="winner-board" class="hidden mt-6 bg-slate-900/80 backdrop-blur-md border border-amber-500 rounded-2xl p-6 shadow-[0_0_30px_rgba(245,158,11,0.3)] flex-col items-center w-[90%] max-w-md pointer-events-auto transition-all transform scale-95 opacity-0 duration-500 z-40">
             <div class="text-5xl mb-2 filter drop-shadow-lg">🏆</div>
             <div class="text-amber-500 text-xs font-bold tracking-widest uppercase mb-1">JUARA 1 TURNAMEN</div>
             <div id="winner-1" class="text-3xl font-black text-white mb-5 text-center tracking-tight bg-gradient-to-r from-amber-200 via-yellow-400 to-amber-200 text-transparent bg-clip-text drop-shadow-sm">NAMA TIM</div>
-            
             <div class="w-full h-px bg-gradient-to-r from-transparent via-slate-500 to-transparent my-2"></div>
-            
             <div class="flex w-full justify-around items-end pt-3">
                 <div class="flex flex-col items-center text-center">
                     <div class="flex items-center gap-1.5 mb-1 text-slate-200">
@@ -260,48 +256,43 @@
         </div>
     </div>
 
-    <!-- Area Bagan (Dimulai dari bawah header, scroll independen) -->
+    <!-- Area Bagan -->
     <main class="flex-1 overflow-auto bg-transparent no-scrollbar relative w-full h-full z-10 pt-[280px]" id="pan-container" style="cursor: grab;">
-        <div id="zoom-wrapper" class="relative p-6 md:p-12 w-max min-w-full h-max mx-auto pb-32 flex flex-col justify-start items-center">
-            
-            <!-- Kontainer Bagan Inti -->
+        <div id="zoom-wrapper" class="relative p-6 md:p-12 w-max min-w-full h-max mx-auto pb-40 flex flex-col justify-start items-center">
+            <!-- bracket-container dibuat absolute position context untuk SVG -->
             <div id="bracket-container" class="relative w-max h-max mt-10">
-                <svg id="svg-lines" class="absolute top-0 left-0 pointer-events-none z-0 overflow-visible"></svg>
+                <svg id="svg-lines" class="overflow-visible"></svg>
                 <div id="bracket-content" class="flex gap-10 md:gap-24 items-center justify-center relative z-10 w-full h-full">
                     <!-- Bagan di-render via JS -->
                 </div>
             </div>
-
         </div>
     </main>
 
-    <!-- Tombol Login Kecil (Sudut Kiri Bawah) -->
+    <!-- TOMBOL TV MODE (Kanan Bawah) -->
+    <button onclick="toggleTVMode()" id="btn-tv-mode" class="fixed bottom-4 right-4 bg-indigo-600 hover:bg-indigo-500 text-white p-3 rounded-full shadow-2xl transition-all hover:scale-110 pointer-events-auto z-[80]" title="TV Mode (Full Screen & Auto Fit)">
+        <i data-lucide="tv" class="w-5 h-5"></i>
+    </button>
+
+    <!-- Tombol Login Kecil -->
     <button onclick="openLoginModal()" id="btn-login" class="fixed bottom-4 left-4 bg-black/60 backdrop-blur-md border border-white/20 hover:bg-white/10 p-3 rounded-full shadow-2xl text-slate-300 transition-all hover:scale-110 pointer-events-auto z-[80]">
         <i data-lucide="lock" class="w-5 h-5"></i>
     </button>
 
-    <!-- Bottom Bar (Tengah, Admin Tools di Tengah Bawah) -->
-    <div class="fixed bottom-0 left-0 right-0 p-4 flex justify-center items-end z-[70] pointer-events-none">
-        
-        <!-- PENCARIAN (Akan disembunyikan jika Admin Tools aktif) -->
+    <!-- Bottom Bar -->
+    <div id="bottom-bar-container" class="fixed bottom-0 left-0 right-0 p-4 flex justify-center items-end z-[70] pointer-events-none transition-opacity duration-300">
         <div id="search-container" class="flex items-center bg-black/60 backdrop-blur-md border border-white/20 rounded-full px-4 py-2.5 w-64 md:w-80 shadow-2xl pointer-events-auto transition-all focus-within:border-white/60 focus-within:ring-2 ring-white/10 relative">
             <i data-lucide="search" class="w-4 h-4 text-slate-300 mr-2.5 shrink-0"></i>
             <input type="text" id="search-input" list="team-list" placeholder="Cari Tim..." oninput="searchTeam(this.value)" class="bg-transparent border-none outline-none text-sm text-white w-full placeholder-slate-400 font-medium">
             <datalist id="team-list"></datalist>
         </div>
 
-        <!-- Panel Admin (Tengah Bawah) -->
         <div class="flex flex-col items-center gap-3 pointer-events-auto w-full max-w-4xl absolute bottom-4">
-            
-            <div id="sync-status" class="text-xs bg-black/40 backdrop-blur-sm px-3 py-1.5 rounded-full border border-white/10 shadow-lg absolute right-4 bottom-16">
-                <!-- Status Sinkronisasi -->
-            </div>
+            <div id="sync-status" class="text-xs bg-black/40 backdrop-blur-sm px-3 py-1.5 rounded-full border border-white/10 shadow-lg absolute right-4 bottom-16 hidden"></div>
 
             <div class="flex items-center gap-2 justify-center w-full">
-                <!-- Panel Menu Admin (Tersembunyi jika bukan admin) -->
                 <div id="admin-tools" class="hidden flex-wrap justify-center items-center gap-2 bg-black/70 backdrop-blur-md p-2 rounded-xl border border-white/20 shadow-2xl">
                     
-                    <!-- Ukuran -->
                     <div class="flex items-center gap-1.5 bg-white/5 rounded-lg px-2.5 py-2" title="Jumlah Tim (2-32)">
                         <i data-lucide="users" class="w-4 h-4 text-slate-300"></i>
                         <input type="number" id="size-input" class="w-12 bg-transparent text-center font-bold outline-none text-sm text-white" min="2" max="32" value="16" onkeydown="if(event.key === 'Enter') changeSize()">
@@ -312,7 +303,6 @@
                     
                     <div class="w-px h-6 bg-white/10 mx-1"></div>
 
-                    <!-- Ukuran Font Tim (Perbesar/Perkecil) -->
                     <div class="flex items-center gap-1.5 bg-white/5 rounded-lg px-2 py-1.5 border border-white/5" title="Perbesar/Perkecil Nama Peserta">
                         <i data-lucide="type" class="w-4 h-4 text-blue-300"></i>
                         <button onclick="changeFontSize(-1)" class="p-1 text-slate-300 hover:text-white hover:bg-white/10 rounded transition cursor-pointer pointer-events-auto"><i data-lucide="minus" class="w-3 h-3"></i></button>
@@ -322,7 +312,6 @@
 
                     <div class="w-px h-6 bg-white/10 mx-1"></div>
 
-                    <!-- Efek Partikel Selector -->
                     <div class="flex items-center gap-1.5 bg-white/5 rounded-lg px-2 py-1.5 border border-white/5" title="Efek Animasi Latar">
                         <i data-lucide="sparkles" class="w-4 h-4 text-amber-300"></i>
                         <select id="particle-selector" class="bg-transparent text-xs font-bold outline-none text-white cursor-pointer hover:bg-white/5 transition" onchange="changeParticle()">
@@ -339,7 +328,6 @@
 
                     <div class="w-px h-6 bg-white/10 mx-1"></div>
 
-                    <!-- 10 Background Selector -->
                     <select id="bg-selector" class="bg-white/5 border border-white/10 text-xs font-bold rounded-lg px-2 py-2 outline-none text-white cursor-pointer hover:bg-white/10 transition max-w-[100px]" onchange="changeThemeAndBg()">
                         <option value="bg-grad-1" class="text-black">1. Dark</option>
                         <option value="bg-grad-2" class="text-black">2. Blood</option>
@@ -358,7 +346,6 @@
                         <option value="bg-grad-15" class="text-black">15. Magenta Rose</option>
                     </select>
 
-                    <!-- 10 Theme Selector -->
                     <select id="theme-selector" class="bg-white/5 border border-white/10 text-xs font-bold rounded-lg px-2 py-2 outline-none text-white cursor-pointer hover:bg-white/10 transition max-w-[100px]" onchange="changeThemeAndBg()">
                         <option value="theme-emerald" class="text-black">🟩 Emerald</option>
                         <option value="theme-red" class="text-black">🟥 Red</option>
@@ -374,7 +361,6 @@
 
                     <div class="w-px h-6 bg-white/10 mx-1"></div>
 
-                    <!-- Tools Lanjutan -->
                     <button onclick="openBulkModal()" class="bg-indigo-500/20 hover:bg-indigo-500/40 text-indigo-300 px-3 py-2 rounded-lg text-xs flex items-center gap-2 transition font-bold border border-indigo-500/30">
                         <i data-lucide="clipboard-paste" class="w-4 h-4"></i> Paste
                     </button>
@@ -383,21 +369,24 @@
                         <i data-lucide="shuffle" class="w-4 h-4"></i> Acak
                     </button>
 
-                    <!-- Tes AI / Bot -->
-                    <div class="relative group cursor-pointer hover:z-50" onmouseenter="this.children[1].classList.remove('hidden')" onmouseleave="this.children[1].classList.add('hidden')">
-                        <button class="bg-emerald-500/20 hover:bg-emerald-500/40 text-emerald-300 px-3 py-2 rounded-lg text-xs flex items-center gap-2 transition font-bold border border-emerald-500/30 pointer-events-none">
+                    <!-- Perbaikan interaksi Hover Bot (Memakai group-hover CSS) -->
+                    <div class="relative group cursor-pointer hover:z-[100]">
+                        <button class="bg-emerald-500/20 group-hover:bg-emerald-500/40 text-emerald-300 px-3 py-2 rounded-lg text-xs flex items-center gap-2 transition font-bold border border-emerald-500/30">
                             Bot <i data-lucide="chevron-down" class="w-3 h-3"></i>
                         </button>
-                        <div class="absolute bottom-full right-0 mb-1 hidden w-40 bg-slate-800/95 backdrop-blur-md border border-slate-600 rounded-xl shadow-2xl overflow-hidden z-[100] transition-opacity">
-                            <button onclick="generateAITeams()" class="w-full text-left px-4 py-2.5 hover:bg-slate-700 text-xs text-amber-300 font-bold transition flex items-center gap-2 border-b border-white/5">
-                                <i data-lucide="sparkles" class="w-4 h-4"></i> AI Gen Nama
-                            </button>
-                            <button onclick="autoFillNames()" class="w-full text-left px-4 py-2.5 hover:bg-slate-700 text-xs text-slate-200 transition flex items-center gap-2 border-b border-white/5">
-                                <i data-lucide="bot" class="w-4 h-4"></i> Isi Default
-                            </button>
-                            <button onclick="autoFillScores()" class="w-full text-left px-4 py-2.5 hover:bg-slate-700 text-xs text-slate-200 transition flex items-center gap-2">
-                                <i data-lucide="dices" class="w-4 h-4"></i> Acak Skor
-                            </button>
+                        <!-- Area transparan (pb-2) mencegah terputusnya hover saat kursor turun ke menu -->
+                        <div class="absolute bottom-full right-0 hidden group-hover:block w-40 pb-2 z-[100]">
+                            <div class="bg-slate-800/95 backdrop-blur-md border border-slate-600 rounded-xl shadow-2xl overflow-hidden transition-opacity">
+                                <button onclick="generateAITeams()" class="w-full text-left px-4 py-2.5 hover:bg-slate-700 text-xs text-amber-300 font-bold transition flex items-center gap-2 border-b border-white/5">
+                                    <i data-lucide="sparkles" class="w-4 h-4"></i> AI Gen Nama
+                                </button>
+                                <button onclick="autoFillNames()" class="w-full text-left px-4 py-2.5 hover:bg-slate-700 text-xs text-slate-200 transition flex items-center gap-2 border-b border-white/5">
+                                    <i data-lucide="bot" class="w-4 h-4"></i> Isi Default
+                                </button>
+                                <button onclick="autoFillScores()" class="w-full text-left px-4 py-2.5 hover:bg-slate-700 text-xs text-slate-200 transition flex items-center gap-2">
+                                    <i data-lucide="dices" class="w-4 h-4"></i> Acak Skor
+                                </button>
+                            </div>
                         </div>
                     </div>
 
@@ -415,7 +404,7 @@
         </div>
     </div>
 
-    <!-- Modal Paste (Bulk) -->
+    <!-- Modals -->
     <div id="bulk-modal" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-[100] flex items-center justify-center p-4">
         <div class="bg-slate-900 border border-slate-700 rounded-2xl p-6 w-full max-w-lg shadow-2xl">
             <h3 class="text-xl font-bold text-white mb-2">Paste Nama Tim</h3>
@@ -428,11 +417,9 @@
         </div>
     </div>
 
-    <!-- Modal Login Admin -->
     <div id="login-modal" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-[120] flex items-center justify-center p-4">
         <div class="bg-slate-900 border border-slate-700 rounded-2xl p-6 w-full max-w-sm shadow-2xl transform scale-95 transition-transform duration-300" id="login-modal-box">
             <h3 class="text-xl font-bold text-white mb-4">Login Admin</h3>
-            <!-- Type password dan disensor menjadi bintang otomatis -->
             <input type="password" id="admin-password-input" class="w-full bg-slate-800 border border-slate-600 rounded-lg p-3 text-white outline-none focus:border-emerald-500 mb-4 transition-colors" placeholder="Masukkan Password" onkeydown="if(event.key === 'Enter') submitLogin()">
             <div class="flex justify-end gap-3">
                 <button onclick="closeLoginModal()" class="px-4 py-2 rounded-lg text-sm text-slate-300 hover:bg-slate-800 transition-colors">Batal</button>
@@ -441,7 +428,6 @@
         </div>
     </div>
 
-    <!-- Modal AI Komentator -->
     <div id="ai-modal" class="hidden fixed inset-0 bg-black/80 backdrop-blur-md z-[110] flex items-center justify-center p-4">
         <div class="bg-slate-900 border border-amber-500/40 rounded-2xl p-6 w-full max-w-md shadow-[0_0_50px_rgba(245,158,11,0.2)] relative overflow-hidden">
             <div class="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-amber-500 via-yellow-300 to-amber-500"></div>
@@ -450,7 +436,6 @@
                 <h3 class="text-xl font-black text-white tracking-tight">Komentator AI</h3>
             </div>
             <div id="ai-text" class="min-h-[100px] flex flex-col items-center justify-center p-4 bg-slate-800/50 rounded-xl border border-slate-700/50">
-                <!-- Konten diproses -->
             </div>
             <div class="flex justify-end mt-6">
                 <button onclick="closeAIModal()" class="px-6 py-2.5 rounded-xl text-sm font-bold bg-white/10 hover:bg-white/20 text-white transition-colors">Tutup</button>
@@ -467,22 +452,16 @@
         let isAdmin = false;
         let svgTimeout;
         let isHeaderShrinkEnabled = true;
+        let isFitToScreen = false;
+        let isTVMode = false;
         let particleIntervals = [];
         let currentParticleType = null;
-        let lastWinnerState = false; // State untuk mendeteksi kapan juara pertama kali muncul
+        let lastWinnerState = false;
         
         let tournamentData = {
-            title: "Turnamen Bracket Live",
-            subtitle: "",
-            period: "",
-            size: 16,        
-            actualSize: 16,  
-            theme: "theme-emerald",
-            bgTheme: "bg-grad-1",
-            particleType: "star",
-            locationUrl: "https://maps.app.goo.gl/reHkx6shAXRKqTq99",
-            teamFontSize: 14,
-            matches: {}
+            title: "Turnamen Bracket Live", subtitle: "", period: "", size: 16, actualSize: 16,  
+            theme: "theme-emerald", bgTheme: "bg-grad-1", particleType: "star",
+            locationUrl: "https://maps.app.goo.gl/reHkx6shAXRKqTq99", teamFontSize: 14, matches: {}
         };
 
         const firebaseConfig = {
@@ -494,26 +473,18 @@
             appId: "1:486368316980:web:dfa97e7a04f8a33e7b4461"
         };
 
-        // --- SISTEM AUDIO (Efek Suara Ringan) ---
         let audioCtx = null;
         function initAudio() {
-            if (!audioCtx) {
-                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-            }
-            if (audioCtx.state === 'suspended') {
-                audioCtx.resume();
-            }
+            if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            if (audioCtx.state === 'suspended') audioCtx.resume();
         }
 
-        // Mainkan suara klik/tombol
         function playBeep() {
             if (!audioCtx || audioCtx.state === 'suspended') return;
             try {
-                const osc = audioCtx.createOscillator();
-                const gain = audioCtx.createGain();
+                const osc = audioCtx.createOscillator(); const gain = audioCtx.createGain();
                 osc.connect(gain); gain.connect(audioCtx.destination);
-                osc.type = 'sine';
-                osc.frequency.setValueAtTime(600, audioCtx.currentTime);
+                osc.type = 'sine'; osc.frequency.setValueAtTime(600, audioCtx.currentTime);
                 osc.frequency.exponentialRampToValueAtTime(300, audioCtx.currentTime + 0.05);
                 gain.gain.setValueAtTime(0.05, audioCtx.currentTime);
                 gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.05);
@@ -521,153 +492,219 @@
             } catch(e) {}
         }
 
-        // Mainkan suara kemenangan saat final selesai
         function playWinSound() {
             if (!audioCtx || audioCtx.state === 'suspended') return;
             try {
-                const osc = audioCtx.createOscillator();
-                const gain = audioCtx.createGain();
+                const osc = audioCtx.createOscillator(); const gain = audioCtx.createGain();
                 osc.connect(gain); gain.connect(audioCtx.destination);
                 osc.type = 'triangle';
-                osc.frequency.setValueAtTime(523.25, audioCtx.currentTime); // C5
-                osc.frequency.setValueAtTime(659.25, audioCtx.currentTime + 0.1); // E5
-                osc.frequency.setValueAtTime(783.99, audioCtx.currentTime + 0.2); // G5
-                osc.frequency.setValueAtTime(1046.50, audioCtx.currentTime + 0.3); // C6
+                osc.frequency.setValueAtTime(523.25, audioCtx.currentTime); 
+                osc.frequency.setValueAtTime(659.25, audioCtx.currentTime + 0.1); 
+                osc.frequency.setValueAtTime(783.99, audioCtx.currentTime + 0.2); 
+                osc.frequency.setValueAtTime(1046.50, audioCtx.currentTime + 0.3); 
                 gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
                 gain.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 0.6);
                 osc.start(); osc.stop(audioCtx.currentTime + 0.6);
             } catch(e) {}
         }
 
-        // Deteksi interaksi pertama untuk inisiasi audio (Kebijakan browser)
-        document.body.addEventListener('click', () => {
-            initAudio();
-        }, { once: true });
-
-        // Event listener klik global untuk tombol (Efek suara)
-        document.addEventListener('click', (e) => {
-            if (e.target.tagName === 'BUTTON' || e.target.closest('button')) {
-                playBeep();
-            }
-        });
-
+        document.body.addEventListener('click', () => { initAudio(); }, { once: true });
+        document.addEventListener('click', (e) => { if (e.target.tagName === 'BUTTON' || e.target.closest('button')) playBeep(); });
 
         window.onload = () => {
-            initFirebase();
-            setupPanZoom();
-            startRealtimeClock();
-            setupScrollHeaderBehavior();
-            
-            window.addEventListener('resize', () => {
-                clearTimeout(svgTimeout);
-                svgTimeout = setTimeout(drawLines, 100);
-            });
+            initFirebase(); setupPanZoom(); startRealtimeClock(); setupScrollHeaderBehavior();
+            window.addEventListener('resize', () => { clearTimeout(svgTimeout); svgTimeout = setTimeout(drawLines, 100); });
         };
 
-        // --- Fitur Sanitasi Input (XSS Prevention) ---
         function sanitizeInput(str) {
             if (typeof str !== 'string') return str;
-            // Mengubah karakter berbahaya menjadi HTML entities
             return str.replace(/[&<>"'/]/ig, (match) => {
                 const map = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#x27;', "/": '&#x2F;' };
                 return map[match];
             });
         }
 
-        // --- Fitur Fullscreen ---
-        function toggleFullscreen() {
-            if (!document.fullscreenElement) {
-                document.documentElement.requestFullscreen().catch(err => {
-                    console.log(`Error attempting to enable full-screen mode: ${err.message}`);
-                });
+        // --- FITUR TV MODE ---
+        function toggleTVMode() {
+            isTVMode = !isTVMode;
+            const btnTV = document.getElementById('btn-tv-mode');
+            const bottomBar = document.getElementById('bottom-bar-container');
+            const topControls = document.getElementById('top-controls');
+            const btnLogin = document.getElementById('btn-login');
+
+            if (isTVMode) {
+                // Aktifkan TV Mode
+                btnTV.classList.replace('bg-indigo-600', 'bg-rose-600');
+                btnTV.classList.replace('hover:bg-indigo-500', 'hover:bg-rose-500');
+                btnTV.title = "Keluar TV Mode";
+                
+                bottomBar.classList.add('opacity-0', 'pointer-events-none');
+                topControls.classList.add('opacity-0', 'pointer-events-none');
+                if(!isAdmin) btnLogin.classList.add('opacity-0', 'pointer-events-none');
+
+                // Paksa Fullscreen
+                if (!document.fullscreenElement) document.documentElement.requestFullscreen().catch(e => console.log(e));
+                
+                // Matikan shrink header
+                isHeaderShrinkEnabled = false;
+                handleScroll(); // Reset header ke ukuran besar
+                
+                // Paksa Fit to Screen
+                if(!isFitToScreen) {
+                    isFitToScreen = true;
+                    applyFitToScreenLogic();
+                }
+
             } else {
-                if (document.exitFullscreen) {
-                    document.exitFullscreen();
+                // Matikan TV Mode
+                btnTV.classList.replace('bg-rose-600', 'bg-indigo-600');
+                btnTV.classList.replace('hover:bg-rose-500', 'hover:bg-indigo-500');
+                btnTV.title = "TV Mode (Full Screen & Auto Fit)";
+
+                bottomBar.classList.remove('opacity-0', 'pointer-events-none');
+                topControls.classList.remove('opacity-0', 'pointer-events-none');
+                if(!isAdmin) btnLogin.classList.remove('opacity-0', 'pointer-events-none');
+                
+                // Keluar Fullscreen
+                if (document.fullscreenElement && document.exitFullscreen) document.exitFullscreen();
+                
+                // Kembalikan shrink header
+                isHeaderShrinkEnabled = true;
+                handleScroll();
+
+                // Matikan Fit to Screen
+                if(isFitToScreen) {
+                    isFitToScreen = false;
+                    document.getElementById('icon-fit-screen').setAttribute('data-lucide', 'monitor-dot');
+                    window.currentScale = 1;
+                    applyZoom();
+                    setTimeout(() => { centerScroll(); drawLines(); }, 100);
                 }
             }
+            lucide.createIcons();
+        }
+
+        // Dipisahkan agar bisa dipanggil dari TV Mode atau Tombol Manual
+        function applyFitToScreenLogic() {
+            const panContainer = document.getElementById('pan-container');
+            const content = document.getElementById('bracket-container');
+            
+            window.currentScale = 1;
+            applyZoom(); 
+            
+            setTimeout(() => {
+                const viewportWidth = panContainer.clientWidth;
+                const viewportHeight = panContainer.clientHeight;
+                
+                // Ukuran murni (unscaled) dari konten bagan
+                const contentWidth = content.offsetWidth;
+                const contentHeight = content.offsetHeight + 150; 
+                
+                const scaleX = (viewportWidth - 80) / contentWidth;
+                const scaleY = (viewportHeight - 120) / contentHeight;
+                
+                window.currentScale = Math.min(scaleX, scaleY, 1.5);
+                if(window.currentScale < 0.2) window.currentScale = 0.2; 
+                
+                applyZoom();
+                
+                setTimeout(() => {
+                    // Pusatkan scroll bar
+                    panContainer.scrollLeft = (panContainer.scrollWidth - panContainer.clientWidth) / 2;
+                    panContainer.scrollTop = (panContainer.scrollHeight - panContainer.clientHeight) / 2;
+                }, 150);
+            }, 50);
+        }
+
+        function toggleFullscreen() {
+            if (!document.fullscreenElement) document.documentElement.requestFullscreen().catch(e => console.log(e));
+            else if (document.exitFullscreen) document.exitFullscreen();
         }
 
         document.addEventListener('fullscreenchange', () => {
-            const icon = document.getElementById('icon-fullscreen');
-            if (document.fullscreenElement) {
-                icon.setAttribute('data-lucide', 'minimize');
-            } else {
-                icon.setAttribute('data-lucide', 'maximize');
+            document.getElementById('icon-fullscreen').setAttribute('data-lucide', document.fullscreenElement ? 'minimize' : 'maximize');
+            
+            // Jika keluar fullscreen lewat tombol ESC, dan sedang mode TV, matikan mode TV
+            if (!document.fullscreenElement && isTVMode) {
+                toggleTVMode(); 
             }
             lucide.createIcons();
         });
 
+        // Fitur 2: Fit to Screen Toggle
+        function toggleFitToScreen() {
+            isFitToScreen = !isFitToScreen;
+            const icon = document.getElementById('icon-fit-screen');
 
-        // --- Fitur Toggle Pojok Kanan Atas ---
+            if (isFitToScreen) {
+                icon.setAttribute('data-lucide', 'zoom-in');
+                applyFitToScreenLogic();
+            } else {
+                icon.setAttribute('data-lucide', 'monitor-dot');
+                window.currentScale = 1;
+                applyZoom();
+                setTimeout(() => { centerScroll(); drawLines(); }, 100);
+            }
+            lucide.createIcons();
+        }
+
         function toggleHeaderShrink() {
             isHeaderShrinkEnabled = !isHeaderShrinkEnabled;
             document.getElementById('icon-header-toggle').setAttribute('data-lucide', isHeaderShrinkEnabled ? 'pin' : 'pin-off');
-            lucide.createIcons();
-            handleScroll(); 
+            lucide.createIcons(); handleScroll(); 
         }
 
         function startParticles(type) {
-            if (window.particleIntervals) {
-                window.particleIntervals.forEach(clearInterval);
-            }
+            if (window.particleIntervals) window.particleIntervals.forEach(clearInterval);
             window.particleIntervals = [];
-
-            if (type === 'none') {
-                const container = document.getElementById('particles-container');
-                if(container) container.innerHTML = '';
-                return;
-            }
-            
+            if (type === 'none') { document.getElementById('particles-container').innerHTML = ''; return; }
             if (type.includes('dust')) window.particleIntervals.push(setInterval(() => createParticle('dust'), 250));
             if (type.includes('bubble')) window.particleIntervals.push(setInterval(() => createParticle('bubble'), 500));
             if (type.includes('star')) window.particleIntervals.push(setInterval(() => createParticle('star'), 400));
-            if (type.includes('flare') || type === 'lens-flare') window.particleIntervals.push(setInterval(() => createParticle('lens-flare'), 1500));
+            if (type.includes('flare') || type === 'lens-flare') window.particleIntervals.push(setInterval(() => createParticle('lens-flare'), 2500)); // Diperpanjang jeda pembuatannya agar tidak menumpuk
         }
 
         function createParticle(type) {
             const container = document.getElementById('particles-container');
             if (!container || document.visibilityState !== 'visible') return;
-            
-            const p = document.createElement('div');
-            let size;
+            const p = document.createElement('div'); let size;
             
             if (type === 'lens-flare') {
-                size = Math.random() * 400 + 200; 
-                p.className = 'absolute pointer-events-none rounded-[100%] blur-sm';
-                const colors = ['rgba(255,255,255,0.7)', 'rgba(96,165,250,0.4)', 'rgba(251,191,36,0.4)', 'rgba(236,72,153,0.4)'];
-                const color = colors[Math.floor(Math.random() * colors.length)];
-                p.style.background = `radial-gradient(ellipse, ${color} 0%, transparent 70%)`;
-                p.style.width = `${size * 2}px`;
-                p.style.height = `${size / 8}px`;
-                p.style.top = `${Math.random() * 100}vh`;
-                const angle = Math.random() * 40 - 20;
-                p.style.transform = `rotate(${angle}deg)`;
+                size = Math.random() * 500 + 300; 
+                p.className = 'absolute pointer-events-none rounded-[100%] blur-sm opacity-0';
+                const colors = ['rgba(255,255,255,0.8)', 'rgba(96,165,250,0.5)', 'rgba(251,191,36,0.5)', 'rgba(236,72,153,0.5)'];
+                p.style.background = `radial-gradient(ellipse, ${colors[Math.floor(Math.random() * colors.length)]} 0%, transparent 70%)`;
+                p.style.width = `${size * 2}px`; p.style.height = `${size / 8}px`;
+                p.style.top = `${Math.random() * 80 + 10}vh`; 
+                const rot = Math.random() * 40 - 20;
+                p.style.setProperty('--rot', `${rot}deg`); // Variabel custom untuk rotasi di keyframes
                 p.style.setProperty('--max-opacity', Math.random() * 0.4 + 0.1);
-                p.style.animation = `flarePan ${Math.random() * 10 + 10}s linear forwards`;
+                
+                // Durasi acak 6-12 detik agar halus bergeraknya
+                const duration = Math.random() * 6 + 6;
+                p.style.animation = `flarePan ${duration}s ease-in-out forwards`;
+                
+                container.appendChild(p); 
+                setTimeout(() => { if (p.parentNode) p.remove(); }, duration * 1000 + 500); // Pastikan dihapus
+                return; // Return awal untuk flare
             } else if (type === 'bubble') {
-                size = Math.random() * 12 + 4; 
-                p.className = 'absolute pointer-events-none border border-white/30 rounded-full bg-white/5 backdrop-blur-sm';
+                size = Math.random() * 12 + 4; p.className = 'absolute pointer-events-none border border-white/30 rounded-full bg-white/5 backdrop-blur-sm';
             } else if (type === 'dust') {
-                size = Math.random() * 4 + 1;
-                p.className = 'absolute pointer-events-none bg-slate-300 rounded-full opacity-60';
+                size = Math.random() * 4 + 1; p.className = 'absolute pointer-events-none bg-slate-300 rounded-full opacity-60';
             } else {
-                size = Math.random() * 4 + 2; 
-                p.className = 'absolute pointer-events-none bg-amber-200 shadow-[0_0_5px_#fde047] rounded-full';
+                size = Math.random() * 4 + 2; p.className = 'absolute pointer-events-none bg-amber-200 shadow-[0_0_5px_#fde047] rounded-full';
             }
             
             if (type !== 'lens-flare') {
-                p.style.width = `${size}px`;
-                p.style.height = `${size}px`;
-                p.style.left = `${Math.random() * 100}vw`;
-                p.style.bottom = '-20px';
+                p.style.width = `${size}px`; p.style.height = `${size}px`;
+                p.style.left = `${Math.random() * 100}vw`; p.style.bottom = '-20px';
                 p.style.setProperty('--max-opacity', Math.random() * 0.5 + 0.2);
                 p.style.animation = `floatUp ${Math.random() * 8 + 6}s linear forwards`;
             }
-            
-            container.appendChild(p);
-            setTimeout(() => { if (p.parentNode) p.remove(); }, 20000);
+            container.appendChild(p); setTimeout(() => { if (p.parentNode) p.remove(); }, 20000);
         }
 
+        // Fitur 5: Header Transparan & Blur saat scroll
         function handleScroll() {
             const panContainer = document.getElementById('pan-container');
             const header = document.getElementById('main-header');
@@ -676,56 +713,34 @@
             const clockContainer = document.getElementById('clock-container');
 
             if (isHeaderShrinkEnabled && panContainer.scrollTop > 40) {
-                header.classList.add('bg-slate-900/90', 'backdrop-blur-xl', 'border-b', 'border-white/10', 'shadow-2xl');
-                header.classList.remove('pt-8', 'pb-6');
+                // Mode Kecil: Blur dan transparan untuk hemat tempat dan terlihat elegan
+                header.classList.add('bg-black/20', 'backdrop-blur-md', 'border-b', 'border-white/10', 'shadow-sm');
+                header.classList.remove('bg-transparent', 'pt-8', 'pb-6');
                 header.classList.add('pt-3', 'pb-3');
                 
-                title.classList.replace('text-4xl', 'text-2xl');
-                title.classList.replace('md:text-5xl', 'md:text-3xl');
-                
-                subtitle.classList.replace('text-lg', 'text-sm');
-                subtitle.classList.replace('md:text-xl', 'text-sm');
-                subtitle.classList.replace('mt-2', 'mt-0');
-                
-                clockContainer.classList.add('scale-y-0', 'h-0', 'opacity-0');
-                clockContainer.classList.remove('mt-4');
+                title.classList.replace('text-4xl', 'text-2xl'); title.classList.replace('md:text-5xl', 'md:text-3xl');
+                subtitle.classList.replace('text-lg', 'text-sm'); subtitle.classList.replace('md:text-xl', 'text-sm'); subtitle.classList.replace('mt-2', 'mt-0');
+                clockContainer.classList.add('scale-y-0', 'h-0', 'opacity-0'); clockContainer.classList.remove('mt-4');
             } else {
-                header.classList.remove('bg-slate-900/90', 'backdrop-blur-xl', 'border-b', 'border-white/10', 'shadow-2xl');
+                // Mode Besar: Transparan Penuh tanpa blur, membaur dengan background
+                header.classList.remove('bg-black/20', 'backdrop-blur-md', 'border-b', 'border-white/10', 'shadow-sm');
+                header.classList.add('bg-transparent', 'pt-8', 'pb-6');
                 header.classList.remove('pt-3', 'pb-3');
-                header.classList.add('pt-8', 'pb-6');
                 
-                title.classList.replace('text-2xl', 'text-4xl');
-                title.classList.replace('md:text-3xl', 'md:text-5xl');
-                
-                subtitle.classList.replace('text-sm', 'text-lg');
-                subtitle.classList.replace('text-sm', 'md:text-xl');
-                subtitle.classList.replace('mt-0', 'mt-2');
-                
-                clockContainer.classList.remove('scale-y-0', 'h-0', 'opacity-0');
-                clockContainer.classList.add('mt-4');
+                title.classList.replace('text-2xl', 'text-4xl'); title.classList.replace('md:text-3xl', 'md:text-5xl');
+                subtitle.classList.replace('text-sm', 'text-lg'); subtitle.classList.replace('text-sm', 'md:text-xl'); subtitle.classList.replace('mt-0', 'mt-2');
+                clockContainer.classList.remove('scale-y-0', 'h-0', 'opacity-0'); clockContainer.classList.add('mt-4');
             }
         }
 
-        function setupScrollHeaderBehavior() {
-            const panContainer = document.getElementById('pan-container');
-            panContainer.addEventListener('scroll', handleScroll);
-        }
+        function setupScrollHeaderBehavior() { document.getElementById('pan-container').addEventListener('scroll', handleScroll); }
 
         function startRealtimeClock() {
-            const hmEl = document.getElementById('clock-hm');
-            const sEl = document.getElementById('clock-s');
-            const dateEl = document.getElementById('realtime-date');
-            
             setInterval(() => {
                 const now = new Date();
-                const hh = now.getHours().toString().padStart(2, '0');
-                const mm = now.getMinutes().toString().padStart(2, '0');
-                const ss = now.getSeconds().toString().padStart(2, '0');
-                
-                hmEl.innerText = `${hh}:${mm}`;
-                sEl.innerText = ss;
-                
-                dateEl.innerText = now.toLocaleDateString('id-ID', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+                document.getElementById('clock-hm').innerText = `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
+                document.getElementById('clock-s').innerText = now.getSeconds().toString().padStart(2, '0');
+                document.getElementById('realtime-date').innerText = now.toLocaleDateString('id-ID', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
             }, 1000);
         }
 
@@ -733,90 +748,55 @@
             try {
                 if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
                 window.db = firebase.firestore();
-                const docRef = window.db.collection('turnamen').doc('data_bagan');
-
-                docRef.onSnapshot((doc) => {
-                    if (doc.exists) {
-                        const data = doc.data();
-                        if (data && data.matches && Object.keys(data.matches).length > 0) {
-                            tournamentData = { ...tournamentData, ...data };
-                        } else generateEmptyMatches(16, 16);
+                window.db.collection('turnamen').doc('data_bagan').onSnapshot((doc) => {
+                    if (doc.exists && doc.data() && Object.keys(doc.data().matches || {}).length > 0) {
+                        tournamentData = { ...tournamentData, ...doc.data() };
                     } else generateEmptyMatches(16, 16);
-                    applyStateToUI();
-                    updateSyncStatus(true);
-                }, (error) => {
-                    updateSyncStatus(false, "Terputus");
-                });
-            } catch (error) {
-                updateSyncStatus(false, "Error");
-                generateEmptyMatches(16, 16);
-                applyStateToUI();
-            }
+                    applyStateToUI(); updateSyncStatus(true);
+                }, () => updateSyncStatus(false, "Terputus"));
+            } catch (error) { generateEmptyMatches(16, 16); applyStateToUI(); }
         }
 
         function applyStateToUI() {
             renderBracketDOM();
 
             const syncInput = (id, field) => {
-                const el = document.getElementById(id);
-                if (!el) return;
+                const el = document.getElementById(id); if (!el) return;
                 if (document.activeElement !== el) el.value = tournamentData[field] || "";
                 if(isAdmin) { el.removeAttribute('readonly'); el.classList.add('cursor-text'); } 
                 else { el.setAttribute('readonly', true); el.classList.remove('cursor-text'); }
             };
 
-            syncInput('tournament-title', 'title');
-            syncInput('tournament-subtitle', 'subtitle');
-            syncInput('tournament-period', 'period');
+            syncInput('tournament-title', 'title'); syncInput('tournament-subtitle', 'subtitle');
             
             document.title = tournamentData.title || "Bagan Turnamen";
-
             document.getElementById('app-body').className = `${tournamentData.theme || 'theme-emerald'} ${tournamentData.bgTheme || 'bg-grad-1'} bg-animated h-screen flex flex-col transition-colors duration-700 relative`;
             document.getElementById('theme-selector').value = tournamentData.theme || 'theme-emerald';
             document.getElementById('bg-selector').value = tournamentData.bgTheme || 'bg-grad-1';
             
-            const partSel = document.getElementById('particle-selector');
-            if (partSel) partSel.value = tournamentData.particleType || 'star';
-
-            const locLink = document.getElementById('location-link');
-            if (locLink) locLink.href = tournamentData.locationUrl || "https://maps.app.goo.gl/reHkx6shAXRKqTq99";
+            if (document.getElementById('particle-selector')) document.getElementById('particle-selector').value = tournamentData.particleType || 'star';
             
             const sizeInput = document.getElementById('size-input');
             if (document.activeElement !== sizeInput) sizeInput.value = (tournamentData.actualSize || tournamentData.size || 16).toString();
 
-            const fSize = tournamentData.teamFontSize || 14;
-            document.documentElement.style.setProperty('--team-font-size', `${fSize}px`);
-            const fontDisp = document.getElementById('font-size-disp');
-            if (fontDisp) fontDisp.innerText = fSize;
+            document.documentElement.style.setProperty('--team-font-size', `${tournamentData.teamFontSize || 14}px`);
+            if (document.getElementById('font-size-disp')) document.getElementById('font-size-disp').innerText = tournamentData.teamFontSize || 14;
 
-            const adminTools = document.getElementById('admin-tools');
-            const searchContainer = document.getElementById('search-container');
-            const btnEditLoc = document.getElementById('btn-edit-location');
-            const btnLogin = document.getElementById('btn-login'); 
-            
             if(isAdmin) {
-                if(btnLogin) btnLogin.classList.add('hidden');
-                if(searchContainer) searchContainer.classList.add('hidden');
-                adminTools.classList.remove('hidden'); adminTools.classList.add('flex');
-                if (btnEditLoc) btnEditLoc.classList.remove('hidden');
+                document.getElementById('btn-login').classList.add('hidden');
+                document.getElementById('search-container').classList.add('hidden');
+                document.getElementById('admin-tools').classList.remove('hidden'); document.getElementById('admin-tools').classList.add('flex');
             } else {
-                if(btnLogin) btnLogin.classList.remove('hidden');
-                if(searchContainer) searchContainer.classList.remove('hidden');
-                adminTools.classList.add('hidden'); adminTools.classList.remove('flex');
-                if (btnEditLoc) btnEditLoc.classList.add('hidden');
+                document.getElementById('btn-login').classList.remove('hidden');
+                document.getElementById('search-container').classList.remove('hidden');
+                document.getElementById('admin-tools').classList.add('hidden'); document.getElementById('admin-tools').classList.remove('flex');
             }
 
             const pType = tournamentData.particleType || 'star';
-            if (currentParticleType !== pType) {
-                currentParticleType = pType;
-                startParticles(pType);
-            }
+            if (currentParticleType !== pType) { currentParticleType = pType; startParticles(pType); }
 
-            updateDatalist();
-            checkWinnerBoard();
-            
-            clearTimeout(svgTimeout);
-            svgTimeout = setTimeout(() => { drawLines(); centerScroll(); }, 150);
+            updateDatalist(); checkWinnerBoard();
+            clearTimeout(svgTimeout); svgTimeout = setTimeout(() => { drawLines(); }, 150);
         }
 
         function centerScroll() {
@@ -827,37 +807,26 @@
         }
 
         function checkWinnerBoard() {
-            const finalMatch = tournamentData.matches['final'];
-            const bronzeMatch = tournamentData.matches['bronze'];
+            const finalMatch = tournamentData.matches['final']; const bronzeMatch = tournamentData.matches['bronze'];
             const board = document.getElementById('winner-board');
-            
             if (!finalMatch) return;
-            const s1 = parseInt(finalMatch.s1); const s2 = parseInt(finalMatch.s2);
             
+            const s1 = parseInt(finalMatch.s1); const s2 = parseInt(finalMatch.s2);
             if (!isNaN(s1) && !isNaN(s2) && s1 !== s2 && finalMatch.t1 && finalMatch.t2) {
-                const winner = s1 > s2 ? finalMatch.t1 : finalMatch.t2;
-                const runnerUp = s1 > s2 ? finalMatch.t2 : finalMatch.t1;
-                
-                document.getElementById('winner-1').innerText = winner;
-                document.getElementById('winner-2').innerText = runnerUp;
+                document.getElementById('winner-1').innerText = s1 > s2 ? finalMatch.t1 : finalMatch.t2;
+                document.getElementById('winner-2').innerText = s1 > s2 ? finalMatch.t2 : finalMatch.t1;
                 
                 let thirdPlace = "MENUNGGU HASIL";
                 if (bronzeMatch) {
                     const bs1 = parseInt(bronzeMatch.s1); const bs2 = parseInt(bronzeMatch.s2);
-                    if (!isNaN(bs1) && !isNaN(bs2) && bs1 !== bs2 && bronzeMatch.t1 && bronzeMatch.t2) {
-                        thirdPlace = bs1 > bs2 ? bronzeMatch.t1 : bronzeMatch.t2;
-                    }
+                    if (!isNaN(bs1) && !isNaN(bs2) && bs1 !== bs2 && bronzeMatch.t1 && bronzeMatch.t2) thirdPlace = bs1 > bs2 ? bronzeMatch.t1 : bronzeMatch.t2;
                 }
                 document.getElementById('winner-3').innerText = thirdPlace;
 
                 board.classList.remove('hidden'); void board.offsetWidth; 
-                board.classList.remove('scale-95', 'opacity-0');
-                board.classList.add('scale-100', 'opacity-100', 'flex');
+                board.classList.remove('scale-95', 'opacity-0'); board.classList.add('scale-100', 'opacity-100', 'flex');
                 
-                if (!lastWinnerState) {
-                    playWinSound(); // Efek suara kemenangan!
-                    lastWinnerState = true;
-                }
+                if (!lastWinnerState) { playWinSound(); lastWinnerState = true; }
             } else {
                 lastWinnerState = false;
                 board.classList.add('scale-95', 'opacity-0'); board.classList.remove('scale-100', 'opacity-100');
@@ -866,11 +835,8 @@
         }
 
         function renderBracketDOM() {
-            const container = document.getElementById('bracket-content');
-            container.innerHTML = ''; 
-            
-            const size = parseInt(tournamentData.size) || 16;
-            const totalRounds = Math.log2(size);
+            const container = document.getElementById('bracket-content'); container.innerHTML = ''; 
+            const size = parseInt(tournamentData.size) || 16; const totalRounds = Math.log2(size);
             
             for (let round = 1; round < totalRounds; round++) container.appendChild(createRoundColumn(round, totalRounds, 'l'));
             container.appendChild(createFinalColumn(totalRounds));
@@ -881,13 +847,11 @@
 
         function createRoundColumn(roundNum, totalRounds, side) {
             const col = document.createElement('div');
-            // Ganti gap-8 menjadi gap-4 agar lebih rapat
             col.className = 'flex flex-col gap-4 justify-around h-full z-10 relative';
             const matchCount = (parseInt(tournamentData.size) / 2) / Math.pow(2, roundNum - 1);
             let roundName = matchCount === 2 ? "SEMIFINAL" : (matchCount === 4 ? "PEREMPAT FINAL" : `${matchCount * 2} BESAR`);
             
             col.innerHTML = `<div class="text-center text-[11px] font-black opacity-60 uppercase tracking-[0.2em] mb-2 text-white">${roundName}</div>`;
-
             for (let i = 1; i <= matchCount / 2; i++) {
                 const matchId = `r${roundNum}_${side}_${i}`;
                 const nextId = (roundNum + 1 === totalRounds) ? 'final' : `r${roundNum + 1}_${side}_${Math.ceil(i / 2)}`;
@@ -896,36 +860,48 @@
             return col;
         }
 
+        // Fitur 3: Penyesuaian agar garis Final presisi sejajar
         function createFinalColumn() {
             const col = document.createElement('div');
-            col.className = 'flex flex-col items-center justify-center min-h-full shrink-0 mx-6 z-10 relative';
+            // Menghilangkan shrink-0 dan margin samping yang berlebihan agar spacing sama rata dengan kolom lain
+            col.className = 'flex flex-col items-center justify-center min-h-full relative z-10';
             
             const finalWrapper = document.createElement('div');
-            finalWrapper.className = 'flex flex-col gap-4 items-center relative z-20';
-            finalWrapper.innerHTML = `<div class="text-center text-[12px] font-black text-amber-400 bg-amber-500/20 py-1.5 px-6 rounded-full border border-amber-500/40 uppercase tracking-widest backdrop-blur-md self-center shadow-[0_0_15px_rgba(245,158,11,0.2)]">BABAK FINAL</div>`;
+            finalWrapper.className = 'flex flex-col items-center relative z-20';
+            // Teks Final dibuat absolute agar tidak mendorong kotak ke bawah merusak kelurusan garis
+            finalWrapper.innerHTML = `<div class="absolute -top-12 text-center text-[12px] font-black text-amber-400 bg-amber-500/20 py-1.5 px-6 rounded-full border border-amber-500/40 uppercase tracking-widest backdrop-blur-md self-center shadow-[0_0_15px_rgba(245,158,11,0.2)] whitespace-nowrap">BABAK FINAL</div>`;
             finalWrapper.appendChild(createMatchCard('final', null, 'c', true));
             col.appendChild(finalWrapper);
 
             const bronzeWrapper = document.createElement('div');
-            bronzeWrapper.className = 'absolute top-1/2 mt-[140px] flex flex-col gap-3 items-center z-10 w-full';
-            bronzeWrapper.innerHTML = `<div class="text-center text-[10px] font-bold opacity-70 uppercase tracking-widest bg-black/40 py-1.5 px-5 rounded-full border border-white/20 backdrop-blur-md self-center text-white">PEREBUTAN JUARA 3</div>`;
+            // Diberi jarak ke bawah dengan margin-top, kotak dibiarkan murni di tengah relative container
+            bronzeWrapper.className = 'absolute top-1/2 mt-32 flex flex-col items-center z-10 w-full';
+            // Teks absolute agar kotak tetap sejajar secara struktur 
+            bronzeWrapper.innerHTML = `<div class="absolute -top-10 text-center text-[10px] font-bold opacity-70 uppercase tracking-widest bg-black/40 py-1.5 px-5 rounded-full border border-white/20 backdrop-blur-md self-center text-white whitespace-nowrap">PEREBUTAN JUARA 3</div>`;
             bronzeWrapper.appendChild(createMatchCard('bronze', null, 'c'));
             
+            // Footer Element
             const footerEl = document.createElement('div');
-            footerEl.className = 'mt-8 z-20 pointer-events-auto w-full flex flex-col items-center justify-center gap-4';
+            footerEl.className = 'mt-10 z-20 pointer-events-auto w-full flex flex-col items-center justify-center gap-4';
+            
+            // Ambil value period dari global state saat render awal
+            const periodValue = tournamentData.period || "";
+            
             footerEl.innerHTML = `
-                <input type="text" id="tournament-period" onchange="updatePeriod(this.value)" placeholder="Teks Footer / Tanggal Periode Turnamen" class="bg-transparent text-center border-none outline-none hover:border-b focus:border-b border-white/30 text-slate-400 font-bold tracking-widest text-sm md:text-base w-[350px] sm:w-[500px] md:w-[700px] max-w-[90vw] transition-all placeholder-slate-600 uppercase" readonly>
+                <input type="text" id="tournament-period" onchange="updatePeriod(this.value)" placeholder="Teks Footer / Tanggal Periode Turnamen" value="${periodValue}" class="bg-transparent text-center border-none outline-none hover:border-b focus:border-b border-white/30 text-slate-300 font-bold tracking-widest text-sm md:text-base w-[350px] sm:w-[500px] md:w-[700px] max-w-[90vw] transition-all placeholder-slate-500 uppercase ${isAdmin ? 'cursor-text' : 'pointer-events-none'}" ${isAdmin ? '' : 'readonly'}>
                 <div class="flex items-center gap-3">
-                    <a href="https://maps.app.goo.gl/reHkx6shAXRKqTq99" id="location-link" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 text-sm md:text-base text-blue-300 hover:text-blue-100 transition-all bg-blue-900/40 hover:bg-blue-800/60 px-6 py-2.5 rounded-full border border-blue-500/50 shadow-[0_0_20px_rgba(59,130,246,0.3)] font-semibold">
+                    <a href="#" id="location-link" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 text-sm md:text-base text-blue-300 hover:text-blue-100 transition-all bg-blue-900/40 hover:bg-blue-800/60 px-6 py-2.5 rounded-full border border-blue-500/50 shadow-[0_0_20px_rgba(59,130,246,0.3)] font-semibold">
                         <i data-lucide="map-pin" class="w-4 h-4"></i> Lokasi Turnamen
                     </a>
-                    <button id="btn-edit-location" onclick="editLocationPrompt()" class="hidden bg-black/50 backdrop-blur-md border border-white/20 p-2.5 rounded-full text-slate-300 hover:text-white transition shadow-lg" title="Edit Link Maps">
+                    <button id="btn-edit-location" onclick="editLocationPrompt()" class="${isAdmin ? 'block' : 'hidden'} bg-black/50 backdrop-blur-md border border-white/20 p-2.5 rounded-full text-slate-300 hover:text-white transition shadow-lg" title="Edit Link Maps">
                         <i data-lucide="edit-3" class="w-4 h-4"></i>
                     </button>
                 </div>
+                <div class="text-[10px] text-slate-400 mt-2 opacity-70 uppercase tracking-widest font-semibold flex items-center gap-1.5">
+                    <span>Created and designed by</span> <span class="text-amber-500 font-black">Imsikruwi</span> <span>2026</span>
+                </div>
             `;
             bronzeWrapper.appendChild(footerEl);
-            
             col.appendChild(bronzeWrapper);
             
             return col;
@@ -933,9 +909,7 @@
 
         function createMatchCard(matchId, nextMatchInfo, side, isFinal = false) {
             const match = tournamentData.matches[matchId] || { t1: '', s1: '', t2: '', s2: '', time: '' };
-            const card = document.createElement('div');
-            card.id = `card-${matchId}`;
-            
+            const card = document.createElement('div'); card.id = `card-${matchId}`;
             if (nextMatchInfo) { card.dataset.next = `card-${nextMatchInfo.id}`; card.dataset.side = side; }
 
             let borderClass = isFinal ? 'bracket-card rounded-xl border-amber-500 is-final' : 'bracket-card rounded-xl';
@@ -945,8 +919,7 @@
             const isDone = (!isNaN(s1) && !isNaN(s2) && s1 !== s2);
             const t1Win = isDone && (s1 > s2); const t2Win = isDone && (s2 > s1);
 
-            const timeVal = match.time || '';
-            const showTime = isAdmin || timeVal !== '';
+            const timeVal = match.time || ''; const showTime = isAdmin || timeVal !== '';
             
             const timeInputHTML = showTime ? `
                 <input type="text" class="w-20 bg-transparent border-b border-dashed border-white/40 focus:border-white/80 outline-none text-right font-medium text-[10px] text-slate-300 transition-all pointer-events-auto ${isAdmin?'cursor-text hover:bg-white/5':'cursor-default'}" 
@@ -956,10 +929,7 @@
                 onkeydown="if(event.key==='Enter') this.blur();" title="Atur Waktu Main">
             ` : '';
 
-            const statusHTML = isDone 
-                ? '<span class="text-emerald-400 font-bold tracking-wider">Selesai</span>' 
-                : '<span class="opacity-50 font-medium">Belum Selesai</span>';
-            
+            const statusHTML = isDone ? '<span class="text-emerald-400 font-bold tracking-wider">Selesai</span>' : '<span class="opacity-50 font-medium">Belum Selesai</span>';
             const titleText = isFinal ? 'FINAL' : (matchId === 'bronze' ? 'JUARA 3' : '');
             
             card.className = `match-card overflow-hidden transition-all duration-300 ${borderClass}`;
@@ -967,7 +937,7 @@
             let t1C = t1Win ? 'text-winner' : (isDone ? 'text-loser' : 'text-slate-100');
             let t2C = t2Win ? 'text-winner' : (isDone ? 'text-loser' : 'text-slate-100');
             let s1C = t1Win ? 'text-winner bg-winner' : (isDone ? 'text-loser bg-loser' : 'text-white bg-white/5');
-            let s2C = t2Win ? 'text-winner bg-winner' : (isDone ? 'text-loser bg-loser' : 'text-white bg-white/5');
+            const s2C = t2Win ? 'text-winner bg-winner' : (isDone ? 'text-loser bg-loser' : 'text-white bg-white/5');
 
             if(isDone) card.dataset.winner = t1Win ? '1' : '2';
             if (match.t1 === 'BYE') t1C = 'opacity-30 italic font-normal text-slate-400';
@@ -1001,46 +971,67 @@
             return card;
         }
 
+        function getOffset(el, relativeTo) {
+            let x = 0, y = 0;
+            while (el && el !== relativeTo) {
+                x += el.offsetLeft;
+                y += el.offsetTop;
+                el = el.offsetParent;
+            }
+            return { x, y };
+        }
+
         function drawLines() {
             const svg = document.getElementById('svg-lines');
             const container = document.getElementById('bracket-container');
             const content = document.getElementById('bracket-content');
             
             if(!svg || !container || !content) return;
-            svg.setAttribute('width', content.scrollWidth); svg.setAttribute('height', content.scrollHeight);
+            
+            // Atur ukuran SVG persis sama dengan ukuran murni dari bracket-content
+            svg.style.width = `${content.offsetWidth}px`;
+            svg.style.height = `${content.offsetHeight}px`;
             svg.innerHTML = ''; 
 
-            const containerRect = container.getBoundingClientRect();
-            const zoom = window.currentScale || 1;
-            
             document.querySelectorAll('.match-card').forEach(card => {
-                const nextId = card.dataset.next;
-                if (!nextId) return;
-                const nextCard = document.getElementById(nextId);
-                if (!nextCard) return;
+                const nextId = card.dataset.next; if (!nextId) return;
+                const nextCard = document.getElementById(nextId); if (!nextCard) return;
 
                 const side = card.dataset.side; 
-                const startRect = card.getBoundingClientRect();
-                const endRect = nextCard.getBoundingClientRect();
+                
+                // Gunakan properti offset relative terhadap bracket-content
+                // Ini akan mengabaikan pengaruh transform: scale() dari zoom-wrapper
+                const startPos = getOffset(card, content);
+                const endPos = getOffset(nextCard, content);
+
+                // Ukuran dimensi kotak (offsetWidth tidak terpengaruh scale)
+                const startWidth = card.offsetWidth;
+                const startHeight = card.offsetHeight;
+                const endWidth = nextCard.offsetWidth;
+                const endHeight = nextCard.offsetHeight;
 
                 let startX, startY, endX, endY;
                 const isActive = card.dataset.winner !== undefined;
                 let strokeClass = isActive ? 'line-path line-active' : 'line-path';
                 if (nextId === 'bronze') strokeClass = 'line-path'; 
 
-                if (side === 'l') { startX = (startRect.right - containerRect.left) / zoom; endX = (endRect.left - containerRect.left) / zoom; } 
-                else if (side === 'r') { startX = (startRect.left - containerRect.left) / zoom; endX = (endRect.right - containerRect.left) / zoom; } 
-                else return;
+                if (side === 'l') { 
+                    startX = startPos.x + startWidth;
+                    endX = endPos.x;
+                } else if (side === 'r') { 
+                    startX = startPos.x;
+                    endX = endPos.x + endWidth;
+                } else return;
 
-                startY = ((startRect.top - containerRect.top) + (startRect.height / 2)) / zoom;
-                endY = ((endRect.top - containerRect.top) + (endRect.height / 2)) / zoom;
+                startY = startPos.y + (startHeight / 2);
+                endY = endPos.y + (endHeight / 2);
 
                 const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
-                
+                // Mid point control line
                 const midX = startX + (side==='l'?1:-1)*(Math.abs(endX-startX)/2);
-                const d = `M ${startX} ${startY} C ${midX} ${startY}, ${midX} ${endY}, ${endX} ${endY}`;
-
-                path.setAttribute('d', d); path.setAttribute('class', strokeClass);
+                
+                path.setAttribute('d', `M ${startX} ${startY} C ${midX} ${startY}, ${midX} ${endY}, ${endX} ${endY}`);
+                path.setAttribute('class', strokeClass);
                 svg.appendChild(path);
             });
         }
@@ -1057,183 +1048,117 @@
         function updateSyncStatus(isSuccess, msg = null) {
             const statusDiv = document.getElementById('sync-status');
             if (isSuccess) {
-                statusDiv.innerHTML = '<span class="text-emerald-400 font-bold flex items-center gap-1.5"><div class="w-2 h-2 bg-emerald-400 rounded-full animate-pulse shadow-[0_0_8px_rgba(52,211,153,0.8)]"></div> Live</span>';
+                // Sembunyikan indikator live sukses
+                statusDiv.classList.add('hidden');
             } else {
-                statusDiv.innerHTML = `<span class="text-amber-400 font-bold flex items-center gap-1.5"><i data-lucide="refresh-cw" class="w-3 h-3 animate-spin"></i> ${msg || 'Memproses...'}</span>`;
+                // Tampilkan pesan error/loading jika ada masalah
+                statusDiv.classList.remove('hidden');
+                statusDiv.innerHTML = `<span class="text-amber-400 font-bold flex items-center gap-1.5 bg-black/60 px-3 py-1.5 rounded-full border border-amber-500/30"><i data-lucide="alert-triangle" class="w-3 h-3"></i> ${msg || 'Memproses...'}</span>`;
             }
             lucide.createIcons();
         }
 
-        function updateTitle(val) { 
-            if(!isAdmin) return; 
-            tournamentData.title = sanitizeInput(val); 
-            document.title = tournamentData.title || "Bagan Turnamen";
-            saveDataToFirebase(); 
-        }
+        function updateTitle(val) { if(!isAdmin) return; tournamentData.title = sanitizeInput(val); document.title = tournamentData.title || "Bagan Turnamen"; saveDataToFirebase(); }
         function updateSubtitle(val) { if(!isAdmin) return; tournamentData.subtitle = sanitizeInput(val); saveDataToFirebase(); }
         function updatePeriod(val) { if(!isAdmin) return; tournamentData.period = sanitizeInput(val); saveDataToFirebase(); }
 
         function updateData(matchId, field, value) {
-            if (!isAdmin) return;
-            if(!tournamentData.matches[matchId]) return;
-            // Gunakan sanitasi untuk semua input sebelum simpan
+            if (!isAdmin || !tournamentData.matches[matchId]) return;
             tournamentData.matches[matchId][field] = sanitizeInput(value);
-            processAutoAdvance(matchId);
-            applyStateToUI(); saveDataToFirebase();
+            processAutoAdvance(matchId); applyStateToUI(); saveDataToFirebase();
         }
 
         function processAutoAdvance(matchId) {
-            const match = tournamentData.matches[matchId];
-            if (!match) return;
-
+            const match = tournamentData.matches[matchId]; if (!match) return;
             const s1 = parseInt(match.s1); const s2 = parseInt(match.s2);
             let winnerName = '', loserName = '';
 
-            if (!isNaN(s1) && !isNaN(s2) && s1 !== s2) {
-                winnerName = s1 > s2 ? match.t1 : match.t2;
-                loserName = s1 > s2 ? match.t2 : match.t1;
-            } else if (match.t1 === 'BYE' && match.t2 !== '' && match.t2 !== 'BYE') { winnerName = match.t2; } 
+            if (!isNaN(s1) && !isNaN(s2) && s1 !== s2) { winnerName = s1 > s2 ? match.t1 : match.t2; loserName = s1 > s2 ? match.t2 : match.t1; } 
+            else if (match.t1 === 'BYE' && match.t2 !== '' && match.t2 !== 'BYE') { winnerName = match.t2; } 
             else if (match.t2 === 'BYE' && match.t1 !== '' && match.t1 !== 'BYE') { winnerName = match.t1; }
 
             if (matchId.startsWith('r')) {
-                const parts = matchId.split('_');
-                const round = parseInt(parts[0].replace('r', ''));
-                const side = parts[1]; const index = parseInt(parts[2]);
+                const parts = matchId.split('_'); const round = parseInt(parts[0].replace('r', '')); const side = parts[1]; const index = parseInt(parts[2]);
                 const totalRounds = Math.log2(parseInt(tournamentData.size));
-                
                 let nextId = (round + 1 === totalRounds) ? 'final' : `r${round + 1}_${side}_${Math.ceil(index / 2)}`;
                 let isSlot1 = (round + 1 === totalRounds) ? (side === 'l') : (index % 2 !== 0);
 
                 if (tournamentData.matches[nextId]) {
-                    if (isSlot1) tournamentData.matches[nextId].t1 = winnerName;
-                    else tournamentData.matches[nextId].t2 = winnerName;
+                    if (isSlot1) tournamentData.matches[nextId].t1 = winnerName; else tournamentData.matches[nextId].t2 = winnerName;
                     processAutoAdvance(nextId);
                 }
 
                 if (nextId === 'final' && tournamentData.matches['bronze'] && loserName !== '' && loserName !== 'BYE') {
-                    if (side === 'l') tournamentData.matches['bronze'].t1 = loserName;
-                    else tournamentData.matches['bronze'].t2 = loserName;
+                    if (side === 'l') tournamentData.matches['bronze'].t1 = loserName; else tournamentData.matches['bronze'].t2 = loserName;
                     processAutoAdvance('bronze');
                 }
             }
         }
 
         function generateEmptyMatches(bracketSize, actualSize) {
-            tournamentData.matches = {};
-            const totalRounds = Math.log2(bracketSize);
-            const halfSize = bracketSize / 2;
-
+            tournamentData.matches = {}; const totalRounds = Math.log2(bracketSize); const halfSize = bracketSize / 2;
             ['l', 'r'].forEach(side => {
                 for (let round = 1; round < totalRounds; round++) {
-                    for (let i = 1; i <= (halfSize / Math.pow(2, round - 1)); i++) {
-                        tournamentData.matches[`r${round}_${side}_${i}`] = { t1: '', s1: '', t2: '', s2: '', time: '' };
-                    }
+                    for (let i = 1; i <= (halfSize / Math.pow(2, round - 1)); i++) tournamentData.matches[`r${round}_${side}_${i}`] = { t1: '', s1: '', t2: '', s2: '', time: '' };
                 }
             });
-            tournamentData.matches['final'] = { t1: '', s1: '', t2: '', s2: '', time: '' };
-            tournamentData.matches['bronze'] = { t1: '', s1: '', t2: '', s2: '', time: '' };
+            tournamentData.matches['final'] = { t1: '', s1: '', t2: '', s2: '', time: '' }; tournamentData.matches['bronze'] = { t1: '', s1: '', t2: '', s2: '', time: '' };
 
-            let byesCount = bracketSize - actualSize;
-            let sortedR1 = [];
+            let byesCount = bracketSize - actualSize; let sortedR1 = [];
             for(let i=1; i<=halfSize; i++) { sortedR1.push(`r1_l_${i}`); sortedR1.push(`r1_r_${i}`); }
-
-            for(let k=0; k<byesCount; k++) {
-                if(sortedR1[k]) { let m = tournamentData.matches[sortedR1[k]]; m.t2 = 'BYE'; m.s1 = '1'; m.s2 = '0'; }
-            }
-            Object.keys(tournamentData.matches).forEach(id => {
-                if(tournamentData.matches[id].t2 === 'BYE') processAutoAdvance(id);
-            });
+            for(let k=0; k<byesCount; k++) { if(sortedR1[k]) { let m = tournamentData.matches[sortedR1[k]]; m.t2 = 'BYE'; m.s1 = '1'; m.s2 = '0'; } }
+            Object.keys(tournamentData.matches).forEach(id => { if(tournamentData.matches[id].t2 === 'BYE') processAutoAdvance(id); });
         }
 
         function searchTeam(query) {
             const searchStr = query.toLowerCase().trim();
             if (searchStr === 'admin1') { isAdmin = true; document.getElementById('search-input').value = ''; applyStateToUI(); return; }
-
-            const inputs = document.querySelectorAll('.match-card input[type="text"]');
-            inputs.forEach(input => {
+            document.querySelectorAll('.match-card input[type="text"]').forEach(input => {
                 input.parentElement.classList.remove('bg-white/20', 'border-white/50');
-                if (searchStr.length > 0 && input.value && input.value.toLowerCase().includes(searchStr)) {
-                    input.parentElement.classList.add('bg-white/20', 'border-white/50');
-                }
+                if (searchStr.length > 0 && input.value && input.value.toLowerCase().includes(searchStr)) input.parentElement.classList.add('bg-white/20', 'border-white/50');
             });
         }
 
-        // Modal Login Logic
         function openLoginModal() {
-            const modal = document.getElementById('login-modal');
-            const box = document.getElementById('login-modal-box');
+            const modal = document.getElementById('login-modal'); const box = document.getElementById('login-modal-box');
             modal.classList.remove('hidden');
-            setTimeout(() => {
-                box.classList.remove('scale-95');
-                box.classList.add('scale-100');
-                document.getElementById('admin-password-input').focus();
-            }, 10);
+            setTimeout(() => { box.classList.remove('scale-95'); box.classList.add('scale-100'); document.getElementById('admin-password-input').focus(); }, 10);
         }
 
         function closeLoginModal() {
-            const modal = document.getElementById('login-modal');
-            const box = document.getElementById('login-modal-box');
-            box.classList.remove('scale-100');
-            box.classList.add('scale-95');
-            setTimeout(() => {
-                modal.classList.add('hidden');
-                document.getElementById('admin-password-input').value = '';
-            }, 300);
+            const modal = document.getElementById('login-modal'); const box = document.getElementById('login-modal-box');
+            box.classList.remove('scale-100'); box.classList.add('scale-95');
+            setTimeout(() => { modal.classList.add('hidden'); document.getElementById('admin-password-input').value = ''; }, 300);
         }
 
         function submitLogin() {
             const pwd = document.getElementById('admin-password-input').value;
-            if (pwd === "admin" || pwd === "admin1") { 
-                isAdmin = true; 
-                applyStateToUI(); 
-                closeLoginModal();
-            } else {
-                alert("Password Salah!");
-            }
+            if (pwd === "admin" || pwd === "admin1") { isAdmin = true; applyStateToUI(); closeLoginModal(); } else { alert("Password Salah!"); }
         }
 
         function logoutAdmin() { isAdmin = false; applyStateToUI(); }
 
         function changeFontSize(diff) {
             if(!isAdmin) return;
-            let currentSize = tournamentData.teamFontSize || 14;
-            currentSize += diff;
-            if (currentSize < 10) currentSize = 10;
-            if (currentSize > 30) currentSize = 30;
-            tournamentData.teamFontSize = currentSize;
-            saveDataToFirebase(); applyStateToUI();
+            let currentSize = tournamentData.teamFontSize || 14; currentSize += diff;
+            if (currentSize < 10) currentSize = 10; if (currentSize > 30) currentSize = 30;
+            tournamentData.teamFontSize = currentSize; saveDataToFirebase(); applyStateToUI();
         }
 
         function changeSize() {
             if(!isAdmin) return;
-            const sizeInput = document.getElementById('size-input');
-            const inputVal = parseInt(sizeInput.value);
-            
-            if(isNaN(inputVal) || inputVal < 2 || inputVal > 32) {
-                alert("Jumlah tim minimal 2 dan maksimal 32!");
-                sizeInput.value = tournamentData.actualSize;
-                return;
-            }
-            
+            const sizeInput = document.getElementById('size-input'); const inputVal = parseInt(sizeInput.value);
+            if(isNaN(inputVal) || inputVal < 2 || inputVal > 32) { alert("Jumlah tim minimal 2 dan maksimal 32!"); sizeInput.value = tournamentData.actualSize; return; }
             if(confirm(`Membuat bagan baru untuk ${inputVal} tim akan MENGHAPUS semua nama & skor. Lanjut?`)) {
-                tournamentData.actualSize = inputVal;
-                let bSize = 2; 
-                while (bSize < inputVal) bSize *= 2; 
-                if (bSize < 4) bSize = 4;
-                
-                tournamentData.size = bSize; 
-                generateEmptyMatches(bSize, inputVal);
-                saveDataToFirebase(); 
-                applyStateToUI();
-            } else {
-                sizeInput.value = tournamentData.actualSize; 
-            }
+                tournamentData.actualSize = inputVal; let bSize = 2; 
+                while (bSize < inputVal) bSize *= 2; if (bSize < 4) bSize = 4;
+                tournamentData.size = bSize; generateEmptyMatches(bSize, inputVal); saveDataToFirebase(); applyStateToUI();
+            } else { sizeInput.value = tournamentData.actualSize; }
         }
 
         function changeThemeAndBg() {
             if(!isAdmin) return;
-            tournamentData.theme = document.getElementById('theme-selector').value;
-            tournamentData.bgTheme = document.getElementById('bg-selector').value;
+            tournamentData.theme = document.getElementById('theme-selector').value; tournamentData.bgTheme = document.getElementById('bg-selector').value;
             saveDataToFirebase(); applyStateToUI();
         }
 
@@ -1245,30 +1170,21 @@
 
         function editLocationPrompt() {
             if(!isAdmin) return;
-            const current = tournamentData.locationUrl || "https://maps.app.goo.gl/reHkx6shAXRKqTq99";
-            const newUrl = prompt("Masukkan Link Google Maps Baru (URL):", current);
-            if(newUrl !== null && newUrl.trim() !== "") {
-                tournamentData.locationUrl = sanitizeInput(newUrl.trim());
-                saveDataToFirebase(); applyStateToUI();
-            }
+            const newUrl = prompt("Masukkan Link Google Maps Baru (URL):", tournamentData.locationUrl || "https://maps.app.goo.gl/reHkx6shAXRKqTq99");
+            if(newUrl !== null && newUrl.trim() !== "") { tournamentData.locationUrl = sanitizeInput(newUrl.trim()); saveDataToFirebase(); applyStateToUI(); }
         }
 
         function resetData() {
             if(!isAdmin) return;
-            if(confirm("Hapus semua nama dan skor?")) {
-                generateEmptyMatches(tournamentData.size, tournamentData.actualSize);
-                saveDataToFirebase(); applyStateToUI();
-            }
+            if(confirm("Hapus semua nama dan skor?")) { generateEmptyMatches(tournamentData.size, tournamentData.actualSize); saveDataToFirebase(); applyStateToUI(); }
         }
 
         function openBulkModal() { document.getElementById('bulk-modal').classList.remove('hidden'); }
         function closeBulkModal() { document.getElementById('bulk-modal').classList.add('hidden'); document.getElementById('bulk-textarea').value = ''; }
         function saveBulkModal() {
             if(!isAdmin) return;
-            // Gunakan sanitasi untuk daftar input massal
             const lines = document.getElementById('bulk-textarea').value.split('\n').map(t => sanitizeInput(t.trim())).filter(t => t.length > 0);
             if(lines.length === 0) return closeBulkModal();
-
             let r1Slots = []; const half = tournamentData.size / 2;
             for(let i=1; i<=half; i++) {
                 let keyL = `r1_l_${i}`; if(tournamentData.matches[keyL].t1 !== 'BYE') r1Slots.push({key: keyL, slot: 't1'});
@@ -1291,43 +1207,32 @@
                 }
             });
 
-            // Kosongkan skor R1 dan bagan ronde-ronde ke depan secara instan sebelum animasi
             Object.keys(tournamentData.matches).forEach(k => {
                 let m = tournamentData.matches[k];
                 if (m.t1 !== 'BYE' && m.t2 !== 'BYE') { m.s1 = ''; m.s2 = ''; }
                 if (!k.startsWith('r1_')) { m.t1 = ''; m.t2 = ''; } 
             });
 
-            // Putar Audio efek mengacak
             if (audioCtx && audioCtx.state !== 'suspended') {
                 try {
-                    const osc = audioCtx.createOscillator();
-                    const gain = audioCtx.createGain();
+                    const osc = audioCtx.createOscillator(); const gain = audioCtx.createGain();
                     osc.connect(gain); gain.connect(audioCtx.destination);
-                    osc.type = 'sawtooth';
-                    osc.frequency.setValueAtTime(100, audioCtx.currentTime);
+                    osc.type = 'sawtooth'; osc.frequency.setValueAtTime(100, audioCtx.currentTime);
                     osc.frequency.exponentialRampToValueAtTime(800, audioCtx.currentTime + 1.5);
-                    gain.gain.setValueAtTime(0.05, audioCtx.currentTime);
-                    gain.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 1.5);
+                    gain.gain.setValueAtTime(0.05, audioCtx.currentTime); gain.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 1.5);
                     osc.start(); osc.stop(audioCtx.currentTime + 1.5);
                 } catch(e) {}
             }
 
-            // Terapkan ke UI agar ronde ke depannya langsung terlihat kosong selama animasi
             applyStateToUI();
-
-            // Beri jeda kecil agar DOM selesai dirender, lalu pasang kelas animasi CSS 'anim-roulette' 
             setTimeout(() => {
-                const r1Inputs = document.querySelectorAll('.match-card[id^="card-r1_"] .team-row input[type="text"]');
-                r1Inputs.forEach(input => {
+                document.querySelectorAll('.match-card[id^="card-r1_"] .team-row input[type="text"]').forEach(input => {
                     if(!input.value.includes('BYE')) input.classList.add('anim-roulette');
                 });
             }, 50);
 
-            // Setel hasil acakan setelah durasi putaran selesai (1.5 detik)
             setTimeout(() => {
-                currentTeams.sort(() => Math.random() - 0.5);
-                let idx = 0; const half = tournamentData.size / 2;
+                currentTeams.sort(() => Math.random() - 0.5); let idx = 0; const half = tournamentData.size / 2;
                 for(let i=1; i<=half; i++) {
                     let mL = tournamentData.matches[`r1_l_${i}`]; let mR = tournamentData.matches[`r1_r_${i}`];
                     if(mL.t1 !== 'BYE' && currentTeams[idx]) { mL.t1 = currentTeams[idx++]; processAutoAdvance(`r1_l_${i}`); }
@@ -1362,8 +1267,7 @@
                 if (m.t1 !== '' && m.t2 !== '' && m.s1 === '' && m.s2 === '') {
                     let s1 = Math.floor(Math.random() * 4); let s2 = Math.floor(Math.random() * 4);
                     while(s1 === s2) s2 = Math.floor(Math.random() * 4);
-                    m.s1 = s1.toString(); m.s2 = s2.toString();
-                    isChanged = true;
+                    m.s1 = s1.toString(); m.s2 = s2.toString(); isChanged = true;
                 }
             });
             if (isChanged) { Object.keys(tournamentData.matches).forEach(id => processAutoAdvance(id)); saveDataToFirebase(); applyStateToUI(); }
@@ -1382,8 +1286,12 @@
         function applyZoom() {
             const zoomWrapper = document.getElementById('zoom-wrapper');
             zoomWrapper.style.transform = `scale(${window.currentScale})`;
-            zoomWrapper.style.transformOrigin = 'center top';
-            drawLines();
+            
+            // Pastikan gambar diulang setiap ada perubahan skala
+            // timeout memastikan animasi scale CSS berjalan/selesai dirender
+            setTimeout(() => {
+                drawLines();
+            }, 50);
         }
 
         function setupPanZoom() {
@@ -1404,20 +1312,18 @@
                 container.scrollTop = scrollTop - ((e.pageY - container.offsetTop) - startY);
             });
 
-            // Wheel zoom (Desktop)
             container.addEventListener('wheel', (e) => {
                 if (e.ctrlKey) {
                     e.preventDefault();
+                    // Matikan auto-fit jika user melakukan zoom manual
+                    if(isFitToScreen) { isFitToScreen = false; document.getElementById('icon-fit-screen').setAttribute('data-lucide', 'scan'); lucide.createIcons(); }
                     const delta = e.deltaY > 0 ? -0.1 : 0.1;
                     window.currentScale = Math.min(Math.max(0.3, window.currentScale + delta), 2.0);
                     applyZoom();
                 }
             }, { passive: false });
 
-            // Touch Pinch-to-Zoom (Mobile)
-            let initialDistance = null;
-            let initialScale = 1;
-            let lastTouchX = null, lastTouchY = null;
+            let initialDistance = null; let initialScale = 1; let lastTouchX = null, lastTouchY = null;
 
             container.addEventListener('touchstart', (e) => {
                 if (e.target.tagName === 'INPUT' || e.target.tagName === 'BUTTON' || e.target.closest('button')) return;
@@ -1437,9 +1343,9 @@
                     container.scrollTop = scrollTop - (e.touches[0].pageY - lastTouchY);
                 } else if (e.touches.length === 2 && initialDistance !== null) {
                     e.preventDefault();
+                    if(isFitToScreen) { isFitToScreen = false; document.getElementById('icon-fit-screen').setAttribute('data-lucide', 'scan'); lucide.createIcons(); }
                     const currentDistance = Math.hypot(e.touches[0].pageX - e.touches[1].pageX, e.touches[0].pageY - e.touches[1].pageY);
-                    const scaleChange = currentDistance / initialDistance;
-                    window.currentScale = Math.min(Math.max(0.3, initialScale * scaleChange), 2.0);
+                    window.currentScale = Math.min(Math.max(0.3, initialScale * (currentDistance / initialDistance)), 2.0);
                     applyZoom();
                 }
             }, { passive: false });
@@ -1456,27 +1362,19 @@
                 const result = await response.json();
                 if (result.candidates && result.candidates[0].content) return result.candidates[0].content.parts[0].text;
                 return "Maaf, AI sedang mengalami gangguan sinyal. Coba lagi nanti!";
-            } catch (e) {
-                console.error("Gemini API Error:", e);
-                return "Terjadi kesalahan sistem saat memanggil AI.";
-            }
+            } catch (e) { return "Terjadi kesalahan sistem saat memanggil AI."; }
         }
 
         async function generateAITeams() {
             if(!isAdmin) return;
-            updateSyncStatus(false, "AI Bekerja...");
-            let emptyCount = 0;
+            updateSyncStatus(false, "AI Bekerja..."); let emptyCount = 0;
             Object.keys(tournamentData.matches).forEach(id => {
-                if(id.startsWith('r1_')) {
-                    let m = tournamentData.matches[id];
-                    if (m.t1 === '' && m.t1 !== 'BYE') emptyCount++; if (m.t2 === '' && m.t2 !== 'BYE') emptyCount++;
-                }
+                if(id.startsWith('r1_')) { let m = tournamentData.matches[id]; if (m.t1 === '' && m.t1 !== 'BYE') emptyCount++; if (m.t2 === '' && m.t2 !== 'BYE') emptyCount++; }
             });
             if (emptyCount === 0) { alert("Tidak ada slot kosong di babak 1."); updateSyncStatus(true); return; }
 
             const prompt = `Buatkan ${emptyCount} nama tim e-sports yang unik, keren, lucu dan belum pernah ada. HANYA pisahkan dengan koma (,). Jangan tambahkan teks, titik, atau penomoran apapun selain nama-nama tersebut.`;
             const namesText = await callGeminiText(prompt, "Kamu adalah generator nama tim profesional.");
-            // Filter dan sanitasi kembalian dari AI
             const names = namesText.split(',').map(n => sanitizeInput(n.trim().replace(/['"]/g, ''))).filter(n => n.length > 0);
 
             let tIdx = 0;
@@ -1495,8 +1393,7 @@
             const match = tournamentData.matches[matchId];
             if(!match || !match.t1 || !match.t2 || match.t1 === 'BYE' || match.t2 === 'BYE') { alert("Kedua tim harus terisi terlebih dahulu untuk mendapatkan komentar AI!"); return; }
 
-            const modal = document.getElementById('ai-modal');
-            const textContainer = document.getElementById('ai-text');
+            const modal = document.getElementById('ai-modal'); const textContainer = document.getElementById('ai-text');
             textContainer.innerHTML = '<i data-lucide="loader-2" class="w-8 h-8 animate-spin text-amber-500 mx-auto mb-3"></i><p class="text-xs text-slate-300 animate-pulse font-bold">AI sedang menyusun komentar hype...</p>';
             lucide.createIcons(); modal.classList.remove('hidden');
 
